@@ -1,0 +1,8 @@
+/dist/
+/build/
+/nbproject/
+/test/
+/librerias/
+build.xml
+manifest.mf
+/bnproject/private/private.xml
