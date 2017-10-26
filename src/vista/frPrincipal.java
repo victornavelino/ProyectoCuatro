@@ -49,6 +49,7 @@ import includes.diagCargando;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -1226,14 +1227,17 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setForeground(new java.awt.Color(0, 0, 0));
+        setIconImage(getIconImage());
 
+        jDesktopPane1.setBackground(new java.awt.Color(255, 204, 153));
         jDesktopPane1.setName("jDesktopPane1"); // NOI18N
+        jDesktopPane1.setOpaque(false);
 
         jScrollPane1.setBackground(new java.awt.Color(0, 0, 0));
         jScrollPane1.setForeground(new java.awt.Color(255, 204, 0));
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        taSalida.setBackground(new java.awt.Color(0, 0, 0));
+        taSalida.setBackground(new java.awt.Color(255, 102, 0));
         taSalida.setColumns(20);
         taSalida.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         taSalida.setForeground(new java.awt.Color(153, 255, 102));
@@ -1245,10 +1249,10 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jDesktopPane1.add(jScrollPane1);
         jScrollPane1.setBounds(0, 0, 990, 120);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo La Tradicion.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LogoArcoIris.png"))); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         jDesktopPane1.add(jLabel1);
-        jLabel1.setBounds(180, 130, 600, 490);
+        jLabel1.setBounds(180, 130, 670, 620);
 
         jToolBar1.setRollover(true);
         jToolBar1.setName("jToolBar1"); // NOI18N
@@ -1558,7 +1562,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         cargarHoraDelServidorAlInicio();
         buscarNombrePuertoSegunSistema();
         if (!portFound) {
-            buscarPuerto();
+          //  buscarPuerto();
             if (puertoEncontrado != null) {
                 abrirPuerto();
             }
@@ -1750,9 +1754,9 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             sucursal = SucursalFacade.getInstance().buscarPorCodigo(codSucursal);
             if (sucursal != null) {
                 try {
-                    this.setTitle("Bienvenido " + usuario.getNombreCompleto() + " al Sistema de Gestion Carnicerias la Tradicion - " + sucursal);
+                    this.setTitle("Bienvenido " + usuario.getNombreCompleto() + " al Sistema de Gestion Arcoiris Pinturerias - " + sucursal);
                 } catch (Exception e) {
-                    this.setTitle("Bienvenido al Sistema de Gestion Carnicerias la Tradicion");
+                    this.setTitle("Bienvenido al Sistema de Gestion Arcoiris Pinturerias");
                     System.out.println(e);
                 }
                 if (sucursal.getCodigo().equals("1")) {
@@ -1795,7 +1799,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 //            defaultPort = "COM3";
 //        }
     }
-
+/*
     private void buscarPuerto() {
 //        System.out.println("port lis" + portList);
         portList = CommPortIdentifier.getPortIdentifiers();
@@ -1811,7 +1815,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         }
 
     }
-
+*/
     private void abrirPuerto() {
         try {
             serialPort = (SerialPort) puertoEncontrado.open("SimpleReadApp", 2000);
@@ -1925,6 +1929,8 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
     }
 
+    
+    
     public void eventosDeTeclas() {
 
     }
@@ -2075,6 +2081,15 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         diagConfiguracion configuracion = new diagConfiguracion();
         configuracion.setLocation(Comunes.centrarDialog(configuracion));
         configuracion.setVisible(true);
+    }
+    //El siguiente codigo sirve para poner cambiar el icono de la ventana, es decir para cambiar la taza de java por un logo personalizado
+        @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().
+                getImage(ClassLoader.getSystemResource("Imagenes/LogoArcoIrisICONO.png"));
+
+
+        return retValue;
     }
 
 }
