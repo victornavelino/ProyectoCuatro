@@ -568,6 +568,17 @@ public class DiagPromocion extends javax.swing.JDialog {
 //        SpinnerNumberModel modelo = new SpinnerNumberModel(prioridadInicial+1, prioridadInicial+1, 15, 1);
 //        spPrioridad.setModel(modelo);
 
+       /* Para ocultar los dias de la semana en el dialogo de promocion */
+        jLabel6.setVisible(false);
+        chkLunes.setVisible(false);
+        chkMartes.setVisible(false);
+        chkMiercoles.setVisible(false);
+        chkJueves.setVisible(false);
+        chkViernes.setVisible(false);
+        chkSabado.setVisible(false);
+        chkDomingo.setVisible(false);
+        //fin
+        
         flag = true;
         this.setTitle("Promoción");
         if (tipoOperacion.equals("Modificación")) {
