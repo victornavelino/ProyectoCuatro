@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
- /*
+/*
  * Principal.java
  *
  * Created on 06/10/2009, 22:33:56
@@ -12,7 +12,6 @@ package vista;
 
 //import entidades.persona.investigador.Investigador;
 // entidades.proyecto.Proyecto;
-import Recursos.sincro.SincronizaCliente;
 import entidades.Configuracion;
 import entidades.Paneles;
 import entidades.Sucursal;
@@ -627,27 +626,27 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
 
-        public void actionPerformed(ActionEvent e) {
-            int cantidadVtasSinCobrar = VentaFacade.getInstance().cantidadVentasSinCobrar(sucursal);
-            if(cantidadVtasSinCobrar == 0){
-                int cantidadVentasSinCerrar = VentaFacade.getInstance().cantidadVentasSinCerrar(sucursal);
-                if (cantidadVentasSinCerrar > 0) {
-                    int reply = JOptionPane.showConfirmDialog(null,
-                            "Exiten " + cantidadVentasSinCerrar + " ventas sin cerrar\n"
-                            + "¿Desea realizar el cierre?\n"
-                            + "Recuerde que no podrá anular una venta ya cerrada", "Realizar Cierre",
-                            JOptionPane.YES_NO_OPTION);
-                    if (reply == JOptionPane.YES_OPTION) {
+            public void actionPerformed(ActionEvent e) {
+                int cantidadVtasSinCobrar = VentaFacade.getInstance().cantidadVentasSinCobrar(sucursal);
+                if (cantidadVtasSinCobrar == 0) {
+                    int cantidadVentasSinCerrar = VentaFacade.getInstance().cantidadVentasSinCerrar(sucursal);
+                    if (cantidadVentasSinCerrar > 0) {
+                        int reply = JOptionPane.showConfirmDialog(null,
+                                "Exiten " + cantidadVentasSinCerrar + " ventas sin cerrar\n"
+                                + "¿Desea realizar el cierre?\n"
+                                + "Recuerde que no podrá anular una venta ya cerrada", "Realizar Cierre",
+                                JOptionPane.YES_NO_OPTION);
+                        if (reply == JOptionPane.YES_OPTION) {
 //                       Comunes.ventanaCargandoUnParametro(CierreVentasFacade.getInstance(), "realizarCierre", "Realizando Cierre", sucursal);
-                        CierreVentas realizarCierre = CierreVentasFacade.getInstance().realizarCierre(sucursal);
-                        new Impresora().imprimir(realizarCierre);
+                            CierreVentas realizarCierre = CierreVentasFacade.getInstance().realizarCierre(sucursal);
+                            new Impresora().imprimir(realizarCierre);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "No existen ventas para cerrar");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, "No existen ventas para cerrar");
+                    JOptionPane.showMessageDialog(rootPane, "Existen " + cantidadVtasSinCobrar + " ventas sin cobrar");
                 }
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Existen " + cantidadVtasSinCobrar + " ventas sin cobrar");
-            }
             }
         });
         //REIMPRIMIR CIERRE
@@ -1108,7 +1107,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
-                jXTaskPnMovimientos.add(new AbstractAction() {
+        jXTaskPnMovimientos.add(new AbstractAction() {
             {
                 putValue(Action.NAME, "Alta Mov. Internos");
                 putValue(Action.SHORT_DESCRIPTION, "Alta Mov. Internos");
@@ -1122,7 +1121,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
-        
+
         jXTaskPnMovimientos.add(new AbstractAction() {
             {
                 putValue(Action.NAME, "Admin. Mov. Internos");
@@ -1137,24 +1136,24 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
-        
-    if(sucursal.getCodigo().equals("1")) {
-        jXTaskPnMovimientos.add(new AbstractAction() {
-            {
-                putValue(Action.NAME, "Nota de pedido de Media Res");
-                putValue(Action.SHORT_DESCRIPTION, "Pedido");
 
-            }
+        if (sucursal.getCodigo().equals("1")) {
+            jXTaskPnMovimientos.add(new AbstractAction() {
+                {
+                    putValue(Action.NAME, "Nota de pedido de Media Res");
+                    putValue(Action.SHORT_DESCRIPTION, "Pedido");
 
-            public void actionPerformed(ActionEvent e) {
+                }
+
+                public void actionPerformed(ActionEvent e) {
 //                frPedidoDeMedias inventario = new frPedidoDeMedias(usuario, sucursal);
 //                inventario.setLocation(Comunes.centrarFrame(inventario));
 //                inventario.setVisible(true);
 
-            }
-        });          
-    }       
- 
+                }
+            });
+        }
+
     }
 
     /**
@@ -1194,7 +1193,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         tbBarraPrincipal = new javax.swing.JToolBar();
         btonCerrarSesion = new javax.swing.JButton();
         btonTerminar2 = new javax.swing.JButton();
-        btnSincronizar = new javax.swing.JButton();
         btnConfiguracion = new javax.swing.JButton();
         btnSincronizarBucardo = new javax.swing.JButton();
         jXPanel1 = new org.jdesktop.swingx.JXPanel();
@@ -1291,21 +1289,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
         });
         tbBarraPrincipal.add(btonTerminar2);
-
-        btnSincronizar.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
-        btnSincronizar.setText("ENVIAR VENTAS/CAJAS");
-        btnSincronizar.setFocusable(false);
-        btnSincronizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSincronizar.setMaximumSize(new java.awt.Dimension(88, 55));
-        btnSincronizar.setMinimumSize(new java.awt.Dimension(88, 55));
-        btnSincronizar.setName("btnSincronizar"); // NOI18N
-        btnSincronizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSincronizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSincronizarActionPerformed(evt);
-            }
-        });
-        tbBarraPrincipal.add(btnSincronizar);
 
         btnConfiguracion.setText("Configuracion");
         btnConfiguracion.setFocusable(false);
@@ -1476,20 +1459,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
-    private void btnSincronizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarActionPerformed
-        SincronizaCliente cliente = new SincronizaCliente();
-        setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        //cliente.pedir();
-        cliente.enviar();
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        JOptionPane.showMessageDialog(null, "Sincronizacion Finalizada");
-        frLogin login = new frLogin();
-        login.setVisible(true);
-        cerrarPuertoBalanza();
-        this.dispose();
-
-    }//GEN-LAST:event_btnSincronizarActionPerformed
-
     private void btnSincronizarBucardoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSincronizarBucardoActionPerformed
         sincronizarTablasBucardo();
     }//GEN-LAST:event_btnSincronizarBucardoActionPerformed
@@ -1511,7 +1480,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfiguracion;
-    private javax.swing.JButton btnSincronizar;
     private javax.swing.JButton btnSincronizarBucardo;
     private javax.swing.JButton btonCerrarSesion;
     private javax.swing.JButton btonTerminar2;
@@ -1562,7 +1530,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         cargarHoraDelServidorAlInicio();
         buscarNombrePuertoSegunSistema();
         if (!portFound) {
-          //  buscarPuerto();
+            //  buscarPuerto();
             if (puertoEncontrado != null) {
                 abrirPuerto();
             }
@@ -1761,7 +1729,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 }
                 if (sucursal.getCodigo().equals("1")) {
                     //PARA EL SERVIDOR SE DESHABILITA EL BOTON SINCRONIZAR
-                    btnSincronizar.setEnabled(false);
+                    //btnSincronizar.setEnabled(false);
                     // Y SE HABILITA LA SINCRONIZACION DE BUCARDO
                     btnSincronizarBucardo.setEnabled(true);
 
@@ -1799,23 +1767,24 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 //            defaultPort = "COM3";
 //        }
     }
-/*
-    private void buscarPuerto() {
-//        System.out.println("port lis" + portList);
-        portList = CommPortIdentifier.getPortIdentifiers();
-        while (portList.hasMoreElements()) {
-            portId = (CommPortIdentifier) portList.nextElement();
-            if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                if (portId.getName().equals(defaultPort)) {
-                    portFound = true;
-                    puertoEncontrado = portId;
+    /*
+     private void buscarPuerto() {
+     //        System.out.println("port lis" + portList);
+     portList = CommPortIdentifier.getPortIdentifiers();
+     while (portList.hasMoreElements()) {
+     portId = (CommPortIdentifier) portList.nextElement();
+     if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+     if (portId.getName().equals(defaultPort)) {
+     portFound = true;
+     puertoEncontrado = portId;
 
-                }
-            }
-        }
+     }
+     }
+     }
 
-    }
-*/
+     }
+     */
+
     private void abrirPuerto() {
         try {
             serialPort = (SerialPort) puertoEncontrado.open("SimpleReadApp", 2000);
@@ -1929,8 +1898,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
     }
 
-    
-    
     public void eventosDeTeclas() {
 
     }
@@ -2082,14 +2049,27 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         configuracion.setLocation(Comunes.centrarDialog(configuracion));
         configuracion.setVisible(true);
     }
+
     //El siguiente codigo sirve para poner cambiar el icono de la ventana, es decir para cambiar la taza de java por un logo personalizado
-        @Override
+
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
                 getImage(ClassLoader.getSystemResource("Imagenes/LogoArcoIrisICONO.png"));
 
-
         return retValue;
+    }
+
+    private void sincronizarRegistros() {
+       //SincronizaCliente cliente = new SincronizaCliente();
+        //setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        //cliente.enviar();
+        // setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        // JOptionPane.showMessageDialog(null, "Sincronizacion Finalizada");
+        //frLogin login = new frLogin();
+        // login.setVisible(true);
+        // cerrarPuertoBalanza();
+        // this.dispose();
     }
 
 }
