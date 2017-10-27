@@ -94,6 +94,7 @@ import vista.Inventario.frInventario;
 import vista.Inventario.frInventarioFind;
 import vista.TipoIva.DiagTipoIva;
 import vista.articulos.DiagAdminArticulos;
+import vista.articulos.DiagAdminPrecioArticulo;
 import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
@@ -464,6 +465,20 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 DiagAdminArticulos diagAdminArticulos = new DiagAdminArticulos(frame, true);
                 diagAdminArticulos.setLocation(Comunes.centrarDialog(diagAdminArticulos));
                 diagAdminArticulos.setVisible(true);
+            }
+
+        });
+         jXTaskPaneArticulos.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Precio Articulo");
+                putValue(Action.SHORT_DESCRIPTION, "Asignar Precios Articulos Individual");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagAdminPrecioArticulo diagAdminPrecioArticulo = new DiagAdminPrecioArticulo(frame, true);
+                diagAdminPrecioArticulo.setLocation(Comunes.centrarDialog(diagAdminPrecioArticulo));
+                diagAdminPrecioArticulo.setVisible(true);
             }
 
         });
@@ -1532,7 +1547,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         if (!portFound) {
             //  buscarPuerto();
             if (puertoEncontrado != null) {
-                abrirPuerto();
+              //  abrirPuerto();
             }
         } else {
             System.out.println("No se pudo abrir el puerto");
@@ -1785,14 +1800,14 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
      }
      */
 
-    private void abrirPuerto() {
+    /*private void abrirPuerto() {
         try {
             serialPort = (SerialPort) puertoEncontrado.open("SimpleReadApp", 2000);
         } catch (PortInUseException ex) {
             Logger.getLogger(frPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }*/
 
     private void cerrarPuertoBalanza() {
         try {

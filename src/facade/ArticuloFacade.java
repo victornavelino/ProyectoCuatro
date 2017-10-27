@@ -214,5 +214,18 @@ public class ArticuloFacade {
         em.getTransaction().commit();
 
     }
+    public Articulo getfindArticuloCodigo(Long id) {
+        boolean flag = false;
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager ema = emfa.createEntityManager();
+        Query quBuscar = ema.createQuery("SELECT s FROM Articulo s WHERE s.id=:id");
+        quBuscar.setParameter("id", id);
+         try {
+            return (Articulo) quBuscar.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
 
 }

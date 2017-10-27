@@ -245,5 +245,18 @@ public class PrecioArticuloFacade {
             return new ArrayList<>();
         }
     }
-
+public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager ema = emfa.createEntityManager();
+        ema.getEntityManagerFactory().getCache().evictAll();
+        Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p where p.articulo.id  =:articulo order by p.sucursal.nombre asc");
+        quBuscar.setParameter("articulo", articulo);
+        
+        ema.getEntityManagerFactory().getCache().evictAll();
+        try {
+           return (List<PrecioArticulo>) quBuscar.getResultList();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 }
