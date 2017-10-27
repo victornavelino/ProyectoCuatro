@@ -5,26 +5,17 @@
  */
 package vista.Caja;
 
-import vista.ventas.*;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.caja.Caja;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.TipoDocumento;
 import entidades.usuario.Usuario;
 import entidades.venta.CierreVentas;
 import entidades.venta.Venta;
 import entidades.venta.VentaArticulo;
-import facade.ArticuloFacade;
 import facade.CajaFacade;
-import facade.CierreVentasFacade;
-import facade.ClienteFacade;
-import facade.SucursalFacade;
-import facade.TipoDocumentoFacade;
-import facade.UsuarioFacade;
-import facade.VentaFacade;
 import includes.ExportarExcel;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
@@ -33,7 +24,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +62,8 @@ public class DiagExportarImportarCaja extends javax.swing.JDialog {
     private List<VentaArticulo> listaVentaArticulos;
     private Articulo articulo;
 
-    private Persona persona;
-    private Organismo organismo;
+    private Cliente persona;
+
 
     private DocumentoIdentidad documento;
     private TipoDocumento tipodoc;

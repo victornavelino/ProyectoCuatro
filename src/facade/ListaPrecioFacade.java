@@ -31,7 +31,7 @@ import javax.swing.JOptionPane;
  */
 public class ListaPrecioFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     ListaPrecioJpaController listaPrecioJpaController = new ListaPrecioJpaController(emf);
 

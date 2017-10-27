@@ -34,7 +34,7 @@ import javax.persistence.Query;
  */
 public class TarjetaDeCreditoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     TarjetaDeCreditoJpaController tarjetaDeCreditoJpaController = new TarjetaDeCreditoJpaController(emf);
 

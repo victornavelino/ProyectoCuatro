@@ -25,7 +25,7 @@ import javax.persistence.*;
  */
 public class CuponTarjetaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     private static CuponTarjetaFacade instance = null;
 

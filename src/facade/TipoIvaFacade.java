@@ -30,7 +30,7 @@ import javax.persistence.Query;
  */
 public class TipoIvaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     TipoIvaJpaController tipoIvaJpaController = new TipoIvaJpaController(emf);
 
@@ -87,7 +87,7 @@ public class TipoIvaFacade {
     }
 
     public List<TipoIva> getTodos() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT t FROM TipoIva t");
         return qu.getResultList();

@@ -7,8 +7,6 @@ package vista.cliente;
 
 import entidades.articulo.ListaPrecio;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.Telefono;
 import entidades.persona.TipoDocumento;
@@ -90,14 +88,6 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
         btnExportarClientes = new javax.swing.JButton();
         btnGuardarListaClientes = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        btnImportarClientes1 = new javax.swing.JButton();
-        btnExportarClientes1 = new javax.swing.JButton();
-        btnGuardarListaClientes1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblOrganismos = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        btnCargarOrganismos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -185,107 +175,6 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
-        btnImportarClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/new_page.png"))); // NOI18N
-        btnImportarClientes1.setText(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.btnImportarClientes1.text")); // NOI18N
-        btnImportarClientes1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportarClientes1ActionPerformed(evt);
-            }
-        });
-
-        btnExportarClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/new_page.png"))); // NOI18N
-        btnExportarClientes1.setText(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.btnExportarClientes1.text")); // NOI18N
-        btnExportarClientes1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExportarClientes1ActionPerformed(evt);
-            }
-        });
-
-        btnGuardarListaClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
-        btnGuardarListaClientes1.setText(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.btnGuardarListaClientes1.text")); // NOI18N
-        btnGuardarListaClientes1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarListaClientes1ActionPerformed(evt);
-            }
-        });
-
-        tblOrganismos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tblOrganismos);
-
-        jButton2.setText(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.jButton2.text")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        btnCargarOrganismos.setText(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.btnCargarOrganismos.text")); // NOI18N
-        btnCargarOrganismos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarOrganismosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnImportarClientes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExportarClientes1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(btnCargarOrganismos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(288, 288, 288)
-                        .addComponent(btnGuardarListaClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(320, 320, 320)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(320, 320, 320)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(btnImportarClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExportarClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCargarOrganismos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(btnGuardarListaClientes1)
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(120, 120, 120)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(121, 121, 121)))
-        );
-
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(DiagImportarExportarClientes.class, "DiagImportarExportarClientes.jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -318,29 +207,9 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
         guardar();
     }//GEN-LAST:event_btnGuardarListaClientesActionPerformed
 
-    private void btnImportarClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarClientes1ActionPerformed
-        importarOrg();// TODO add your handling code here:
-    }//GEN-LAST:event_btnImportarClientes1ActionPerformed
-
-    private void btnExportarClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarClientes1ActionPerformed
-        exportarOrg();
-    }//GEN-LAST:event_btnExportarClientes1ActionPerformed
-
-    private void btnGuardarListaClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarListaClientes1ActionPerformed
-        guardarOrg();
-    }//GEN-LAST:event_btnGuardarListaClientes1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cargarTablaClientesPersona(ClienteFacade.getInstance().getPersonas());
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btnCargarOrganismosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarOrganismosActionPerformed
-        cargarTablaClientesOrganismo(ClienteFacade.getInstance().getOrganismos());
-    }//GEN-LAST:event_btnCargarOrganismosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,22 +254,14 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCargarOrganismos;
     private javax.swing.JButton btnExportarClientes;
-    private javax.swing.JButton btnExportarClientes1;
     private javax.swing.JButton btnGuardarListaClientes;
-    private javax.swing.JButton btnGuardarListaClientes1;
     private javax.swing.JButton btnImportarClientes;
-    private javax.swing.JButton btnImportarClientes1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblClientes;
-    private javax.swing.JTable tblOrganismos;
     // End of variables declaration//GEN-END:variables
 
     private void importar() {

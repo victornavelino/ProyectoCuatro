@@ -263,7 +263,7 @@ public class Comunes {
     }
 
     public static Date obtenerFechaActualDesdeDB() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emf.createEntityManager();
         Query q = em.createNativeQuery("SELECT NOW()");
         return (Date) q.getSingleResult();

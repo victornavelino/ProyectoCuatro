@@ -55,7 +55,7 @@ public class Reporte {
     public void hello() {
         Reportes reportes = new reportes.Reportes();
         try {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager em = emf.createEntityManager();
             Map parameters = new HashMap();
             parameters.put(JRJpaQueryExecuterFactory.PARAMETER_JPA_ENTITY_MANAGER, em);

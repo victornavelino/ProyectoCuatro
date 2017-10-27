@@ -13,8 +13,6 @@ import entidades.cliente.Cliente;
 import entidades.usuario.Usuario;
 import entidades.venta.Venta;
 import entidades.caja.VentaCobranza;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import facade.ClienteFacade;
 import facade.CobranzaCtaCteFacade;
 import facade.CuentaCorrienteFacade;
@@ -1355,7 +1353,7 @@ public class DiagCuentasCorrientes extends javax.swing.JDialog {
         if (!ftfDocumento.getText().isEmpty()) {
             cliente = ClienteFacade.getInstance().getPersonaXDni(ftfDocumento.getText());
             if (cliente != null) {
-                ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
+                ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
                 tfCliente.setText(cliente.toString());
                 seleccionarCliente();
 
@@ -1376,20 +1374,13 @@ public class DiagCuentasCorrientes extends javax.swing.JDialog {
         diagBuscarCliente.setVisible(true);
         if (diagBuscarCliente.getCliente() != null) {
             cliente = diagBuscarCliente.getCliente();
-            if (cliente.getClass() == Persona.class) {
                 try {
-                    ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
+                    ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
                 } catch (Exception e) {
 
                 }
 
-            } else {
-                try {
-                    ftfDocumento.setText(((Organismo) cliente).getCUIT());
-                } catch (Exception e) {
 
-                }
-            }
             tfCliente.setText(cliente.toString());
             seleccionarCliente();
 
@@ -1404,7 +1395,7 @@ public class DiagCuentasCorrientes extends javax.swing.JDialog {
     private void buscarClientePorDNISaldo() {
         clienteSaldo = ClienteFacade.getInstance().getPersonaXDni(ftfDocumentoSaldo.getText());
         if (clienteSaldo != null) {
-            ftfDocumentoSaldo.setText(((Persona) clienteSaldo).getDocumentoIdentidad().getNumero());
+            ftfDocumentoSaldo.setText(clienteSaldo.getDocumentoIdentidad().getNumero());
             tfClienteSaldo.setText(clienteSaldo.toString());
             cargarSaldosCliente();
         } else {
@@ -1421,20 +1412,12 @@ public class DiagCuentasCorrientes extends javax.swing.JDialog {
         diagBuscarCliente.setVisible(true);
         if (diagBuscarCliente.getCliente() != null) {
             clienteSaldo = diagBuscarCliente.getCliente();
-            if (clienteSaldo.getClass() == Persona.class) {
                 try {
-                    ftfDocumentoSaldo.setText(((Persona) clienteSaldo).getDocumentoIdentidad().getNumero());
+                    ftfDocumentoSaldo.setText(clienteSaldo.getDocumentoIdentidad().getNumero());
                 } catch (Exception e) {
 
                 }
 
-            } else {
-                try {
-                    ftfDocumentoSaldo.setText(((Organismo) clienteSaldo).getCUIT());
-                } catch (Exception e) {
-
-                }
-            }
             tfClienteSaldo.setText(clienteSaldo.toString());
             cargarSaldosCliente();
 

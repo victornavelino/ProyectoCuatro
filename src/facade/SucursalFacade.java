@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class SucursalFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     SucursalJpaController sucursalJpaController = new SucursalJpaController(emf);
 
@@ -80,7 +80,7 @@ public class SucursalFacade {
     }
 
     public List<Sucursal> getTodos() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ems = emfs.createEntityManager();
         Query qu = ems.createQuery("SELECT s FROM Sucursal s");
         ems.getEntityManagerFactory().getCache().evictAll();
@@ -88,7 +88,7 @@ public class SucursalFacade {
     }
 
     public List<Sucursal> buscarPorNombre(String nombre) {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ems = emfs.createEntityManager();
         Query qu = ems.createQuery("SELECT s FROM Sucursal s WHERE s.nombre LIKE :nombre");
         qu.setParameter("nombre", "%" + nombre + "%");
@@ -125,7 +125,7 @@ public class SucursalFacade {
     }
 
     List<Sucursal> getSucursalesNoCentral() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ems = emfs.createEntityManager();
         Query qu = ems.createQuery("SELECT s FROM Sucursal s WHERE s.codigo<>:codigo ");
         qu.setParameter("codigo", "1");

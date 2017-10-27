@@ -11,8 +11,6 @@ import entidades.caja.CobroVenta;
 import entidades.caja.CuentaCorriente;
 import entidades.caja.CuponTarjeta;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.usuario.Usuario;
 import entidades.venta.Venta;
 import entidades.venta.VentaArticulo;
@@ -946,7 +944,7 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
     private void agregarPagoCuentaCorriente() {
         if (ticket != null) {
             if (saldo.signum() == 1) {
-                if (!ticket.isEsPersona() || !ticket.getCliente().contains("EVENTUAL")) {
+                if (!ticket.getCliente().contains("EVENTUAL")) {
                     if (!agregoPagoCuentaCorriente) {
                         if (clienteTieneCuentaCorriente()) {
 
@@ -1109,11 +1107,7 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
 
     public Cliente getClienteDelTicket(Venta ticket) {
         Cliente cliente;
-        if (ticket.isEsPersona()) {
-            cliente = ClienteFacade.getInstance().getPersonaXDni(ticket.getDniCliente());
-        } else {
-            cliente = ClienteFacade.getInstance().buscarCuitEmpresaObjeto(ticket.getDniCliente());
-        }
+        cliente = ClienteFacade.getInstance().getPersonaXDni(ticket.getDniCliente());
         return cliente;
     }
 

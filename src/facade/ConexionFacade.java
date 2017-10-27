@@ -24,7 +24,7 @@ public class ConexionFacade {
     public static final Map PROPIEDADES = new HashMap<String, String>() {
         {
 
-            put("javax.persistence.jdbc.url", "jdbc:postgresql://192.168.1.21:5432/carniceria");
+            put("javax.persistence.jdbc.url", "jdbc:postgresql://localhost:5432/carniceria");
             put("javax.persistence.jdbc.password", "123654");
             put("javax.persistence.jdbc.driver", "org.postgresql.Driver");
             put("javax.persistence.jdbc.user","postgres");

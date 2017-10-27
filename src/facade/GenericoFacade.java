@@ -21,7 +21,7 @@ import javax.persistence.Query;
  */
 public class GenericoFacade<T> {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     GenericoJpaController genericoJpaController = new GenericoJpaController(emf);
 
@@ -82,7 +82,7 @@ public class GenericoFacade<T> {
 
     public List<T> buscarTodos(Field nombreEntidad) {
         //EntityManager em = getEntityManager();
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT e FROM " + nombreEntidad.getType().getSimpleName() + " e");
         return qu.getResultList();

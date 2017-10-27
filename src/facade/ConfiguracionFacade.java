@@ -22,7 +22,7 @@ import javax.persistence.Query;
  */
 public class ConfiguracionFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static ConfiguracionFacade instance = null;
 

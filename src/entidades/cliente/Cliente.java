@@ -189,7 +189,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente: "+this.apellido;
+        return apellido + ", " + nombre;
     }
 
 }

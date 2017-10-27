@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class ArticuloFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static ArticuloFacade instance = null;
 
@@ -79,7 +79,7 @@ public class ArticuloFacade {
     }
 
     public List<Articulo> getTodos() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query qu = em.createQuery("SELECT s FROM Articulo s");
         em.getEntityManagerFactory().getCache().evictAll();
@@ -106,7 +106,7 @@ public class ArticuloFacade {
     }
 
     public List<Articulo> buscarPorDescDescCortayCodigo(String descripcion) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query qu = em.createQuery("SELECT s FROM Articulo s WHERE "
                 + "s.descripcionReducida LIKE :descripcion  OR "
@@ -145,7 +145,7 @@ public class ArticuloFacade {
 
     public boolean buscarExistenciaCodigoBarra(String codigo) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT s FROM Articulo s WHERE s.codigoBarra=:codigo");
         quBuscar.setParameter("codigo", codigo);
@@ -166,7 +166,7 @@ public class ArticuloFacade {
 
     public boolean getArticuloCodigo(Long id) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT s FROM Articulo s WHERE s.id=:id");
         quBuscar.setParameter("id", id);
@@ -199,7 +199,7 @@ public class ArticuloFacade {
 
     public void borrarArticulos() {
         System.out.println("entro borrado Articulos");
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         em.getTransaction().begin();
         int qua = em.createQuery("DELETE FROM PrecioArticulo ap").executeUpdate();

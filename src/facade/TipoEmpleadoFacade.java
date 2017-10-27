@@ -30,7 +30,7 @@ import javax.persistence.Query;
  */
 public class TipoEmpleadoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     TipoEmpleadoJpaController tipoEmpleadoJpaController = new TipoEmpleadoJpaController(emf);
 

@@ -36,7 +36,7 @@ import javax.persistence.Query;
  */
 public class PlanTarjetaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     PlanTarjetaJpaController planTarjetaJpaController = new PlanTarjetaJpaController(emf);
 
@@ -93,7 +93,7 @@ public class PlanTarjetaFacade {
     }
 
     public List<PlanTarjeta> getTodos() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT p FROM PlanTarjeta p");
         ema.getEntityManagerFactory().getCache().evictAll();

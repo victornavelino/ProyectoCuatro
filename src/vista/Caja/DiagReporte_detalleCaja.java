@@ -5,9 +5,7 @@
  */
 package vista.Caja;
 
-import Recursos.ProgressBar;
 import entidades.Sucursal;
-import entidades.articulo.Articulo;
 import entidades.caja.Caja;
 import entidades.caja.CobranzaCtaCte;
 import entidades.caja.CuentaCorriente;
@@ -15,25 +13,17 @@ import entidades.caja.CuponTarjeta;
 import entidades.caja.Gasto;
 import entidades.caja.Ingreso;
 import entidades.caja.MovimientoCaja;
-import entidades.caja.PlanTarjeta;
 import entidades.caja.RetiroEfectivo;
 import entidades.caja.Sueldo;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
-
+import entidades.cliente.Cliente;
 import facade.CajaFacade;
 import facade.ClienteFacade;
-import facade.CobranzaCtaCteFacade;
-import facade.CuentaCorrienteFacade;
-import facade.CuponTarjetaFacade;
 import facade.SucursalFacade;
 import includes.Comunes;
 import includes.ExportarExcel;
 import includes.FormatoTablaConColor;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -43,21 +33,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 
 /**
  *
@@ -72,8 +54,7 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
     private Vector headers = new Vector();
     private Vector data = new Vector();
 
-    private Persona persona;
-    private Organismo organismo;
+    private Cliente persona;
     private Sucursal sucursal;
 
     private int AuxTicket, AuxSucursal;
@@ -610,7 +591,8 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
                         lstGasto.add(a);
                         break;
 
-                    case "CobranzaCtaCte": /*lo que paga de la cta cte*/
+                    case "CobranzaCtaCte":
+                        /*lo que paga de la cta cte*/
 
                         bgCtaCte = bgCtaCte.add(mc.getImporte());
                         CobranzaCtaCte ctaCteAux = (CobranzaCtaCte) mc;
@@ -635,17 +617,9 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
                         bgTotalSaldoCtaCte = bgTotalSaldoCtaCte.add(mc.getImporte());
 
 //                    }//else
-                        String sTipo_cliente = ClienteFacade.getInstance().buscarTipoCliente(iId_cliente).getClass().getSimpleName();
-                        switch (sTipo_cliente) {
-                            case "Persona":
-                                Object cc_p[] = {"   - " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getNombre() + "," + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getApellido(), formatoConComa.format(bgImporteFinal), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
-                                lstCtaCte.add(cc_p);
-                                break;
-                            case "Organismo":
-                                Object cc_o[] = {"   - " + ClienteFacade.getInstance().getOrganismoXId(iId_cliente).getRazonSocial(), formatoConComa.format(bgImporteFinal), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
-                                lstCtaCte.add(cc_o);
-                                break;
-                        }//switch   
+                        Object cc_p[] = {"   - " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getNombre() + "," + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getApellido(), formatoConComa.format(bgImporteFinal), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
+                        lstCtaCte.add(cc_p);
+
                         break;
 
                     case "Sueldo":
@@ -676,17 +650,9 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
             // CUENTA CORRIENTE *** lo que compro
             for (CuentaCorriente ctacte : caja.getMovimientosCtaCte()) {
                 bgTotalSaldoCtaCte_2 = bgTotalSaldoCtaCte_2.add(ctacte.getImporteCtaCte());
-                String sTipo_cliente = ClienteFacade.getInstance().buscarTipoCliente(ctacte.getCliente().getId()).getClass().getSimpleName();
-                switch (sTipo_cliente) {
-                    case "Persona":
-                        Object cc_p[] = {"   - " + ClienteFacade.getInstance().getPersonasXId(ctacte.getCliente().getId()).getNombre() + "," + ClienteFacade.getInstance().getPersonasXId(ctacte.getCliente().getId()).getApellido(), formatoConComa.format(ctacte.getImporteCtaCte()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
-                        lstCtaCte_2.add(cc_p);
-                        break;
-                    case "Organismo":
-                        Object cc_o[] = {"   - " + ClienteFacade.getInstance().getOrganismoXId(ctacte.getCliente().getId()).getRazonSocial(), formatoConComa.format(ctacte.getImporteCtaCte()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
-                        lstCtaCte_2.add(cc_o);
-                        break;
-                }//switch              
+                Object cc_p[] = {"   - " + ClienteFacade.getInstance().getPersonasXId(ctacte.getCliente().getId()).getNombre() + "," + ClienteFacade.getInstance().getPersonasXId(ctacte.getCliente().getId()).getApellido(), formatoConComa.format(ctacte.getImporteCtaCte()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "CTA. CTE."};//.toString().replace('.', ',')
+                lstCtaCte_2.add(cc_p);
+
             }//for (CuentaCorriente ctacte : caja.getMovimientosCtaCte())        
 
             //PARA CUPON TARJETA
@@ -696,19 +662,9 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
                     Long iId_cliente = cuporTarjetaAux.getCliente().getId();
                     bgVale = bgVale.add(cuporTarjetaAux.getImporteCupon());
 
-                    String sTipo_cliente = ClienteFacade.getInstance().buscarTipoCliente(iId_cliente).getClass().getSimpleName();
-                    switch (sTipo_cliente) {
-                        case "Persona":
-                            Object cv_p[] = {"   - " + cuporTarjetaAux.getPlanTarjeta().getDescripcion() + " - " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getNombre() + " " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getApellido(),
-                                formatoConComa.format(cuporTarjetaAux.getImporteCupon()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "VALES"};//cuporTarjetaAux.getPlanTarjeta().getDescripcion() //.toString().replace('.', ',')
-                            lstVale.add(cv_p);
-                            break;
-                        case "Organismo":
-                            Object cv_o[] = {"   - " + cuporTarjetaAux.getPlanTarjeta().getDescripcion() + " - " + ClienteFacade.getInstance().getOrganismoXId(iId_cliente).getRazonSocial(),
-                                formatoConComa.format(cuporTarjetaAux.getImporteCupon()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "VALES"};//cuporTarjetaAux.getPlanTarjeta().getDescripcion() //.toString().replace('.', ',')
-                            lstVale.add(cv_o);
-                            break;
-                    }//switch                 
+                    Object cv_p[] = {"   - " + cuporTarjetaAux.getPlanTarjeta().getDescripcion() + " - " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getNombre() + " " + ClienteFacade.getInstance().getPersonasXId(iId_cliente).getApellido(),
+                        formatoConComa.format(cuporTarjetaAux.getImporteCupon()), " ", formats.format(caja.getFechaInicio()), formats.format(caja.getFechaFin()), caja.getSucursal().getCodigo() + " - " + caja.getSucursal().getNombre(), caja.getUsuario().getNombreUsuario(), "VALES"};//cuporTarjetaAux.getPlanTarjeta().getDescripcion() //.toString().replace('.', ',')
+                    lstVale.add(cv_p);
 
                 } else if (cuporTarjetaAux.getPlanTarjeta().getEsVale() == false) {
                     bgTarjeta = bgTarjeta.add(cuporTarjetaAux.getImporteCuponConRecargo());
@@ -782,10 +738,10 @@ public class DiagReporte_detalleCaja extends javax.swing.JDialog {
 //            for (CuentaCorriente ctacte : caja.getMovimientosCtaCte()) {
 //                bgTotalSaldoCtaCte_2.add(ctacte.getImporteCtaCte());
 //            }
-System.out.println("bgTotalSaldoCtaCte_2 " + bgTotalSaldoCtaCte_2);  
-System.out.println("bgTotalSaldoCtaCte " + bgTotalSaldoCtaCte);  
+            System.out.println("bgTotalSaldoCtaCte_2 " + bgTotalSaldoCtaCte_2);
+            System.out.println("bgTotalSaldoCtaCte " + bgTotalSaldoCtaCte);
             bgDifCtaCte = bgTotalSaldoCtaCte_2.subtract(bgTotalSaldoCtaCte);
-System.out.println("bgDifCtaCte " + bgDifCtaCte);            
+            System.out.println("bgDifCtaCte " + bgDifCtaCte);
             if (bgDifCtaCte.compareTo(new BigDecimal("0.00")) != 0) {
                 Object[] filaCtaCte = new Object[8];
                 filaCtaCte[0] = " * CTA. CTE.";

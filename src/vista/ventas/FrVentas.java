@@ -10,8 +10,6 @@ import entidades.articulo.Articulo;
 import entidades.articulo.PrecioArticulo;
 import entidades.caja.Caja;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.promocion.DiaSemana;
 import entidades.promocion.Promocion;
 import entidades.promocion.PromocionArticulo;
@@ -101,7 +99,7 @@ public class FrVentas extends SuperFrame {
     private BigDecimal total;
     private List<Promocion> listaPromocionesPorcentajeTodos;
     //private KeyboardFocusManager manager;
-    private Persona persona;
+    private Cliente persona;
     private KeyEventDispatcher keyDispaycher;
     private Color color;
     private Color colorPorDefecto;
@@ -792,12 +790,11 @@ public class FrVentas extends SuperFrame {
     private void buscarClientePorDNI() {
         cliente = ClienteFacade.getInstance().getPersonaXDni(ftfDocumento.getText());
         if (cliente != null) {
-            ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
+            ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
             tfCliente.setText(cliente.toString());
             tfListaPrecio.setText(cliente.getListaPrecio().getDescripcion());
-            if (cliente.getClass() == Persona.class) {
-                verificarCumpleanos((Persona) cliente);
-            }
+            verificarCumpleanos(cliente);
+
         } else {
             buscarCliente();
 
@@ -814,21 +811,13 @@ public class FrVentas extends SuperFrame {
         diagBuscarCliente.setVisible(true);
         if (diagBuscarCliente.getCliente() != null) {
             cliente = diagBuscarCliente.getCliente();
-            if (cliente.getClass() == Persona.class) {
-                verificarCumpleanos((Persona) cliente);
-                try {
-                    ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
-                } catch (Exception e) {
+            verificarCumpleanos(cliente);
+            try {
+                ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
+            } catch (Exception e) {
 
-                }
-
-            } else {
-                try {
-                    ftfDocumento.setText(((Organismo) cliente).getCUIT());
-                } catch (Exception e) {
-
-                }
             }
+
             tfCliente.setText(cliente.toString());
             tfListaPrecio.setText(cliente.getListaPrecio().getDescripcion());
             tfCodigo.requestFocus();
@@ -849,7 +838,7 @@ public class FrVentas extends SuperFrame {
 
     }
 
-    private void verificarCumpleanos(Persona persona) {
+    private void verificarCumpleanos(Cliente persona) {
         if (persona.getFechaNacimiento() != null) {
             if (Comunes.cumpleanos(persona.getFechaNacimiento())) {
                 //taMensaje.setText("FELIZ CUMPLEAÑOS!!");
@@ -1370,17 +1359,17 @@ public class FrVentas extends SuperFrame {
             tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
             btnConfirmarPesada.requestFocus();
         } else //por peso
-        if (!tfPesoBalanza.getText().isEmpty()) {
+         if (!tfPesoBalanza.getText().isEmpty()) {
 
-            subTotalArticulo = precioPromocion.multiply(BigDecimal.valueOf(Double.parseDouble(tfPesoBalanza.getText())));
-            tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
-            btnConfirmarPesada.requestFocus();
-        } else {
-            JOptionPane.showMessageDialog(null, "Este es un articulo para pesar!");
-            limpiarCamposArticulo();
-            tfCodigo.requestFocus();
+                subTotalArticulo = precioPromocion.multiply(BigDecimal.valueOf(Double.parseDouble(tfPesoBalanza.getText())));
+                tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
+                btnConfirmarPesada.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(null, "Este es un articulo para pesar!");
+                limpiarCamposArticulo();
+                tfCodigo.requestFocus();
 
-        }
+            }
     }
 
     private void inicilizarListas() {
@@ -1516,25 +1505,11 @@ public class FrVentas extends SuperFrame {
 //                }
 //            }
                 venta.setDescuento(montoDescuento);
-                if (cliente.getClass() == Persona.class) {
-                    //ES PERSONA
-                    venta.setCliente(((Persona) cliente).toString());
-                    try {
-                        venta.setDniCliente(((Persona) cliente).getDocumentoIdentidad().getNumero());
-                    } catch (Exception e) {
-                        venta.setDniCliente("");
-                    }
-                    venta.setEsPersona(true);
-
-                } else {
-                    //ES ORGANISMO
-                    venta.setCliente(((Organismo) cliente).toString());
-                    try {
-                        venta.setDniCliente(((Organismo) cliente).getCUIT());
-                    } catch (Exception e) {
-                        venta.setDniCliente("");
-                    }
-                    venta.setEsPersona(false);
+                venta.setCliente(cliente.toString());
+                try {
+                    venta.setDniCliente(cliente.getDocumentoIdentidad().getNumero());
+                } catch (Exception e) {
+                    venta.setDniCliente("");
                 }
 
                 venta.setUsuario(usuario);
@@ -1724,7 +1699,6 @@ public class FrVentas extends SuperFrame {
     }
 
     private void verificarSiEsEmpleado() {
-        if (cliente.getClass() == Persona.class) {
             if (EmpleadoFacade.getInstance().existeEmpleadoCliente(cliente)) {
 
                 cargarPromoEmpleado();
@@ -1732,12 +1706,6 @@ public class FrVentas extends SuperFrame {
 
                 cargarPrecioComun();
             }
-
-        } else {
-
-            cargarPrecioComun();
-
-        }
     }
 
     private void actualizarSubtotal() {

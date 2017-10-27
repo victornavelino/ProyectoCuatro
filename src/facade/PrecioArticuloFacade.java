@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  */
 public class PrecioArticuloFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     PrecioArticuloJpaController precioArticuloJpaController = new PrecioArticuloJpaController(emf);
 
@@ -94,7 +94,7 @@ public class PrecioArticuloFacade {
     }
 
     public PrecioArticulo get(Articulo articulo, ListaPrecio listaPrecio, Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         ema.getEntityManagerFactory().getCache().evictAll();
         Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p where p.articulo = :articulo "
@@ -228,7 +228,7 @@ public class PrecioArticuloFacade {
 
     public void borrarPrecioArticulos() {
         System.out.println("entro borrado PrecioArticulos");
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         em.getTransaction().begin();
         int qua = em.createQuery("DELETE FROM PrecioArticulo ap").executeUpdate();

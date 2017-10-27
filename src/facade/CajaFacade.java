@@ -39,7 +39,7 @@ import vista.Caja.DiagResumenCierreCaja;
  */
 public class CajaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     CajaJpaController cajaJpaController = new CajaJpaController(emf);
     SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
@@ -575,7 +575,7 @@ public class CajaFacade {
     }
 
     public Caja getUltimoNumeroCierreCaja() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE c.fechaFin IS NOT NULL ORDER BY c.id DESC");
         quBuscar.setMaxResults(1);
@@ -587,7 +587,7 @@ public class CajaFacade {
     }
 
     public String getUltimoSaldoCaja() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c.cajaFinal FROM Caja c WHERE c.fechaFin IS NOT NULL ORDER BY c.id DESC");
         quBuscar.setMaxResults(1);
@@ -599,7 +599,7 @@ public class CajaFacade {
     }
 
     public Caja getCajaCerrada(Long id) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE c.id=:id AND c.fechaFin IS NOT NULL");
         quBuscar.setParameter("id", id);
@@ -612,7 +612,7 @@ public class CajaFacade {
     }
 
     public List<Caja> getCajasCerradas(Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE c.sucursal=:sucursal AND c.fechaFin IS NOT NULL");
         quBuscar.setParameter("sucursal", sucursal);
@@ -621,7 +621,7 @@ public class CajaFacade {
     }
 
     public List<Caja> getCajasCerradas() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE c.fechaFin IS NOT NULL");
         return quBuscar.getResultList();
@@ -647,7 +647,7 @@ public class CajaFacade {
         System.out.println("fechaniniico: " + fechaInicio);
         System.out.println("codigosucursal: " + codigoSucursal);
         System.out.println("nobreusuario: " + nombreUsuario);
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE c.fechaInicio = :fechaInicio AND c.sucursal.codigo=:codigoSucursal AND c.usuario.nombreUsuario=:nombreUsuario");
         quBuscar.setParameter("fechaInicio", fechaInicio);
@@ -659,7 +659,7 @@ public class CajaFacade {
 
     public List<Caja> findCajaByFechaCierreSucursal(Date fechaIni, Date fechaFin, Sucursal sucursal) {
 
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM Caja c WHERE "
                 + "c.sucursal.id=:idSucursal AND "

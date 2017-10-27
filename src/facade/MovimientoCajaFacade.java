@@ -23,8 +23,6 @@ import entidades.caja.Sueldo;
 import entidades.caja.TipoDeGasto;
 import entidades.caja.TipoDeIngreso;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.usuario.Usuario;
 import entidades.venta.Venta;
 import includes.Comunes;
@@ -47,7 +45,7 @@ import javax.swing.JOptionPane;
  */
 public class MovimientoCajaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     ClienteJpaController clienteJpaController = new ClienteJpaController(emf);
     MovimientoCajaJpaController movimientoCajaJpaController = new MovimientoCajaJpaController(emf);
@@ -110,7 +108,7 @@ public class MovimientoCajaFacade {
 
     public List<Sueldo> getSueldosAdelantos() {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarSueldos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = Sueldo ORDER BY c.fecha ");
             return quBuscarSueldos.getResultList();
@@ -122,7 +120,7 @@ public class MovimientoCajaFacade {
 
     public List<Gasto> getGastos() {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarGastos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = Gasto ORDER BY c.fecha ");
             return quBuscarGastos.getResultList();
@@ -134,7 +132,7 @@ public class MovimientoCajaFacade {
 
     public List<Ingreso> getIngresos() {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarGastos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = Ingreso ORDER BY c.fecha ");
             return quBuscarGastos.getResultList();
@@ -146,7 +144,7 @@ public class MovimientoCajaFacade {
 
     public List<Gasto> getGastosPorTipo(TipoDeGasto tipoDeGasto, Date fechaInicio) {
 
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         System.out.println("fechahha:" + fechaInicio);
         Query quBuscarGastos = ema.createQuery("SELECT g FROM Gasto g WHERE g.tipoDeGasto=:tipoDeGasto AND g.fecha >= :fechaInicio");
@@ -158,7 +156,7 @@ public class MovimientoCajaFacade {
 
     public List<Ingreso> getIngresosPorTipo(TipoDeIngreso tipoDeIngreso, Date fechaInicio) {
 
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscarGastos = ema.createQuery("SELECT i FROM Ingreso i WHERE i.tipoDeIngreso=:tipoDeIngreso AND i.fecha >= :fechaInicio");
         quBuscarGastos.setParameter("tipoDeIngreso", tipoDeIngreso);
@@ -168,7 +166,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<MovimientoCaja> getCajasCobradasDesdeFecha(Date fechaInicio, Sucursal sucursal, Usuario usuario) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscarGastos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE c.fecha >= :fechaInicio AND c.sucursal=:sucursal AND c.usuario=:usuario");
         quBuscarGastos.setParameter("fechaInicio", fechaInicio);
@@ -178,7 +176,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<CuentaCorriente> getCuentasCorrientesDesdeFecha(Date fechaInicio) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CuentaCorriente c WHERE c.fecha >= :fechaInicio");
         quBuscaCCorrientes.setParameter("fechaInicio", fechaInicio);
@@ -186,7 +184,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<CuponTarjeta> getCuponesTarjetaDesdeFecha(Date fechaInicio) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CuponTarjeta c WHERE c.fecha >= :fechaInicio");
         quBuscaCCorrientes.setParameter("fechaInicio", fechaInicio);
@@ -195,7 +193,7 @@ public class MovimientoCajaFacade {
 
     public List<Gasto> getGastos(Date fechaInicio) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarGastos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = Gasto AND c.fecha >= :fechaInicio ORDER BY c.fecha ");
             quBuscarGastos.setParameter("fechaInicio", fechaInicio);
@@ -209,7 +207,7 @@ public class MovimientoCajaFacade {
 
     public List<Ingreso> getIngresos(Date fechaInicio) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarGastos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = Ingreso AND c.fecha >= :fechaInicio ORDER BY c.fecha ");
             quBuscarGastos.setParameter("fechaInicio", fechaInicio);
@@ -221,7 +219,7 @@ public class MovimientoCajaFacade {
         }
     }
 //    public List<CobranzaCtaCte> getCobranzasConSaldo(Cliente cliente) {
-//        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+//        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 //        EntityManager ema = emfa.createEntityManager();
 //        Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.saldoCobranza > 0 AND c.cliente=:cliente");
 //        quBuscaCCorrientes.setParameter("cliente", cliente);
@@ -229,7 +227,7 @@ public class MovimientoCajaFacade {
 //    }
 
     public List<CobranzaCtaCte> getCobranzasDesdeFecha(Date fechaInicio, Sucursal sucursal, Usuario usuario) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscarGastos = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.fecha >= :fechaInicio AND c.sucursal=:sucursal AND c.usuario=:usuario");
         quBuscarGastos.setParameter("fechaInicio", fechaInicio);
@@ -239,7 +237,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<CobranzaCtaCte> getCobranzas(Cliente cliente) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.cliente=:cliente");
         quBuscaCCorrientes.setParameter("cliente", cliente);
@@ -247,7 +245,7 @@ public class MovimientoCajaFacade {
     }
 
     public BigDecimal getSaldoCobranzas(Cliente cliente) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT SUM(c.importe) FROM CobranzaCtaCte c WHERE c.cliente=:cliente");
         quBuscaCCorrientes.setParameter("cliente", cliente).setMaxResults(0);
@@ -256,7 +254,7 @@ public class MovimientoCajaFacade {
 
     //IDEM AL ANTERIOR PERO CON FECHA
     public List<CobranzaCtaCte> getCobranzasConSaldo(Cliente cliente, Date fechaDesde, Date fechaHasta) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.cliente=:cliente AND c.fecha BETWEEN :fechaDesde AND :fechaHasta");
         quBuscaCCorrientes.setParameter("cliente", cliente);
@@ -267,7 +265,7 @@ public class MovimientoCajaFacade {
 
     //DEVUELVE TODAS LAS COBRANZAS SEGUN FECHA
     public List<CobranzaCtaCte> getCobranzasSegunFecha(Date fechaDesde, Date fechaHasta) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.fecha BETWEEN :fechaDesde AND :fechaHasta");
         quBuscaCCorrientes.setParameter("fechaDesde", fechaDesde);
@@ -277,7 +275,7 @@ public class MovimientoCajaFacade {
 
     public boolean existeNroReciboCobranza(int numero) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscarGastos = ema.createQuery("SELECT c FROM CobranzaCtaCte c WHERE c.numero=:numero");
         quBuscarGastos.setParameter("numero", numero);
@@ -298,7 +296,7 @@ public class MovimientoCajaFacade {
 
     public List<Sueldo> getSueldosAdelantos(Caja caja) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarSueldos = ema.createQuery("SELECT c FROM Caja ca, IN (ca.movimientosCaja) c WHERE ca=:caja AND TYPE(c) = Sueldo  ORDER BY c.fecha ");
             quBuscarSueldos.setParameter("caja", caja);
@@ -311,7 +309,7 @@ public class MovimientoCajaFacade {
 
     public List<Sueldo> getSueldosAdelantos(Date fechaInicio) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarSueldos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE c.fecha >= :fechaInicio AND TYPE(c) = Sueldo  ORDER BY c.fecha ");
             quBuscarSueldos.setParameter("fechaInicio", fechaInicio);
@@ -324,7 +322,7 @@ public class MovimientoCajaFacade {
 
     public List<RetiroEfectivo> getRetiroEfectivos(Date fechaInicio) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             Query quBuscarSueldos = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE c.fecha >= :fechaInicio AND TYPE(c) = RetiroEfectivo  ORDER BY c.fecha ");
             quBuscarSueldos.setParameter("fechaInicio", fechaInicio);
@@ -336,7 +334,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<MovimientoCaja> getVentasCobradasDesdeFecha(Date fechaInicio, Sucursal sucursal, Usuario usuario) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = CobroVenta AND c.fecha >= :fechaInicio AND c.sucursal=:sucursal AND c.usuario=:usuario");
         quBuscar.setParameter("fechaInicio", fechaInicio);
@@ -346,7 +344,7 @@ public class MovimientoCajaFacade {
     }
 
     public List<CobroVenta> getVentasEnEfectivo(Date fechaInicio, Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM MovimientoCaja c WHERE TYPE(c) = CobroVenta AND c.fecha >= :fechaInicio AND c.sucursal=:sucursal");
         quBuscar.setParameter("fechaInicio", fechaInicio);
@@ -354,7 +352,7 @@ public class MovimientoCajaFacade {
         return quBuscar.getResultList();
     }
     public String getTotalTarjetaDesdeFecha(Venta venta) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscaCCorrientes = ema.createQuery("SELECT SUM(c.importeCuponConRecargo) FROM CuponTarjeta c WHERE c.venta=:venta");
         quBuscaCCorrientes.setParameter("venta", venta);

@@ -41,7 +41,7 @@ import javax.persistence.Query;
  */
 public class CobranzaCtaCteFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static CobranzaCtaCteFacade instance = null;
 
@@ -101,7 +101,7 @@ public class CobranzaCtaCteFacade {
 
 
     public List<BigDecimal> getSaldoporFechayTicket(Date fechaDesde, Date fechaHasta, int numeroTicket) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c.saldoCobranza FROM CobranzaCtaCte c WHERE c.numero =:numeroTicket AND c.fecha BETWEEN :fechaDesde AND :fechaHasta");
         quBuscar.setParameter("numeroTicket", numeroTicket);

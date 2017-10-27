@@ -26,7 +26,7 @@ import javax.persistence.Query;
  */
 public class ArticuloInventarioFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     ArticuloInventarioJpaController articuloInventarioJpaController = new ArticuloInventarioJpaController(emf);
 

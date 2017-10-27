@@ -25,7 +25,7 @@ import javax.persistence.Query;
  */
 public class InventarioFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     InventarioJpaController inventarioJpaController = new InventarioJpaController(emf);
 
@@ -98,7 +98,7 @@ public class InventarioFacade {
     }
      
     public Long buscarUltimoInventario() {
-EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 EntityManager ema = emfa.createEntityManager();        
         Query quBuscar = ema.createQuery("SELECT MAX(i.id) FROM Inventario i");
 ema.getEntityManagerFactory().getCache().evictAll();

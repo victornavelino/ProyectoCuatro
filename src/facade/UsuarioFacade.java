@@ -34,7 +34,7 @@ public class UsuarioFacade {
 
     public UsuarioFacade() {
         try {
-            emf = Persistence.createEntityManagerFactory("ProyectoDosPU",ConexionFacade.PROPIEDADES);
+            emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU",ConexionFacade.PROPIEDADES);
             usuarioJpa = new UsuarioJpaController(emf);
             em = emf.createEntityManager();
             sha1 = new SHA1();

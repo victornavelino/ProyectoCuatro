@@ -40,7 +40,7 @@ import javax.swing.JOptionPane;
  */
 public class PromocionFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static PromocionFacade instance = null;
 
@@ -107,7 +107,7 @@ public class PromocionFacade {
     }
 
     public List<Promocion> buscarPorDescripcion(String descripcion, Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query qu = em.createQuery("SELECT p FROM Promocion p WHERE p.sucursal = :sucursal AND p.nombre LIKE :descripcion");
         qu.setParameter("descripcion", "%" + descripcion.toUpperCase() + "%");
@@ -117,7 +117,7 @@ public class PromocionFacade {
     }
 
     public List<Promocion> buscarPorSucursal(Sucursal sucursal) {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query qu = em.createQuery("SELECT p FROM Promocion p WHERE p.sucursal = :sucursal");
         qu.setParameter("sucursal", sucursal);
@@ -140,7 +140,7 @@ public class PromocionFacade {
     }
 
     public Promocion buscarPorPromocionArticulo(PromocionArticulo promocionArticulo, Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Date fechaHoy = Comunes.obtenerFechaActualDesdeDB();
         Query qu = ema.createQuery("SELECT p FROM Promocion p, IN(p.promocionesArticulos) pa WHERE pa=:promocionArticulo "
@@ -152,7 +152,7 @@ public class PromocionFacade {
     }
 
     public List<Promocion> buscarPorPromocionArticulo(Articulo articulo, Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Date fechaHoy = Comunes.obtenerFechaActualDesdeDB();
         Query qu = ema.createQuery("SELECT p FROM Promocion p, IN(p.promocionesArticulos) pa WHERE pa.articulo=:articulo "
@@ -164,7 +164,7 @@ public class PromocionFacade {
     }
 
     public List<Promocion> buscarPorPorcentaje(Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Date fechaHoy = Comunes.obtenerFechaActualDesdeDB();
         BigDecimal cero = new BigDecimal("0.00");
@@ -276,7 +276,7 @@ public class PromocionFacade {
 
     public boolean buscarPrioridad(int prioridad, Sucursal sucursal) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT p FROM Promocion p WHERE p.prioridad=:prioridad AND p.sucursal=:sucursal");
         quBuscar.setParameter("prioridad", prioridad);
@@ -298,7 +298,7 @@ public class PromocionFacade {
 
     public boolean buscarPrioridad(int prioridad, Promocion promocion, Sucursal sucursal) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT p FROM Promocion p WHERE p.prioridad=:prioridad AND p.id<>:id AND p.sucursal=:sucursal");
         quBuscar.setParameter("prioridad", prioridad);
@@ -328,7 +328,7 @@ public class PromocionFacade {
 
     public void borrarPromociones() {
         System.out.println("entro borrado promo");
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         em.getTransaction().begin();
         //int nativa= em.createNamedQuery("TRUNCATE promocion_promocion_articulo").executeUpdate();

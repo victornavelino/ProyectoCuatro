@@ -7,8 +7,7 @@ package vista.cliente;
 
 import entidades.Sucursal;
 import entidades.articulo.ListaPrecio;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.localidad.Departamento;
 import entidades.localidad.Localidad;
 import entidades.localidad.Provincia;
@@ -44,9 +43,8 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
     private String tipoOperacion;
     List<Telefono> telefonos = new ArrayList<>();
     List<CorreoElectronico> correosElectronicos = new ArrayList<>();
-    private Persona persona;
+    private Cliente persona;
     private String tipoEntidad;
-    private Organismo organismo;
     private Sucursal sucursal;
 
     public DiagClientePersonaServer(java.awt.Frame parent, boolean modal, String tipoEntidad, String tipoOperacion, Sucursal sucursal) {
@@ -58,22 +56,11 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
         inicializarComponentes();
     }
 
-    public DiagClientePersonaServer(java.awt.Frame parent, boolean modal, String tipoEntidad, String tipoOperacion, Persona persona, Sucursal sucursal) {
+    public DiagClientePersonaServer(java.awt.Frame parent, boolean modal, String tipoEntidad, String tipoOperacion, Cliente persona, Sucursal sucursal) {
         super(parent, modal);
         initComponents();
         this.sucursal = sucursal;
         this.persona = persona;
-        this.tipoEntidad = tipoEntidad;
-        this.tipoOperacion = tipoOperacion;
-        inicializarComponentes();
-
-    }
-
-    public DiagClientePersonaServer(java.awt.Frame parent, boolean modal, String tipoEntidad, String tipoOperacion, Organismo organismo, Sucursal sucursal) {
-        super(parent, modal);
-        initComponents();
-        this.sucursal = sucursal;
-        this.organismo = organismo;
         this.tipoEntidad = tipoEntidad;
         this.tipoOperacion = tipoOperacion;
         inicializarComponentes();
@@ -756,9 +743,6 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
         if (tipoOperacion.equals("ModificaciónPersona")) {
             cargarPersona();
         }
-        if (tipoOperacion.equals("ModificaciónOrganismo")) {
-            cargarOrganismo();
-        }
 
     }
 
@@ -850,39 +834,10 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
     private void aceptar() {
         if (tipoOperacion.equals("AltaPersona")) {
             if (validarPersona2()) {
-                persona = new Persona();
+                persona = new Cliente();
                 cargarEntidadPersona();
                 ClienteFacade.getInstance().alta(persona);
                 JOptionPane.showMessageDialog(null, "Persona agregada!");
-                this.dispose();
-            }
-        }
-        if (tipoOperacion.equals("AltaOrganismo")) {
-            if (validarOrganismo()) {
-                Organismo organismo = new Organismo();
-                organismo.setRazonSocial(tfRazonSocial.getText().toUpperCase());
-                organismo.setCUIT(tfCuil.getText());
-                organismo.setCorreosElectronicos(correosElectronicos);
-                organismo.setTelefonos(telefonos);
-                Domicilio domicilio = new Domicilio();
-                domicilio.setCalle(tfCalle.getText());
-                domicilio.setNumero(tfNumero.getText());
-                domicilio.setPiso(tfPiso.getText());
-                domicilio.setDpto(tfDpto.getText());
-                domicilio.setEntreCalles(tfEntreCalles.getText());
-                domicilio.setReferencia(tfReferencia.getText());
-                domicilio.setBarrio(tfBarrio.getText());
-                domicilio.setLocalidad((Localidad) cboLocalidades.getSelectedItem());
-                domicilio.setCodigoPostal(tfCodigoPostal.getText());
-                organismo.setDomicilio(domicilio);
-                try {
-                    organismo.setListaPrecio((ListaPrecio) cboListaPrecio.getSelectedItem());
-                } catch (Exception e) {
-
-                }
-                organismo.setFechaAlta(Comunes.obtenerFechaActualDesdeDB());
-                ClienteFacade.getInstance().alta(organismo);
-                JOptionPane.showMessageDialog(null, "Organismo agregado!");
                 this.dispose();
             }
         }
@@ -891,16 +846,6 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
                 cargarEntidadPersonaModificacion();
                 ClienteFacade.getInstance().modificar(persona);
                 JOptionPane.showMessageDialog(null, "Persona modificada!");
-                this.dispose();
-
-            }
-
-        }
-        if (tipoOperacion.equals("ModificaciónOrganismo")) {
-            if (validarOrganismo()) {
-                cargarEntidadOrganismo();
-                ClienteFacade.getInstance().modificar(organismo);
-                JOptionPane.showMessageDialog(null, "Organismo modificado!");
                 this.dispose();
 
             }
@@ -953,39 +898,6 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
             flag = false;
         } else if (ClienteFacade.getInstance().buscarDniPersona(tfDocumento.getText().trim()) && tipoOperacion.equals("AltaPersona")) {
             JOptionPane.showMessageDialog(null, "Numero dni Existente");
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
-    }
-
-    private boolean validarOrganismo() {
-        /*   boolean flag = false;
-         if (!tfRazonSocial.getText().isEmpty()) {
-         if (!tfCuil.getText().isEmpty() || Comunes.validarTextFieldCuit(tfCuil)) {
-         flag = true;
-         }
-            
-         else {
-         JOptionPane.showMessageDialog(null, "Debe ingresar correctamente el CUIL", "Error", JOptionPane.ERROR_MESSAGE);
-         }
-         } else {
-         JOptionPane.showMessageDialog(null, "El Organismo debe tener razon social", "Error", JOptionPane.ERROR_MESSAGE);
-         }
-         return flag;*/
-        boolean flag = false;
-        if (tfRazonSocial.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar Razon Social");
-            flag = false;
-        } else if (tfCuil.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar el CUIT");
-            flag = false;
-        } else if (!Comunes.validarTextFieldCuit(tfCuil)) {
-            JOptionPane.showMessageDialog(null, "CUIT invalido");
-            flag = false;
-        } else if (ClienteFacade.getInstance().buscarCuitEmpresa(tfCuil.getText().trim()) && tipoOperacion.equals("AltaOrganismo")) {
-            JOptionPane.showMessageDialog(null, "CUIT Existente");
             flag = false;
         } else {
             flag = true;
@@ -1202,111 +1114,6 @@ public class DiagClientePersonaServer extends javax.swing.JDialog {
 
         }
 
-    }
-
-    private void cargarOrganismo() {
-        tfRazonSocial.setText(organismo.getRazonSocial());
-        tfCuil.setText(organismo.getCUIT());
-        try {
-            telefonos = organismo.getTelefonos();
-            Comunes.cargarJList(jListTelefonos, telefonos);
-        } catch (Exception e) {
-
-        }
-        try {
-            correosElectronicos = organismo.getCorreosElectronicos();
-            Comunes.cargarJList(jListCorreosElectronicos, correosElectronicos);
-        } catch (Exception e) {
-
-        }
-        try {
-            tfCalle.setText(organismo.getDomicilio().getCalle());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfNumero.setText(organismo.getDomicilio().getNumero());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfPiso.setText(organismo.getDomicilio().getPiso());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfDpto.setText(organismo.getDomicilio().getDpto());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfEntreCalles.setText(organismo.getDomicilio().getEntreCalles());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfReferencia.setText(organismo.getDomicilio().getReferencia());
-        } catch (Exception e) {
-
-        }
-        try {
-            tfBarrio.setText(organismo.getDomicilio().getBarrio());
-        } catch (Exception e) {
-
-        }
-        try {
-            cboProvincias.setSelectedItem(organismo.getDomicilio().getLocalidad().getDepartamento().getProvincia());
-            cargarDepartamentos();
-        } catch (java.lang.NullPointerException ex) {
-        }
-        try {
-            cboDepartamentos.setSelectedItem(organismo.getDomicilio().getLocalidad().getDepartamento());
-            cargarLocalidades();
-        } catch (java.lang.NullPointerException ex) {
-        }
-        try {
-            cboLocalidades.setSelectedItem(organismo.getDomicilio().getLocalidad());
-
-        } catch (java.lang.NullPointerException ex) {
-        }
-        try {
-            if (persona.getDomicilio().getLocalidad() != null) {
-                cboLocalidades.setSelectedItem(organismo.getDomicilio().getLocalidad());
-            }
-        } catch (java.lang.NullPointerException ex) {
-        }
-        try {
-            tfCodigoPostal.setText(organismo.getDomicilio().getCodigoPostal());
-        } catch (java.lang.NullPointerException ex) {
-        }
-        try {
-            cboListaPrecio.setSelectedItem(organismo.getListaPrecio());
-        } catch (Exception e) {
-        }
-
-    }
-
-    private void cargarEntidadOrganismo() {
-        organismo.setRazonSocial(tfRazonSocial.getText().toUpperCase());
-        organismo.setCorreosElectronicos(correosElectronicos);
-        organismo.setCUIT(tfCuil.getText());
-        organismo.setTelefonos(telefonos);
-//        Domicilio domicilio = new Domicilio();
-        organismo.getDomicilio().setCalle(tfCalle.getText());
-        organismo.getDomicilio().setNumero(tfNumero.getText());
-        organismo.getDomicilio().setPiso(tfPiso.getText());
-        organismo.getDomicilio().setDpto(tfDpto.getText());
-        organismo.getDomicilio().setEntreCalles(tfEntreCalles.getText());
-        organismo.getDomicilio().setReferencia(tfReferencia.getText());
-        organismo.getDomicilio().setBarrio(tfBarrio.getText());
-        organismo.getDomicilio().setLocalidad((Localidad) cboLocalidades.getSelectedItem());
-        organismo.getDomicilio().setCodigoPostal(tfCodigoPostal.getText());
-//        organismo.setDomicilio(domicilio);
-        try {
-            organismo.setListaPrecio((ListaPrecio) cboListaPrecio.getSelectedItem());
-        } catch (Exception e) {
-
-        }
     }
 
     private void cargarListaPrecio() {

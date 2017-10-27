@@ -7,7 +7,6 @@ import entidades.caja.CuentaCorriente;
 import entidades.caja.CuponTarjeta;
 import entidades.caja.MovimientoCaja;
 import entidades.cliente.Cliente;
-import entidades.cliente.Persona;
 import entidades.inventario.MovimientoInterno;
 import entidades.venta.CierreVentas;
 import entidades.venta.Entrega;
@@ -349,24 +348,21 @@ public class Impresora {
                 totalPromo = totalPromo.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioPromocion()));
             }
             //cliente
-
-            if (venta.isEsPersona()) {
-                //Eventual
-                System.out.println("clinetexxx " + venta.getCliente());
-                if (venta.getCliente().contains("EVENTUAL")) {
-                    for (VentaArticulo ventaArticulo : venta.getVentasArticulos()) {
-                        totalEventual = totalEventual.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioUnitario()));
-                    }
-                    cantTicketsEventuales++;
+            //Eventual
+            System.out.println("clinetexxx " + venta.getCliente());
+            if (venta.getCliente().contains("EVENTUAL")) {
+                for (VentaArticulo ventaArticulo : venta.getVentasArticulos()) {
+                    totalEventual = totalEventual.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioUnitario()));
                 }
-                //Empleado
-                if (EmpleadoFacade.getInstance().existeEmpleadoCliente(getClienteDeLaVenta(venta))) {
-                    totalDescuentoManualEmpleado = totalDescuentoManualEmpleado.add(venta.getDescuento());
-                    for (VentaArticulo ventaArticulo : venta.getVentasArticulos()) {
-                        totalEmpleado = totalEmpleado.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioUnitario()));
-                        totalPromoEmpleado = totalPromoEmpleado.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioPromocion()));
+                cantTicketsEventuales++;
+            }
+            //Empleado
+            if (EmpleadoFacade.getInstance().existeEmpleadoCliente(getClienteDeLaVenta(venta))) {
+                totalDescuentoManualEmpleado = totalDescuentoManualEmpleado.add(venta.getDescuento());
+                for (VentaArticulo ventaArticulo : venta.getVentasArticulos()) {
+                    totalEmpleado = totalEmpleado.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioUnitario()));
+                    totalPromoEmpleado = totalPromoEmpleado.add(ventaArticulo.getCantidadPeso().multiply(ventaArticulo.getPrecioPromocion()));
 
-                    }
                 }
             }
 
@@ -692,7 +688,7 @@ public class Impresora {
             cuponesCtaCteConTarjeta = cuponesCtaCteConTarjeta.add(cupon.getImporteCuponConRecargo());
         }
         //aqui le restamos las cobranzas con tarjeta porque ya que no es ingreso de caja
-        cobranzaCtaCte=cobranzaCtaCte.subtract(cuponesCtaCteConTarjeta);
+        cobranzaCtaCte = cobranzaCtaCte.subtract(cuponesCtaCteConTarjeta);
         totalIngresosCaja = cobranzaCtaCte.add(cobroVenta).add(ingreso);
         totalEgresosCaja = sueldo.add(gasto).add(retiro);
         //como ahora el saldo final lo pones a mano desde la vista previa
@@ -759,19 +755,15 @@ public class Impresora {
 
     public Cliente getClienteDeLaVenta(Venta venta) {
         Cliente cliente;
-        if (venta.isEsPersona()) {
-            System.out.println("dni del cliente: " + venta.getDniCliente());
-            cliente = ClienteFacade.getInstance().getPersonaXDni(venta.getDniCliente());
-        } else {
-            cliente = ClienteFacade.getInstance().buscarCuitEmpresaObjeto(venta.getDniCliente());
-        }
+        System.out.println("dni del cliente: " + venta.getDniCliente());
+        cliente = ClienteFacade.getInstance().getPersonaXDni(venta.getDniCliente());
         //System.out.println("CLIEUNTE DE LA VENTNAAA: "+ cliente);
         return cliente;
     }
-    
-        @SuppressWarnings("empty-statement")
-    public void imprimir(List<MovimientoInterno> movimientos,String tipo) {
-        
+
+    @SuppressWarnings("empty-statement")
+    public void imprimir(List<MovimientoInterno> movimientos, String tipo) {
+
         //leemos los valores
         String tipoFuente = "Dialog";
         int tamanioFuente = 10;
@@ -788,7 +780,7 @@ public class Impresora {
             suma = Integer.parseInt(configFacade.buscar("margensuperior").getValor());
         } catch (Exception e) {
         }
-        
+
         //los asignamos
         Font fuente = new Font(tipoFuente, Font.PLAIN, tamanioFuente);
         String fecha = Comunes.calcularFechaHora();
@@ -802,42 +794,40 @@ public class Impresora {
             pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO    
             pagina.drawString(tipo, 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO    
             //pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es_ES")).format(
-                    //fecha), 10, 55 + suma); //FECHA          
+            //fecha), 10, 55 + suma); //FECHA          
             pagina.drawString("______________________________", 10, 105 + suma); //SEPARADOR
 
             int salto = 115 + suma;
             BigDecimal totalComun = new BigDecimal("0.00");
-            
+
             // Uso esta variable para que imprimi solo la primera vez que recorre
             // el ciclo
-            boolean primeraPasada = true ;
-            
-            for (MovimientoInterno movimiento: movimientos){
-                if(primeraPasada){
+            boolean primeraPasada = true;
+
+            for (MovimientoInterno movimiento : movimientos) {
+                if (primeraPasada) {
                     pagina.drawString("Numero Lote: " + movimiento.getNumeroLote(), 10, salto += 10);
                     pagina.drawString("Sucursal Envío:  " + movimiento.getSucursal(), 10, salto += 10);
                     pagina.drawString("Sucursal Destino:  " + movimiento.getSucursalDestino(), 10, salto += 10);
-                    pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy").format(movimiento.getFecha()), 10, salto += 10); 
+                    pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy").format(movimiento.getFecha()), 10, salto += 10);
                     primeraPasada = false;
-                }               
-                
+                }
+
                 pagina.drawString("Tipo de Movimiento: " + movimiento.getTipoDeMovimiento(), 10, salto += 10);
                 pagina.drawString("Artículo: " + movimiento.getArticuloDescripcion(), 10, salto += 10);
-                pagina.drawString("Cantidad: " + movimiento.getCantidad(), 10, salto += 10);        
+                pagina.drawString("Cantidad: " + movimiento.getCantidad(), 10, salto += 10);
                 BigDecimal totalReg = movimiento.getCantidad().
-                    multiply(movimiento.getMonto()).setScale(2,BigDecimal.ROUND_CEILING);
+                        multiply(movimiento.getMonto()).setScale(2, BigDecimal.ROUND_CEILING);
                 pagina.drawString("                ", 10, salto += 10);
 
                 //totalComun = totalComun.add(totalReg);
-                
             }
-            
+
             /*if (!movimientos.isEmpty()) {
                 pagina.drawString("______________________________", 10, salto); //SEPARADOR
                 pagina.drawString("TOTAL : $ " + totalComun, 10, salto += 10);
                 pagina.drawString("                              ", 10, salto += 10); //SEPARADOR
             }*/
-        
             pagina.dispose();
             pj.end();
         } catch (Exception e) {
@@ -845,5 +835,5 @@ public class Impresora {
         }
 
     }
-    
+
 }

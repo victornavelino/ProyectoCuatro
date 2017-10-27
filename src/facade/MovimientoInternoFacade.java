@@ -27,7 +27,7 @@ import javax.persistence.Query;
  */
 public class MovimientoInternoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     MovimientoInternoJpaController movimientoInternoJpaController = new MovimientoInternoJpaController(emf);
 
@@ -58,8 +58,8 @@ public class MovimientoInternoFacade {
     }
 
     public void alta(MovimientoInterno movimientoInterno) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         new MovimientoInternoJpaController(emfa).create(movimientoInterno);
     }
 
@@ -70,10 +70,10 @@ public class MovimientoInternoFacade {
     public void modificar(MovimientoInterno movimientoInterno, Sucursal sucursal) {
         EntityManagerFactory emfa;
         if (sucursal.getNombre().equals("CENTRAL")) {
-            emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         } else {
-            emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-            //emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+            //emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         }
         try {
 
@@ -99,8 +99,8 @@ public class MovimientoInternoFacade {
 
     public List<MovimientoInterno> buscarPorSucursalRangoFecha(Sucursal sucursal,
             Date fechaInicio, Date fechaFin) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT m FROM MovimientoInterno m WHERE "
                 + "(m.sucursal=:sucursal OR m.sucursalDestino=:sucursal)"
@@ -132,8 +132,8 @@ public class MovimientoInternoFacade {
     }
 
     public List<MovimientoInterno> buscarPorNumeroLote(int numLote) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT m FROM MovimientoInterno m "
                 + "WHERE m.numeroLote=:numLote AND m.anulado=FALSE");
@@ -142,7 +142,7 @@ public class MovimientoInternoFacade {
     }
 
     public int getUltimoNumero() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT MAX(m.numero) FROM MovimientoInterno m");
         quBuscar.setMaxResults(1);
@@ -154,7 +154,7 @@ public class MovimientoInternoFacade {
     }
 
     public int getUltimoNumeroLote() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT MAX(m.numeroLote) FROM MovimientoInterno m");
         quBuscar.setMaxResults(1);

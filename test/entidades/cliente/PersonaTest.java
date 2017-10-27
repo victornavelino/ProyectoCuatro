@@ -50,7 +50,7 @@ public class PersonaTest {
     @Test
     public void testGetApellido() {
         System.out.println("getApellido");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
         Persona instance = new Persona();
         DocumentoIdentidad di = new DocumentoIdentidad();
         TipoDocumento td = new TipoDocumento();

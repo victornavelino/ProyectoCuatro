@@ -32,7 +32,7 @@ import javax.persistence.Query;
  */
 public class DomicilioFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     DomicilioJpaController domicilioJpaController = new DomicilioJpaController(emf);
 

@@ -61,7 +61,6 @@ public class Venta implements Serializable, Comparator {
     @JoinColumn(nullable = false)
     private String cliente;
     private String dniCliente;
-    private boolean esPersona;
     @OneToOne
     @JoinColumn(nullable = false)
     private Usuario usuario;
@@ -164,15 +163,6 @@ public class Venta implements Serializable, Comparator {
     public void setDniCliente(String dniCliente) {
         this.dniCliente = dniCliente;
     }
-
-    public boolean isEsPersona() {
-        return esPersona;
-    }
-
-    public void setEsPersona(boolean esPersona) {
-        this.esPersona = esPersona;
-    }
-    
     public int getNumeroTicket() {
         return numeroTicket;
     }

@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
  */
 public class TipoDocumentoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     TipoDocumentoJpaController tipoDocumentoJpaController = new TipoDocumentoJpaController(emf);
 
@@ -108,7 +108,7 @@ public class TipoDocumentoFacade {
 
     public boolean buscarExisteTipo(String descripcion) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT t FROM TipoDocumento t WHERE t.descripcion=:descripcion");
         quBuscar.setParameter("descripcion", descripcion);

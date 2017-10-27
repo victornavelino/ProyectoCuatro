@@ -34,7 +34,7 @@ import javax.persistence.Query;
  */
 public class PromocionArticuloFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     PromocionArticuloJpaController promocionArticuloJpaController = new PromocionArticuloJpaController(emf);
 

@@ -5,54 +5,31 @@
  */
 package vista.Caja;
 
-import Recursos.ProgressBar;
 import entidades.Sucursal;
-import entidades.articulo.Articulo;
 import entidades.caja.Caja;
-import entidades.caja.CobranzaCtaCte;
-import entidades.caja.Gasto;
-import entidades.caja.Ingreso;
 import entidades.caja.MovimientoCaja;
-import entidades.caja.PlanTarjeta;
-import entidades.caja.RetiroEfectivo;
-import entidades.caja.Sueldo;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
-
+import entidades.cliente.Cliente;
 import facade.CajaFacade;
-import facade.ClienteFacade;
 import facade.SucursalFacade;
 import facade.VentaFacade;
 import includes.Comunes;
 import includes.ExportarExcel;
-import includes.FormatoTablaConColor;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
 
 /**
  *
@@ -67,8 +44,7 @@ public class DiagReporte_resumenCaja extends javax.swing.JDialog {
     private Vector headers = new Vector();
     private Vector data = new Vector();
 
-    private Persona persona;
-    private Organismo organismo;
+    private Cliente persona;
     private Sucursal sucursal;
 
     private int AuxTicket, AuxSucursal;

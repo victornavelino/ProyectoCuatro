@@ -147,7 +147,7 @@ public class GenericoJpaController<T> implements Serializable {
             query.setParameter("cadena", "%" + cadena.trim().toLowerCase() + "%");
         } else {
             //emf = null;
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             EntityManager ema = emfa.createEntityManager();
             query = ema.createQuery("SELECT g FROM " + nombreEntidad + " g ORDER BY g.descripcion");
             ema.getEntityManagerFactory().getCache().evictAll();

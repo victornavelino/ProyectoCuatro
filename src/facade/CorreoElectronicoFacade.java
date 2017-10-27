@@ -5,21 +5,8 @@
  */
 package facade;
 
-import controladores.ArticuloJpaController;
-import controladores.CategoriaJpaController;
 import controladores.CorreoElectronicoJpaController;
-import controladores.ListaPrecioJpaController;
-import controladores.LocalidadJpaController;
-import controladores.ProvinciaJpaController;
-import controladores.SucursalJpaController;
 import controladores.exceptions.NonexistentEntityException;
-import entidades.Sucursal;
-import entidades.articulo.Articulo;
-import entidades.articulo.Categoria;
-import entidades.articulo.ListaPrecio;
-import entidades.cliente.Organismo;
-import entidades.localidad.Localidad;
-import entidades.localidad.Provincia;
 import entidades.persona.CorreoElectronico;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,7 +22,7 @@ import javax.persistence.Query;
  */
 public class CorreoElectronicoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     CorreoElectronicoJpaController correoElectronicoJpaController = new CorreoElectronicoJpaController(emf);
 

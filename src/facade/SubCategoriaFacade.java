@@ -30,7 +30,7 @@ import javax.persistence.Query;
  */
 public class SubCategoriaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     SubCategoriaJpaController subCategoriaJpaController = new SubCategoriaJpaController(emf);
 

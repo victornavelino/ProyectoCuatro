@@ -22,7 +22,7 @@ import javax.persistence.*;
  */
 public class CierreVentasFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     private static CierreVentasFacade instance = null;
 
@@ -80,7 +80,7 @@ public class CierreVentasFacade {
     }
 
     public int getUltimoNumeroCierre() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT v.numeroCierre FROM CierreVentas v ORDER BY v.numeroCierre DESC");
         quBuscar.setMaxResults(1);
@@ -144,7 +144,7 @@ public class CierreVentasFacade {
     }
 
     public CierreVentas listarCierreVentas(int numeroCierre) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM CierreVentas c WHERE c.numeroCierre = :numeroCierre");
         quBuscar.setParameter("numeroCierre", numeroCierre);
@@ -158,7 +158,7 @@ public class CierreVentasFacade {
 
     public boolean existeCierreVentaSucursal(int numCierre, String codSucursal) {
         boolean flag;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT c FROM CierreVentas c WHERE c.numeroCierre=:numCierre AND c.sucursal.codigo=:codSucursal");
         quBuscar.setParameter("numCierre", numCierre);

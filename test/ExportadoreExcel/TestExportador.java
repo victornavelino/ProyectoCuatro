@@ -58,7 +58,7 @@ public class TestExportador {
 
     SimpleDateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     public TestExportador() {
     }

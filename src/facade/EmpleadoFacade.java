@@ -5,20 +5,9 @@
  */
 package facade;
 
-import controladores.ArticuloJpaController;
-import controladores.CategoriaJpaController;
-import controladores.ClienteJpaController;
 import controladores.EmpleadoJpaController;
-import controladores.ListaPrecioJpaController;
-import controladores.SucursalJpaController;
 import controladores.exceptions.NonexistentEntityException;
-import entidades.Sucursal;
-import entidades.articulo.Articulo;
-import entidades.articulo.Categoria;
-import entidades.articulo.ListaPrecio;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.empleado.Empleado;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,7 +23,7 @@ import javax.persistence.Query;
  */
 public class EmpleadoFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     EmpleadoJpaController empleadoJpaController = new EmpleadoJpaController(emf);
 
@@ -84,8 +73,8 @@ public class EmpleadoFacade {
 
     public void modificarCentral(Empleado empleado) {
         try {
-            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-            //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+            EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+            //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
             new EmpleadoJpaController(emfa).edit(empleado);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(EmpleadoFacade.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,7 +96,7 @@ public class EmpleadoFacade {
     }
 
     public Empleado getEmpleadoXId(Long id) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT e FROM Empleado e WHERE e.id=:id");
         quBuscar.setParameter("id", id);
@@ -115,7 +104,7 @@ public class EmpleadoFacade {
     }
 
     public List<Empleado> getEmpleadoNombre(String descripcion) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT e FROM Empleado e WHERE e.apellido LIKE :descripcion");
         quBuscar.setParameter("descripcion", "%" + descripcion.toUpperCase() + "%");
@@ -124,7 +113,7 @@ public class EmpleadoFacade {
     }
 
     public List<Empleado> getTodosOrdenadosXApellido() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT e FROM Empleado e ORDER BY e.apellido ASC");
         ema.getEntityManagerFactory().getCache().evictAll();
@@ -145,17 +134,17 @@ public class EmpleadoFacade {
         EntityManager ema = emf.createEntityManager();
         Query qu = ema.createQuery("SELECT e FROM Empleado e WHERE e.documentoIdentidad.numero=:dni AND e.fechaBaja IS NULL");
 //        System.out.println("CLIENTE ERROR: "+cliente.getId());
-        qu.setParameter("dni", ((Persona) cliente).getDocumentoIdentidad().getNumero().trim());
+        qu.setParameter("dni", cliente.getDocumentoIdentidad().getNumero().trim());
         return !qu.getResultList().isEmpty();
 
     }
 
     public boolean existeEmpleadoClienteCentral(Cliente cliente) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT e FROM Empleado e WHERE e.documentoIdentidad.numero=:dni AND e.fechaBaja IS NULL");
-        qu.setParameter("dni", ((Persona) cliente).getDocumentoIdentidad().getNumero().trim());
+        qu.setParameter("dni", cliente.getDocumentoIdentidad().getNumero().trim());
         return !qu.getResultList().isEmpty();
 
     }
@@ -164,17 +153,17 @@ public class EmpleadoFacade {
 
         EntityManager ema = emf.createEntityManager();
         Query qu = ema.createQuery("SELECT e FROM Empleado e WHERE e.documentoIdentidad.numero=:dni AND e.fechaBaja IS NULL");
-        qu.setParameter("dni", ((Persona) cliente).getDocumentoIdentidad().getNumero().trim());
+        qu.setParameter("dni",cliente.getDocumentoIdentidad().getNumero().trim());
         return (Empleado) qu.getSingleResult();
 
     }
 
     public Empleado getEmpleadoXDNICentral(Cliente cliente) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.CONEXIONCLIENTES);
-        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.CONEXIONCLIENTES);
+        //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query qu = ema.createQuery("SELECT e FROM Empleado e WHERE e.documentoIdentidad.numero=:dni AND e.fechaBaja IS NULL");
-        qu.setParameter("dni", ((Persona) cliente).getDocumentoIdentidad().getNumero().trim());
+        qu.setParameter("dni", cliente.getDocumentoIdentidad().getNumero().trim());
         return (Empleado) qu.getSingleResult();
 
     }

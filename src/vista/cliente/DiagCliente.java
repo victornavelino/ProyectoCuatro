@@ -7,24 +7,17 @@ package vista.cliente;
 
 import entidades.Sucursal;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.empleado.Empleado;
 import facade.ClienteFacade;
 import facade.EmpleadoFacade;
 import includes.Comunes;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -272,7 +265,7 @@ public class DiagCliente extends javax.swing.JDialog {
         cargarTablaPersonas(ClienteFacade.getInstance().getPersonasCentral());
     }
 
-    private void cargarTablaPersonas(List<Persona> personas) {
+    private void cargarTablaPersonas(List<Cliente> personas) {
         modeloTablaPersonas = new ModeloTablaNoEditable();
         cargarEncabezadosTablaPersonas(modeloTablaPersonas);
         configurarTabla(tblPersonas);
@@ -335,11 +328,11 @@ public class DiagCliente extends javax.swing.JDialog {
                 java.awt.Font.PLAIN, 10));
     }
 
-    private void cargarPersonas(List<Persona> personas) {
+    private void cargarPersonas(List<Cliente> personas) {
         try {
             modeloTablaPersonas = new ModeloTablaNoEditable();
             cargarEncabezadosTablaPersonas(modeloTablaPersonas);
-            for (Persona persona : personas) {
+            for (Cliente persona : personas) {
                 cargarPersona(persona);
             }
 
@@ -351,7 +344,7 @@ public class DiagCliente extends javax.swing.JDialog {
     }
 
 
-    private void cargarPersona(Persona persona) {
+    private void cargarPersona(Cliente persona) {
 
         Object[] fila = new Object[4];
         fila[0] = persona.getId();
@@ -361,19 +354,11 @@ public class DiagCliente extends javax.swing.JDialog {
         modeloTablaPersonas.addRow(fila);
     }
 
-    private void cargarOrganismo(Organismo organismo) {
 
-        Object[] fila = new Object[4];
-        fila[0] = organismo.getId();
-        fila[1] = organismo.getRazonSocial();
-        fila[2] = organismo.getCUIT();
-        fila[3] = organismo.getDomicilio();
-        modeloTablaOrganismo.addRow(fila);
-    }
 
     private void modificarPersona() {
         if (tblPersonas.getSelectedRow() != -1) {
-            Persona persona = ClienteFacade.getInstance().getPersonasXIdCentral((Long) tblPersonas.getValueAt(tblPersonas.getSelectedRow(), 0));
+            Cliente persona = ClienteFacade.getInstance().getPersonasXIdCentral((Long) tblPersonas.getValueAt(tblPersonas.getSelectedRow(), 0));
             DiagClientePersona diagClientePersona = new DiagClientePersona(null, true, "Persona", "ModificaciónPersona", persona, sucursal);
             diagClientePersona.setLocation(Comunes.centrarDialog(diagClientePersona));
             diagClientePersona.setVisible(true);
@@ -388,7 +373,7 @@ public class DiagCliente extends javax.swing.JDialog {
             int i = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el Registro seleccionado?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
             if (i == 0) {
                 //primero verificamos si el cliente es tambien un empleado asi borramos ambos
-                Persona cliente = ClienteFacade.getInstance().getPersonasXIdCentral((Long) tblPersonas.getValueAt(tblPersonas.getSelectedRow(), 0));
+                Cliente cliente = ClienteFacade.getInstance().getPersonasXIdCentral((Long) tblPersonas.getValueAt(tblPersonas.getSelectedRow(), 0));
                 if (EmpleadoFacade.getInstance().existeEmpleadoClienteCentral(cliente)) {
                     Empleado empleado = EmpleadoFacade.getInstance().getEmpleadoXDNICentral(cliente);
                     try {

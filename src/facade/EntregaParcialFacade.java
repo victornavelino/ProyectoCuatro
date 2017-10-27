@@ -24,7 +24,7 @@ import javax.persistence.Query;
  */
 public class EntregaParcialFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static EntregaParcialFacade instance = null;
 

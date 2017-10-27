@@ -29,7 +29,7 @@ import net.sf.jasperreports.swing.JRViewer;
  */
 public class Reportes {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
 
     public void dialogoReporte(JasperPrint jasperPrint, String titulo) {

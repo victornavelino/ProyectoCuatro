@@ -38,7 +38,7 @@ import javax.persistence.Query;
  */
 public class VentaFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
     private static VentaFacade instance = null;
 
@@ -93,14 +93,14 @@ public class VentaFacade {
     }
 
     public List<Venta> getTodos() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v ORDER BY v.fecha DESC");
         return q.getResultList();
     }
 
     public List<Object> listaVentasDescendente() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query q = em.createQuery("SELECT v.numeroTicket FROM Venta v ORDER BY v.numeroTicket DESC");
         em.getEntityManagerFactory().getCache().evictAll();
@@ -109,7 +109,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasNoAnuladas() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v where v.anulado=FALSE ORDER BY v.numeroTicket DESC");
         em.getEntityManagerFactory().getCache().evictAll();
@@ -118,7 +118,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasOrdXNroTicket() {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v ORDER BY v.numeroTicket DESC");
         em.getEntityManagerFactory().getCache().evictAll();
@@ -127,7 +127,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasOrdXTicketXFechas(Date desde, Date hasta) {
-        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfs = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfs.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v where v.fecha BETWEEN :desde AND :hasta ORDER BY v.numeroTicket DESC");
         q.setParameter("desde", desde);
@@ -145,7 +145,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasSinCobrar(Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v WHERE v.anulado=FALSE AND v.sucursal=:sucursal AND v.cobroVenta IS NULL ORDER BY v.id DESC");
         q.setParameter("sucursal", sucursal);
@@ -154,7 +154,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasCerradasCobradas(Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v WHERE v.sucursal=:sucursal AND v.cobroVenta IS NOT NULL AND v.cierreVentas IS NOT NULL");
         q.setParameter("sucursal", sucursal);
@@ -163,7 +163,7 @@ public class VentaFacade {
     }
 
     public List<Venta> listaVentasCobradas(Sucursal sucursal) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query q = em.createQuery("SELECT v FROM Venta v WHERE v.sucursal=:sucursal AND v.cobroVenta IS NOT NULL");
         q.setParameter("sucursal", sucursal);
@@ -172,7 +172,7 @@ public class VentaFacade {
     }
 
     public List<Object[]> listadoArticulosVendidos(Venta venta, TipoIva iva) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query q = em.createQuery("SELECT  v.articuloDescripcion, v.cantidadPeso, v.precio,v.precioUnitario, v.precioPromocion , art.subCategoria.categoria.tipoIva.descripcion, "
                 + "                (v.cantidadPeso * v.precioUnitario) FROM Venta vt , Articulo art, "
@@ -311,7 +311,7 @@ public class VentaFacade {
     }
 
     public Venta getVentaNumeroTicket(String numero) {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT v FROM Venta v WHERE v.numeroTicket='" + numero + "'");
         try {
@@ -324,7 +324,7 @@ public class VentaFacade {
 
     public boolean getVentaNumeroTicketSucursal(String numero, String codSucursal) {
         boolean flag = false;
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT v FROM Venta v WHERE v.numeroTicket='" + numero + "' AND v.sucursal.codigo='" + codSucursal + "'");
         try {
@@ -341,7 +341,7 @@ public class VentaFacade {
     }
 
     public int getUltimoNumeroTicket() {
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT MAX(v.numeroTicket) FROM Venta v");
         quBuscar.setMaxResults(1);
@@ -559,7 +559,7 @@ public class VentaFacade {
 
     public Venta getTicketCobradoNoCerradoCaja(String numero,Sucursal sucursal) {
 
-        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT v FROM Venta v WHERE v.numeroTicket=:numero AND v.sucursal=:sucursal AND v.cobroVenta <>null AND NOT v.cobroVenta.cerrado");
         quBuscar.setParameter("numero", Integer.parseInt(numero.trim()));

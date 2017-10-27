@@ -4,7 +4,7 @@
  */
 package entidades.empleado;
 
-import entidades.cliente.Persona;
+
 import entidades.persona.CorreoElectronico;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.Domicilio;
