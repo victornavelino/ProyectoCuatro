@@ -6,8 +6,6 @@
 package vista.ventas;
 
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import facade.ClienteFacade;
 import includes.Comunes;
 import includes.ModeloTablaNoEditable;
@@ -68,13 +66,6 @@ public class DiagBuscarCliente extends SuperDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonas = new javax.swing.JTable();
         btnSeleccionarPersona = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        btnSeleccionarOrganismo = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblOrganismo = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        tfOrganismo = new javax.swing.JTextField();
-        jbBuscarOrganismo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -172,92 +163,6 @@ public class DiagBuscarCliente extends SuperDialog {
 
         jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
 
-        btnSeleccionarOrganismo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/accept.png"))); // NOI18N
-        btnSeleccionarOrganismo.setText(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.btnSeleccionarOrganismo.text")); // NOI18N
-        btnSeleccionarOrganismo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeleccionarOrganismoActionPerformed(evt);
-            }
-        });
-
-        tblOrganismo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Id", "Nombre", "Descripcion", "Domicilio"
-            }
-        ));
-        tblOrganismo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblOrganismoMouseClicked(evt);
-            }
-        });
-        tblOrganismo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tblOrganismoKeyPressed(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tblOrganismo);
-        if (tblOrganismo.getColumnModel().getColumnCount() > 0) {
-            tblOrganismo.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.tblPersonas.columnModel.title0")); // NOI18N
-            tblOrganismo.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.tblPersonas.columnModel.title1")); // NOI18N
-            tblOrganismo.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.tblPersonas.columnModel.title2")); // NOI18N
-            tblOrganismo.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.tblPersonas.columnModel.title3")); // NOI18N
-        }
-
-        jLabel6.setText(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.jLabel6.text")); // NOI18N
-
-        jbBuscarOrganismo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar2.png"))); // NOI18N
-        jbBuscarOrganismo.setText(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.jbBuscarOrganismo.text")); // NOI18N
-        jbBuscarOrganismo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbBuscarOrganismoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbBuscarOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(btnSeleccionarOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jbBuscarOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSeleccionarOrganismo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab(org.openide.util.NbBundle.getMessage(DiagBuscarCliente.class, "DiagBuscarCliente.jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,17 +192,8 @@ public class DiagBuscarCliente extends SuperDialog {
         seleccionarPersona();
     }//GEN-LAST:event_btnSeleccionarPersonaActionPerformed
 
-    private void btnSeleccionarOrganismoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarOrganismoActionPerformed
-        seleccionarOrganismo();
-    }//GEN-LAST:event_btnSeleccionarOrganismoActionPerformed
-
-    private void jbBuscarOrganismoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarOrganismoActionPerformed
-        buscarOrganismo();
-    }//GEN-LAST:event_jbBuscarOrganismoActionPerformed
-
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         modeloTablaOrganismos = new ModeloTablaNoEditable();
-        cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
         modeloTablaPersonas = new ModeloTablaNoEditable();
         cargarEncabezadosTablaPersonas(modeloTablaPersonas);
     }//GEN-LAST:event_jTabbedPane1StateChanged
@@ -307,19 +203,6 @@ public class DiagBuscarCliente extends SuperDialog {
             seleccionarPersona();
         }
     }//GEN-LAST:event_tblPersonasKeyPressed
-
-    private void tblOrganismoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblOrganismoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            seleccionarOrganismo();
-        }
-    }//GEN-LAST:event_tblOrganismoKeyPressed
-
-    private void tblOrganismoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrganismoMouseClicked
-        if (evt.getClickCount() == 2) {
-            seleccionarOrganismo();
-        }
-
-    }//GEN-LAST:event_tblOrganismoMouseClicked
 
     private void tblPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPersonasMouseClicked
         if (evt.getClickCount() == 2) {
@@ -371,20 +254,13 @@ public class DiagBuscarCliente extends SuperDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSeleccionarOrganismo;
     private javax.swing.JButton btnSeleccionarPersona;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton jbBuscarOrganismo;
     private javax.swing.JButton jbBuscarPersona;
-    private javax.swing.JTable tblOrganismo;
     private javax.swing.JTable tblPersonas;
-    private javax.swing.JTextField tfOrganismo;
     private javax.swing.JTextField tfPersona;
     // End of variables declaration//GEN-END:variables
 private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPersonas) {
@@ -395,15 +271,6 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
 
         tblPersonas.setModel(modeloTablaPersonas);
         Comunes.setOcultarColumnasJTable(tblPersonas, 0);
-    }
-
-    private void cargarEncabezadosTablaOrganismos(ModeloTablaNoEditable modeloTablaOrganismos) {
-        modeloTablaOrganismos.addColumn("Id");
-        modeloTablaOrganismos.addColumn("Nombre");
-        modeloTablaOrganismos.addColumn("CUIT");
-        modeloTablaOrganismos.addColumn("Domicilio");
-
-        tblOrganismo.setModel(modeloTablaOrganismos);
     }
 
     private void configurarTabla(JTable tbl) {
@@ -447,7 +314,7 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
                 java.awt.Font.PLAIN, 10));
     }
 
-    private void cargarTablaPersonas(List<Persona> personas) {
+    private void cargarTablaPersonas(List<Cliente> personas) {
         modeloTablaPersonas = new ModeloTablaNoEditable();
         cargarEncabezadosTablaPersonas(modeloTablaPersonas);
         configurarTabla(tblPersonas);
@@ -458,22 +325,12 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
         }
     }
 
-    private void cargarTablaOrganismos(List<Organismo> organismos) {
-        modeloTablaOrganismos = new ModeloTablaNoEditable();
-        cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
-        configurarTabla(tblOrganismo);
-        try {
-            cargarOrganismos(organismos);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Error: " + ex);
-        }
-    }
 
-    private void cargarPersonas(List<Persona> personas) {
+    private void cargarPersonas(List<Cliente> personas) {
         try {
             modeloTablaPersonas = new ModeloTablaNoEditable();
             cargarEncabezadosTablaPersonas(modeloTablaPersonas);
-            for (Persona persona : personas) {
+            for (Cliente persona : personas) {
                 cargarPersona(persona);
             }
 
@@ -483,21 +340,8 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
         }
     }
 
-    private void cargarOrganismos(List<Organismo> organismos) {
-        try {
-            modeloTablaOrganismos = new ModeloTablaNoEditable();
-            cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
-            for (Organismo organismo : organismos) {
-                cargarOrganismo(organismo);
-            }
 
-            tblOrganismo.setModel(modeloTablaOrganismos);
-        } catch (Exception ex) {
-            Logger.getLogger(DiagBuscarCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void cargarPersona(Persona persona) {
+    private void cargarPersona(Cliente persona) {
 
         Object[] fila = new Object[4];
         fila[0] = persona.getId();
@@ -516,25 +360,6 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
         modeloTablaPersonas.addRow(fila);
     }
 
-    private void cargarOrganismo(Organismo organismo) {
-
-        Object[] fila = new Object[4];
-        fila[0] = organismo.getId();
-        fila[1] = organismo.toString();
-        try {
-            fila[2] = organismo.getCUIT();
-        } catch (Exception e) {
-
-        }
-
-        try {
-            fila[3] = organismo.getDomicilio();
-        } catch (Exception e) {
-            fila[3] = "";
-        }
-        modeloTablaOrganismos.addRow(fila);
-    }
-
     private void seleccionarPersona() {
         if (tblPersonas.getSelectedRow() != -1) {
             this.setCliente(ClienteFacade.getInstance().getPersonasXId((Long) tblPersonas.getValueAt(tblPersonas.getSelectedRow(), 0)));
@@ -548,22 +373,7 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
 //        eventosDeTeclas();
         tfPersona.requestFocus();
         cargarTablaPersonas(ClienteFacade.getInstance().getPersonas());
-        cargarTablaOrganismos(ClienteFacade.getInstance().getOrganismos());
 
-    }
-
-    private void buscarOrganismo() {
-        if (!tfOrganismo.getText().isEmpty()) {
-
-            cargarTablaOrganismos(ClienteFacade.getInstance().buscarOrganismos(tfOrganismo.getText()));
-        } else {
-            cargarTablaOrganismos(ClienteFacade.getInstance().getOrganismos());
-        }
-                //para tomar el foco en la primera fila
-        if (modeloTablaOrganismos.getRowCount() > 0) {
-            tblOrganismo.requestFocus();
-            tblOrganismo.changeSelection(0, 0, false, false);
-        }
     }
 
     private void buscarPersona() {
@@ -579,14 +389,7 @@ private void cargarEncabezadosTablaPersonas(ModeloTablaNoEditable modeloTablaPer
         }
     }
 
-    private void seleccionarOrganismo() {
-        if (tblOrganismo.getSelectedRow() != -1) {
-            this.setCliente(ClienteFacade.getInstance().buscar((Long) tblOrganismo.getValueAt(tblOrganismo.getSelectedRow(), 0)));
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un organismo");
-        }
-    }
+
 
 
 }

@@ -7,8 +7,7 @@ package vista.ventas;
 
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.TipoDocumento;
 import entidades.usuario.Usuario;
@@ -68,10 +67,7 @@ public class DiagExportarImportarCierreVentas extends javax.swing.JDialog {
     private VentaArticulo ventaArticulo;
     private List<VentaArticulo> listaVentaArticulos;
     private Articulo articulo;
-
-    private Persona persona;
-    private Organismo organismo;
-
+    private Cliente persona;
     private DocumentoIdentidad documento;
     private TipoDocumento tipodoc;
 

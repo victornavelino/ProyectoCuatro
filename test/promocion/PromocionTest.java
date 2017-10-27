@@ -5,21 +5,9 @@
  */
 package promocion;
 
-import entidades.articulo.Articulo;
-import entidades.promocion.Promocion;
-import entidades.promocion.PromocionArticulo;
 import facade.ArticuloFacade;
-import facade.PromocionFacade;
-import facade.SincronizaFacade;
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

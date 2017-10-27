@@ -9,11 +9,6 @@ import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.PrecioArticulo;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
-import entidades.promocion.DiaSemana;
-import entidades.promocion.Promocion;
-import entidades.promocion.PromocionArticulo;
 import entidades.usuario.Usuario;
 import entidades.venta.Entrega;
 import entidades.venta.EntregaParcial;
@@ -28,7 +23,6 @@ import facade.EntregaParcialFacade;
 import facade.OrdenDeCompraArticuloFacade;
 import facade.OrdenDeCompraFacade;
 import facade.PrecioArticuloFacade;
-import facade.PromocionFacade;
 import facade.VentaFacade;
 import giovynet.serial.Com;
 import gnu.io.CommPortIdentifier;
@@ -38,11 +32,9 @@ import includes.Impresora;
 import includes.ModeloTablaNoEditable;
 import includes.SuperDialog;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -50,7 +42,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
@@ -766,26 +757,14 @@ public class DialogEntregas extends SuperDialog {
             }
             venta.setVentasArticulos(listaVentaArticulos);
             venta.setNumeroTicket(VentaFacade.getInstance().getUltimoNumeroTicket() + 1);
-            if (cliente.getClass() == Persona.class) {
-                //ES PERSONA
-                venta.setCliente(((Persona) cliente).toString());
-                try {
-                    venta.setDniCliente(((Persona) cliente).getDocumentoIdentidad().getNumero());
-                } catch (Exception e) {
-                    venta.setDniCliente("");
-                }
-                venta.setEsPersona(true);
-
-            } else {
-                //ES ORGANISMO
-                venta.setCliente(((Organismo) cliente).toString());
-                try {
-                    venta.setDniCliente(((Organismo) cliente).getCUIT());
-                } catch (Exception e) {
-                    venta.setDniCliente("");
-                }
-                venta.setEsPersona(false);
+            //ES PERSONA
+            venta.setCliente(cliente.toString());
+            try {
+                venta.setDniCliente(cliente.getDocumentoIdentidad().getNumero());
+            } catch (Exception e) {
+                venta.setDniCliente("");
             }
+
             venta.setUsuario(usuario);
             venta.setSucursal(sucursal);
             venta.setDescuento(BigDecimal.ZERO);
@@ -1243,11 +1222,8 @@ public class DialogEntregas extends SuperDialog {
         } catch (Exception e) {
         }
         try {
-            if (ordenDeCompra.getCliente().getClass() == Persona.class) {
-                fila[3] = ((Persona) ordenDeCompra.getCliente()).getDocumentoIdentidad().getNumero();
-            } else {
-                fila[3] = ((Organismo) ordenDeCompra.getCliente()).getCUIT();
-            }
+            fila[3] = ordenDeCompra.getCliente().getDocumentoIdentidad().getNumero();
+
         } catch (Exception e) {
         }
         try {

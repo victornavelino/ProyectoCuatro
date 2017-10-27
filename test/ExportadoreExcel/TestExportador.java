@@ -6,13 +6,11 @@ package ExportadoreExcel;
  * and open the template in the editor.
  */
 
-import controladores.OrganismoJpaController;
-import controladores.PersonaJpaController;
+import controladores.ClienteJpaController;
 import entidades.Configuracion;
 import entidades.Sucursal;
 import entidades.articulo.PrecioArticulo;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.persona.CorreoElectronico;
 import entidades.venta.CierreVentas;
 import entidades.venta.Venta;
@@ -20,7 +18,6 @@ import facade.CierreVentasFacade;
 import facade.ConexionFacade;
 import facade.ConfiguracionFacade;
 import facade.PrecioArticuloFacade;
-import facade.SincronizaFacade;
 import facade.SucursalFacade;
 import facade.VentaFacade;
 import java.io.File;
@@ -82,109 +79,11 @@ public class TestExportador {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-    public void exportarClientesOrganismosDomicilio() {
-
-        OrganismoJpaController controller = new OrganismoJpaController(emf);
-        List<Organismo> listadoOrganismos = controller.findOrganismoEntities();
-        List<List<Object>> tabla = new ArrayList<>();
-        List<Object> fila = new ArrayList<>();
-        fila.add("Razon Social");
-        fila.add("Barrio");
-        fila.add("Calle");
-        fila.add("CodigoPostal");
-        fila.add("Dpto");
-        fila.add("EntreCalles");
-        fila.add("LocalidadId");
-        fila.add("nroCalle");
-        fila.add("Piso");
-        fila.add("Referencia");
-
-        //add
-        tabla.add(fila);
-
-        for (Organismo organismo : listadoOrganismos) {
-            fila = new ArrayList<>();
-
-            fila.add(organismo.getRazonSocial());
-            try {
-                fila.add(organismo.getDomicilio().getBarrio());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getCalle());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getCodigoPostal());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getDpto());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getEntreCalles());
-            } catch (Exception e) {
-                fila.add("");
-            }
-
-            try {
-                fila.add(organismo.getDomicilio().getLocalidad().getId());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getNumero());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getPiso());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(organismo.getDomicilio().getReferencia());
-            } catch (Exception e) {
-                fila.add("");
-            }
-
-            tabla.add(fila);
-
-        }
-        crearExcel(tabla, "organismoDomicilio");
-    }
-
-    public void exportarClientesOrganismosMail() {
-        OrganismoJpaController controller = new OrganismoJpaController(emf);
-        List<Organismo> listadoOrganismos = controller.findOrganismoEntities();
-        List<List<Object>> tabla = new ArrayList<>();
-        List<Object> fila = new ArrayList<>();
-        fila.add("Razon Social");
-        fila.add("Mail");
-        //add
-        tabla.add(fila);
-
-        for (Organismo organismo : listadoOrganismos) {
-            for (CorreoElectronico ce : organismo.getCorreosElectronicos()) {
-                fila = new ArrayList<>();
-                fila.add(organismo.getRazonSocial());
-                fila.add(ce.getDireccion());
-                tabla.add(fila);
-            }
-
-        }
-        crearExcel(tabla, "organismoMail");
-    }
 
     public void exportarClientesPersona() {
 
-        PersonaJpaController controller = new PersonaJpaController(emf);
-        List<Persona> listadoPersonas = controller.findPersonaEntities();
+        ClienteJpaController controller = new ClienteJpaController(emf);
+        List<Cliente> listadoPersonas = controller.findClienteEntities();
         List<List<Object>> tabla = new ArrayList<>();
         List<Object> fila = new ArrayList<>();
         fila.add("Apellido");
@@ -197,7 +96,7 @@ public class TestExportador {
         //add
         tabla.add(fila);
 
-        for (Persona persona : listadoPersonas) {
+        for (Cliente persona : listadoPersonas) {
             fila = new ArrayList<>();
             fila.add(persona.getApellido());
             fila.add(persona.getNombre());
@@ -234,34 +133,7 @@ public class TestExportador {
         crearExcel(tabla, "persona");
     }
 
-    public void exportarClientesOrganismos() {
 
-        OrganismoJpaController controller = new OrganismoJpaController(emf);
-        List<Organismo> listadoOrganismos = controller.findOrganismoEntities();
-        List<List<Object>> tabla = new ArrayList<>();
-        List<Object> fila = new ArrayList<>();
-        fila.add("Razon Social");
-        fila.add("cuit");
-        fila.add("Lista de Precios");
-
-        //add
-        tabla.add(fila);
-
-        for (Organismo organismo : listadoOrganismos) {
-            fila = new ArrayList<>();
-
-            fila.add(organismo.getRazonSocial());
-            fila.add(organismo.getCUIT());
-            try {
-                fila.add(organismo.getListaPrecio().getDescripcion());
-            } catch (Exception e) {
-                fila.add("");
-            }
-            tabla.add(fila);
-
-        }
-        crearExcel(tabla, "organismo");
-    }
 
     public void exportarSucursales() {
 
@@ -322,7 +194,7 @@ public class TestExportador {
             Runtime.getRuntime().exec(backArticulo);
 
         } catch (IOException ex) {
-            Logger.getLogger(SincronizaFacade.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         crearArchivoSql("/tmp/articulo.sql");
     }
@@ -418,7 +290,6 @@ public class TestExportador {
         fila.add("NroTicket");
         fila.add("Cliente");
         fila.add("DNICliente");
-        fila.add("Es Persona");
         fila.add("Usuario");
         fila.add("NroCierreVenta");
         //add
@@ -464,11 +335,6 @@ public class TestExportador {
             try {
                 fila.add(venta.getDniCliente());
 
-            } catch (Exception e) {
-                fila.add("");
-            }
-            try {
-                fila.add(String.valueOf(venta.isEsPersona()));
             } catch (Exception e) {
                 fila.add("");
             }

@@ -5,9 +5,8 @@
  */
 package vista.empleados;
 
-import entidades.cliente.Persona;
+
 import entidades.empleado.Empleado;
-import facade.ClienteFacade;
 import facade.EmpleadoFacade;
 import includes.Comunes;
 import includes.ModeloTablaNoEditable;

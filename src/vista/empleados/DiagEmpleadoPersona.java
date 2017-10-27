@@ -5,8 +5,7 @@
  */
 package vista.empleados;
 
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.empleado.Empleado;
 import entidades.empleado.TipoEmpleado;
 import entidades.localidad.Departamento;
@@ -47,8 +46,7 @@ public class DiagEmpleadoPersona extends javax.swing.JDialog {
     //private Persona persona;
     private Empleado empleado;
     private String tipoEntidad;
-    private Organismo organismo;
-    private Persona personaCliente;
+    private Cliente personaCliente;
 
     /**
      * Creates new form DiagClientePersona
@@ -773,7 +771,7 @@ public class DiagEmpleadoPersona extends javax.swing.JDialog {
         if (tipoOperacion.equals("AltaPersona")) {
             if (validarPersona()) {
                 empleado = new Empleado();
-                personaCliente =new Persona();
+                personaCliente =new Cliente();
                 //persona = new Persona();
                 cargarEntidadPersona();
                 cargarEntidadCliente();

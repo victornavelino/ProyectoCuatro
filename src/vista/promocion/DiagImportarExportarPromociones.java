@@ -7,8 +7,6 @@ package vista.promocion;
 
 import vista.cliente.*;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.Telefono;
 import entidades.persona.TipoDocumento;
@@ -43,8 +41,7 @@ public class DiagImportarExportarPromociones extends javax.swing.JDialog {
     private Vector data = new Vector();
     private List<Cliente> listasCliente;
     private ModeloTablaNoEditable modeloTablaPromociones;
-    private Persona persona;
-    private Organismo organismo;
+    private Cliente persona;
     private TipoTelefono tipotel;
     private Telefono telefono;
     private DocumentoIdentidad documento;
@@ -338,7 +335,7 @@ public class DiagImportarExportarPromociones extends javax.swing.JDialog {
 
         try {
             for (int i = 0; i < tblPromociones.getRowCount(); i++) {
-                persona = new Persona();
+                persona = new Cliente();
                 documento = new DocumentoIdentidad();
                 tipoDoc = new TipoDocumento();
                 persona.setApellido(tblPromociones.getValueAt(i, 0).toString());

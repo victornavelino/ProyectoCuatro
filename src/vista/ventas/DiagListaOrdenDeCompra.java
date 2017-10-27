@@ -6,8 +6,6 @@
 package vista.ventas;
 
 import entidades.Sucursal;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.usuario.Usuario;
 import entidades.venta.OrdenDeCompra;
 import facade.OrdenDeCompraFacade;
@@ -278,11 +276,8 @@ public class DiagListaOrdenDeCompra extends javax.swing.JDialog {
         } catch (Exception e) {
         }
         try {
-            if (ordenDeCompra.getCliente().getClass() == Persona.class) {
-                fila[3] = ((Persona) ordenDeCompra.getCliente()).getDocumentoIdentidad().getNumero();
-            } else {
-                fila[3] = ((Organismo) ordenDeCompra.getCliente()).getCUIT();
-            }
+                fila[3] = ordenDeCompra.getCliente().getDocumentoIdentidad().getNumero();
+
         } catch (Exception e) {
         }
         try {

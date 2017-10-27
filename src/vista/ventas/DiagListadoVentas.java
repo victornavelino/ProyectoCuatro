@@ -6,8 +6,6 @@
 package vista.ventas;
 
 import entidades.Sucursal;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.venta.Venta;
 import entidades.venta.VentaArticulo;
 import facade.VentaFacade;

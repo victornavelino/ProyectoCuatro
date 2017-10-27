@@ -8,8 +8,7 @@ package vista.ventas;
 import entidades.Configuracion;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
+import entidades.cliente.Cliente;
 import entidades.persona.DocumentoIdentidad;
 import entidades.persona.TipoDocumento;
 import entidades.usuario.Usuario;
@@ -65,9 +64,7 @@ public class DiagExportarImportarVentas extends javax.swing.JDialog {
     private List<VentaArticulo> listaVentaArticulos;
     private Articulo articulo;
 
-    private Persona persona;
-    private Organismo organismo;
-
+    private Cliente persona;
     private DocumentoIdentidad documento;
     private TipoDocumento tipodoc;
 
@@ -659,7 +656,7 @@ public class DiagExportarImportarVentas extends javax.swing.JDialog {
                         //System.out.println("paso");
                         //JOptionPane.showMessageDialog(null, "llego");
 
-                        persona = new Persona();
+                        persona = new Cliente();
 
                         //Buscamos si existe el cliente persona
                         if (ClienteFacade.getInstance().getPersonaDni((String) tblVentas.getValueAt(i, 8))) {
@@ -692,29 +689,7 @@ public class DiagExportarImportarVentas extends javax.swing.JDialog {
 
                         venta.setCliente(persona.toString());
                         venta.setDniCliente(persona.getDocumentoIdentidad().getNumero());
-                        venta.setEsPersona(true);
 
-                    }
-
-                    //Si es Organismo
-                    if (!tblVentas.getValueAt(i, 11).equals("null")) {
-                        //JOptionPane.showMessageDialog(null, "entro por organismo");
-
-                        organismo = new Organismo();
-                        //Buscamos si existe el cliente organismo 
-                        if (ClienteFacade.getInstance().buscarCuitEmpresa((String) tblVentas.getValueAt(i, 11))) {
-                            //si existe se lo setea 
-                            organismo = ClienteFacade.getInstance().buscarCuitEmpresaObjeto((String) tblVentas.getValueAt(i, 11));
-                        } else {
-                            //sino se lo crea
-                            organismo.setCUIT((String) tblVentas.getValueAt(i, 11));
-                            organismo.setRazonSocial((String) tblVentas.getValueAt(i, 10));
-                            ClienteFacade.getInstance().alta(organismo);
-                        }
-
-                        venta.setCliente(organismo.getRazonSocial());
-                        venta.setDniCliente(organismo.getCUIT());
-                        venta.setEsPersona(false);
                     }
 
                     //existe sucursal

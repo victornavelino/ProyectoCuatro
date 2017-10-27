@@ -53,8 +53,7 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
     private List<Cliente> listasCliente;
     private ModeloTablaNoEditable modeloTablaClientes;
     private ModeloTablaNoEditable modeloTablaOrganismos;
-    private Persona persona;
-    private Organismo organismo;
+    private Cliente persona;
     private TipoTelefono tipotel;
     private Telefono telefono;
     private DocumentoIdentidad documento;
@@ -331,8 +330,7 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
 
     private void inicializarComponentes() {
         cargarTablaPersonas();
-        cargarTablaOrganismos();
-    }
+      }
 
     private void cargarTablaPersonas() {
         List<Integer> columnasNoEditables = new ArrayList<>();
@@ -346,16 +344,6 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
         cargarEncabezadosTabla(modeloTablaClientes);
     }
 
-    private void cargarTablaOrganismos() {
-        List<Integer> columnasNoEditables = new ArrayList<>();
-        // columnasNoEditables.add(0);
-        columnasNoEditables.add(0);
-        columnasNoEditables.add(1);
-        columnasNoEditables.add(2);
-        columnasNoEditables.add(3);
-        modeloTablaOrganismos = new ModeloTablaNoEditable(columnasNoEditables);
-        cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
-    }
 
     private void cargarEncabezadosTabla(ModeloTablaNoEditable modeloTablaClientes) {
         //modeloTablaClientes.addColumn("ID");
@@ -368,15 +356,9 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
         tblClientes.setModel(modeloTablaClientes);
     }
 
-    private void cargarEncabezadosTablaOrganismos(ModeloTablaNoEditable modeloTablaOrganismos) {
-        // modeloTablaOrganismos.addColumn("ID");
-        modeloTablaOrganismos.addColumn("Razon Social");
-        modeloTablaOrganismos.addColumn("C.U.I.T");
-        modeloTablaOrganismos.addColumn("Lista Precio");
-        tblOrganismos.setModel(modeloTablaOrganismos);
-    }
 
-    private void cargarCliente(Persona persona) {
+
+    private void cargarCliente(Cliente persona) {
         int filas = modeloTablaClientes.getColumnCount();
         int numeroFila = 0;
         Object[] fila = new Object[filas];
@@ -401,21 +383,6 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
         }
 
         modeloTablaClientes.addRow(fila);
-    }
-
-    private void cargarOrganismo(Organismo org) {
-        int filas = modeloTablaOrganismos.getColumnCount();
-        int numeroFila = 0;
-        Object[] fila = new Object[filas];
-        fila[numeroFila++] = org.getRazonSocial();
-        fila[numeroFila++] = org.getCUIT();
-        try {
-            fila[numeroFila++] = org.getListaPrecio().getDescripcion();
-        } catch (Exception e) {
-            //fila[numeroFila++] = "";
-        }
-
-        modeloTablaOrganismos.addRow(fila);
     }
 
     private void guardar() {
@@ -448,7 +415,7 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
                 if (!ClienteFacade.getInstance().getPersonaDni(tblClientes.getValueAt(i, 3).toString())) {
                     System.out.println("entroooooo");
 
-                    persona = new Persona();
+                    persona = new Cliente();
                     documento = new DocumentoIdentidad();
                     tipoDoc = new TipoDocumento();
                     persona.setApellido(tblClientes.getValueAt(i, 0).toString());
@@ -549,100 +516,13 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
 
     }
 
-    private void exportarOrg() {
-        new ExportarExcel().crearExcelJtable(tblOrganismos, "Listado de Organismos");
-    }
 
-    private void importarOrg() {
-        JFileChooser jChooser = new JFileChooser(System.getProperty("user.dir"));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel", "xls");
-        jChooser.setFileFilter(filter);
-        jChooser.showOpenDialog(this);
-        File file = jChooser.getSelectedFile();
-        if (file == null || !file.getName().endsWith("xls")) {
-            JOptionPane.showMessageDialog(null, "Please select only Excel file.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            leerDatosExcel(file);
-            List<Integer> columnasNoEditables = new ArrayList<>();
-            //columnasNoEditables.add(0);
-            columnasNoEditables.add(0);
-            columnasNoEditables.add(1);
-            columnasNoEditables.add(2);
-            columnasNoEditables.add(3);
-            ModeloTablaNoEditable model = new ModeloTablaNoEditable(data, headers, columnasNoEditables);
-            tblOrganismos.setModel(model);
-        }
-    }
-
-    private void guardarOrg() {
-
-        int reply = JOptionPane.showConfirmDialog(null,
-                "¿Desea guardar los cambios?", "Atualizar Clientes",
-                JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            try {
-                guardarClientesOrg();
-                JOptionPane.showMessageDialog(null, "Clientes actualizados correctamente");
-                this.dispose();
-            } catch (java.lang.NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "No se han guardado los cambios \n"
-                        + "Es posible que haya ingresado un valor incorrecto",
-                        "Error Guardando", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se han guardado los cambios");
-            this.dispose();
-        }
-
-    }
-
-    private void guardarClientesOrg() {
-        try {
-            for (int i = 0; i < tblOrganismos.getRowCount(); i++) {
-                organismo = new Organismo();
-
-                organismo.setRazonSocial(tblOrganismos.getValueAt(i, 0).toString());
-                organismo.setCUIT(tblOrganismos.getValueAt(i, 1).toString());
-                if (!tblOrganismos.getValueAt(i, 2).toString().isEmpty()) {
-                    listaPrecio = ListaPrecioFacade.getInstance().getPorDescripcion(tblOrganismos.getValueAt(i, 2).toString());
-                    try {
-                        listaPrecio.getId();
-                        organismo.setListaPrecio(listaPrecio);
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Antes de importar los clientes debe \n"
-                                + "cargar correctamente las listas de precios \n"
-                                + "y verificar que el cliente posea lista de precio \n"
-                                + "en el archivo excel");
-                        throw new Exception();
-                    }
-                }
-
-                ClienteFacade.getInstance().alta(organismo);
-
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "" + e);
-        }
-    }
-
-    private void cargarTablaClientesPersona(List<Persona> personas) {
+    private void cargarTablaClientesPersona(List<Cliente> personas) {
         modeloTablaClientes = new ModeloTablaNoEditable();
         cargarEncabezadosTabla(modeloTablaClientes);
         configurarTabla(tblClientes);
         try {
             cargarClientesPersona(personas);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Error: " + ex);
-        }
-    }
-
-    private void cargarTablaClientesOrganismo(List<Organismo> organismos) {
-        modeloTablaOrganismos = new ModeloTablaNoEditable();
-        cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
-        configurarTabla(tblOrganismos);
-        try {
-
-            cargarClientesOrganismo(organismos);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "Error: " + ex);
         }
@@ -689,11 +569,11 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
                 java.awt.Font.PLAIN, 10));
     }
 
-    private void cargarClientesPersona(List<Persona> personas) {
+    private void cargarClientesPersona(List<Cliente> personas) {
         try {
             modeloTablaClientes = new ModeloTablaNoEditable();
             cargarEncabezadosTabla(modeloTablaClientes);
-            for (Persona persona : personas) {
+            for (Cliente persona : personas) {
                 cargarCliente(persona);
             }
             tblClientes.setModel(modeloTablaClientes);
@@ -701,18 +581,4 @@ public class DiagImportarExportarClientes extends javax.swing.JDialog {
             Logger.getLogger(DiagImportarExportarClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void cargarClientesOrganismo(List<Organismo> organismos) {
-        try {
-            modeloTablaOrganismos = new ModeloTablaNoEditable();
-            cargarEncabezadosTablaOrganismos(modeloTablaOrganismos);
-            for (Organismo org : organismos) {
-                cargarOrganismo(org);
-            }
-            tblOrganismos.setModel(modeloTablaOrganismos);
-        } catch (Exception ex) {
-            Logger.getLogger(DiagImportarExportarClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
 }

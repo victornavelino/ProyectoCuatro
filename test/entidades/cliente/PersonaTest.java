@@ -51,7 +51,7 @@ public class PersonaTest {
     public void testGetApellido() {
         System.out.println("getApellido");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
-        Persona instance = new Persona();
+        Cliente instance = new Cliente();
         DocumentoIdentidad di = new DocumentoIdentidad();
         TipoDocumento td = new TipoDocumento();
         td.setDescripcion("DNI");

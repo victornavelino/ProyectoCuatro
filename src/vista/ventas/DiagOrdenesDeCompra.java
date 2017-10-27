@@ -9,8 +9,6 @@ import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.PrecioArticulo;
 import entidades.cliente.Cliente;
-import entidades.cliente.Organismo;
-import entidades.cliente.Persona;
 import entidades.usuario.Usuario;
 import entidades.venta.OrdenDeCompra;
 import entidades.venta.OrdenDeCompraArticulo;
@@ -615,10 +613,10 @@ public class DiagOrdenesDeCompra extends SuperDialog {
 //                calcularTotal();
                     limpiarCamposArticulo();
                     tfCodigo.requestFocus();
-                }else{
+                } else {
                     //MODIFICACION DE ARTICULO DE LA LISTA
                     btnCancelarModificacion.setEnabled(false);
-                    modificacionOrden=false;
+                    modificacionOrden = false;
                     //segun sea por peso o cantidad la venta
                     if (!tfCantidad.getText().isEmpty()
                             && BigDecimalValidator.getInstance().isValid(tfCantidad.getText())) {
@@ -955,7 +953,7 @@ public class DiagOrdenesDeCompra extends SuperDialog {
     }
 
     private void buscarClientePorDNI() {
-        Persona persona = ClienteFacade.getInstance().getPersonaXDni(ftfDocumento.getText());
+        Cliente persona = ClienteFacade.getInstance().getPersonaXDni(ftfDocumento.getText());
         if (persona != null) {
             tfCliente.setText(persona.toString());
             cliente = persona;
@@ -978,11 +976,8 @@ public class DiagOrdenesDeCompra extends SuperDialog {
         if (diagBuscarCliente.getCliente() != null) {
             cliente = diagBuscarCliente.getCliente();
             tfCliente.setText(cliente.toString());
-            if (cliente.getClass() == Persona.class) {
-                ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
-            } else {
-                ftfDocumento.setText(((Organismo) cliente).getCUIT());
-            }
+            ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
+
             tfCodigo.requestFocus();
             listaArticulos = new ArrayList<>();
         }
@@ -1027,12 +1022,8 @@ public class DiagOrdenesDeCompra extends SuperDialog {
         } catch (Exception e) {
 
         }
+        ftfDocumento.setText(cliente.getDocumentoIdentidad().getNumero());
 
-        if (cliente.getClass() == Persona.class) {
-            ftfDocumento.setText(((Persona) cliente).getDocumentoIdentidad().getNumero());
-        } else {
-            ftfDocumento.setText(((Organismo) cliente).getCUIT());
-        }
         try {
             listaArticulos = ordenDeCompra.getOrdenDeCompraArticulos();
             cargarTablaArticulos(listaArticulos);
