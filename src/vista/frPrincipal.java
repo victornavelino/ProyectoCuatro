@@ -613,6 +613,9 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 if (cajaAbierta != null) {
                     final FrVentas frVentas = new FrVentas(serialPort, usuario, sucursal);
                     frVentas.setVisible(true);
+                    frVentas.setSize(709, 756);
+                    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                    frVentas.setLocation(dim.width/2-frVentas.getSize().width/2, dim.height/2-frVentas.getSize().height/2);
                 } else {
                     JOptionPane.showMessageDialog(null, "No abrio la caja");
                 }

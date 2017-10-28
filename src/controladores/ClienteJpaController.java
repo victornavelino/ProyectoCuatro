@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controladores;
 
 import controladores.exceptions.NonexistentEntityException;
@@ -19,7 +18,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author franco
+ * @author ruben
  */
 public class ClienteJpaController implements Serializable {
 

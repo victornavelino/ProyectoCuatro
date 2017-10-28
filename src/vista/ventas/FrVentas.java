@@ -189,10 +189,11 @@ public class FrVentas extends SuperFrame {
         jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jPanel2.border.title"))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel3.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel3.text")); // NOI18N
 
         ftfDocumento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
@@ -214,10 +215,10 @@ public class FrVentas extends SuperFrame {
         });
 
         tfCliente.setEditable(false);
-        tfCliente.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfCliente.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfCliente.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfCliente.text")); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel4.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel4.text")); // NOI18N
 
         taMensaje.setEditable(false);
@@ -225,7 +226,7 @@ public class FrVentas extends SuperFrame {
         taMensaje.setRows(5);
         jScrollPane1.setViewportView(taMensaje);
 
-        jLabel20.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel20.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel20.text")); // NOI18N
 
         tfListaPrecio.setEditable(false);
@@ -237,15 +238,15 @@ public class FrVentas extends SuperFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(ftfDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
                     .addComponent(tfCliente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -279,8 +280,9 @@ public class FrVentas extends SuperFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jPanel3.border.title"))); // NOI18N
 
-        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfCodigo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfCodigo.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfCodigo.text")); // NOI18N
+        tfCodigo.setMinimumSize(new java.awt.Dimension(22, 30));
         tfCodigo.setNextFocusableComponent(tblArticulos);
         tfCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,56 +298,58 @@ public class FrVentas extends SuperFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel5.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel5.text")); // NOI18N
 
         tfDescripcion.setEditable(false);
-        tfDescripcion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfDescripcion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfDescripcion.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfDescripcion.text")); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel6.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel6.text")); // NOI18N
 
         tfPrecio.setEditable(false);
-        tfPrecio.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfPrecio.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfPrecio.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfPrecio.text")); // NOI18N
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel7.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel7.text")); // NOI18N
 
         tfPromocion.setEditable(false);
-        tfPromocion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfPromocion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfPromocion.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfPromocion.text")); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel8.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel8.text")); // NOI18N
 
         tfSubTotalArticulo.setEditable(false);
-        tfSubTotalArticulo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfSubTotalArticulo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfSubTotalArticulo.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfSubTotalArticulo.text")); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel9.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel9.text")); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jPanel1.border.title"))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel1.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel1.text")); // NOI18N
 
         tfPesoBalanza.setEditable(false);
-        tfPesoBalanza.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfPesoBalanza.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfPesoBalanza.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfPesoBalanza.text")); // NOI18N
+        tfPesoBalanza.setMinimumSize(new java.awt.Dimension(22, 32));
         tfPesoBalanza.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tfPesoBalanzaKeyTyped(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel2.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel2.text")); // NOI18N
 
-        tfCantidad.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        tfCantidad.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfCantidad.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfCantidad.text")); // NOI18N
+        tfCantidad.setMinimumSize(new java.awt.Dimension(22, 32));
         tfCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCantidadActionPerformed(evt);
@@ -374,14 +378,14 @@ public class FrVentas extends SuperFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tfCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfPesoBalanza)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(tfCantidad))
-                .addContainerGap())
+                    .addComponent(jLabel2))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(tfPesoBalanza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -418,7 +422,7 @@ public class FrVentas extends SuperFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
@@ -426,15 +430,14 @@ public class FrVentas extends SuperFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPromocion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfSubTotalArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tfPromocion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(tfPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(tfDescripcion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfSubTotalArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jPanel4.border.title"))); // NOI18N
@@ -460,26 +463,23 @@ public class FrVentas extends SuperFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(317, 317, 317))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
         );
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel10.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel10.text")); // NOI18N
 
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel11.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel11.text")); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel12.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel12.text")); // NOI18N
 
         tfSubtotalGral.setEditable(false);
         tfSubtotalGral.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tfSubtotalGral.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfSubtotalGral.text")); // NOI18N
 
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel13.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel13.text")); // NOI18N
 
         tfTotal.setEditable(false);
@@ -511,7 +511,7 @@ public class FrVentas extends SuperFrame {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel14.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel14.text")); // NOI18N
 
         tfDescuento.setEditable(false);
@@ -530,13 +530,13 @@ public class FrVentas extends SuperFrame {
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         jLabel15.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel15.text")); // NOI18N
 
-        jLabel16.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel16.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel16.text")); // NOI18N
 
-        jLabel17.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel17.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel17.text")); // NOI18N
 
-        jLabel18.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel18.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel18.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -596,7 +596,7 @@ public class FrVentas extends SuperFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -628,7 +628,7 @@ public class FrVentas extends SuperFrame {
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
@@ -1057,10 +1057,10 @@ public class FrVentas extends SuperFrame {
         tbl.getTableHeader().setBackground(java.awt.Color.WHITE);
         tbl.getTableHeader().setForeground(Color.BLACK);
         tbl.getTableHeader().setFont(new java.awt.Font("Dialog",
-                java.awt.Font.PLAIN, 18));
+                java.awt.Font.PLAIN, 12));
         //Si le queremos cambiar el tamaño a la tablita
         tbl.setFont(new java.awt.Font("Dialog",
-                java.awt.Font.PLAIN, 18));
+                java.awt.Font.PLAIN, 10));
     }
 
     private void cargarArticulos(List<VentaArticulo> listaVentaArticulos) {
