@@ -332,10 +332,14 @@ public class DiagAdminPrecioArticulo extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+       if (tblArticulos1.getSelectedRow() != -1) {
         System.out.println("la fila seleccionada es " + (Long) tblArticulos1.getValueAt(tblArticulos1.getSelectedRow(), 0));
        agregarNuevoArticulo(ArticuloFacade.getInstance().getfindArticuloCodigo((long) tblArticulos1.getValueAt(tblArticulos1.getSelectedRow(), 0)));
        cargarTablaArticulosPrecios(PrecioArticuloFacade.getInstance().buscarPoridArticulo((long) tblArticulos1.getValueAt(tblArticulos1.getSelectedRow(), 0)));
-
+       }
+       else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
+        }
 //cargarTablaArticulos(PrecioArticuloFacade.getInstance().getTodos());
         /*if (rbCodigo.isSelected()) {
             //cargarTablaArticulos(ArticuloFacade.getInstance().getTodosCodigo());

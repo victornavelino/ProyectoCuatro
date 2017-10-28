@@ -80,10 +80,8 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cboListaPrecios = new javax.swing.JComboBox();
-        btnNuevaSubcategoria = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         cboSucursal = new javax.swing.JComboBox();
-        btnNuevaUnidadMedida = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -102,25 +100,9 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
 
         cboListaPrecios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnNuevaSubcategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
-        btnNuevaSubcategoria.setText(org.openide.util.NbBundle.getMessage(DlgPrecioArticulo.class, "DlgPrecioArticulo.btnNuevaSubcategoria.text")); // NOI18N
-        btnNuevaSubcategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaSubcategoriaActionPerformed(evt);
-            }
-        });
-
         jLabel5.setText(org.openide.util.NbBundle.getMessage(DlgPrecioArticulo.class, "DlgPrecioArticulo.jLabel5.text")); // NOI18N
 
         cboSucursal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnNuevaUnidadMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
-        btnNuevaUnidadMedida.setText(org.openide.util.NbBundle.getMessage(DlgPrecioArticulo.class, "DlgPrecioArticulo.btnNuevaUnidadMedida.text")); // NOI18N
-        btnNuevaUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaUnidadMedidaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -140,11 +122,7 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(cboSucursal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cboListaPrecios, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnNuevaSubcategoria)
-                                .addComponent(btnNuevaUnidadMedida))
-                            .addGap(42, 42, 42))
+                            .addGap(105, 105, 105))
                         .addComponent(tfprecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
@@ -159,19 +137,15 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboListaPrecios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4))
-                    .addComponent(btnNuevaSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboListaPrecios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
-                    .addComponent(btnNuevaUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
@@ -208,16 +182,6 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnNuevaSubcategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubcategoriaActionPerformed
-        agregarNuevaSubcategoria();
-        Comunes.cargarJCombo(cboListaPrecios, SubCategoriaFacade.getInstance().getTodos());
-    }//GEN-LAST:event_btnNuevaSubcategoriaActionPerformed
-
-    private void btnNuevaUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaUnidadMedidaActionPerformed
-        agregarUnidadMedida();
-        Comunes.cargarJCombo(cboSucursal, UnidadMedidaFacade.getInstance().getTodos());
-    }//GEN-LAST:event_btnNuevaUnidadMedidaActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         aceptar();
@@ -268,8 +232,6 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnNuevaSubcategoria;
-    private javax.swing.JButton btnNuevaUnidadMedida;
     private javax.swing.JComboBox cboListaPrecios;
     private javax.swing.JComboBox cboSucursal;
     private javax.swing.JLabel jLabel1;
@@ -365,10 +327,13 @@ public class DlgPrecioArticulo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "El articulo debe tener nombre", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (tfprecio.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El articulo debe tener Descripcion", "Mensaje", JOptionPane.ERROR_MESSAGE);
+        
+        if(!Comunes.validarBigDecimal(tfprecio.getText())){
+        JOptionPane.showMessageDialog(this, "Debe ingresar el precio en formato numerico", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return false;
+      
         }
+        
        /* if (tfCodigoBarra.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El articulo debe tener Codigo", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return false;
