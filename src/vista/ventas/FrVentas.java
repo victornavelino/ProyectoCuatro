@@ -45,6 +45,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Observable;
+import java.util.Random;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -58,6 +61,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import vista.articulos.DiagBuscarArticulo;
 import vista.frPrincipal;
+import vista.ventas.DiagAgregarPromoCompleta.ArticuloCantidad;
 
 /**
  *
@@ -106,6 +110,7 @@ public class FrVentas extends SuperFrame {
     private Color colorBoton;
     private PrecioArticulo precioComun;
     private BigDecimal montoDescuento = new BigDecimal("0.00");
+    LabelParpadea lp = null;
 
     /**
      * Creates new form FrmVentas
@@ -186,6 +191,7 @@ public class FrVentas extends SuperFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jLabelPromoCompleta = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -337,7 +343,6 @@ public class FrVentas extends SuperFrame {
         tfPesoBalanza.setEditable(false);
         tfPesoBalanza.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfPesoBalanza.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfPesoBalanza.text")); // NOI18N
-        tfPesoBalanza.setMinimumSize(new java.awt.Dimension(22, 32));
         tfPesoBalanza.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tfPesoBalanzaKeyTyped(evt);
@@ -349,7 +354,6 @@ public class FrVentas extends SuperFrame {
 
         tfCantidad.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tfCantidad.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.tfCantidad.text")); // NOI18N
-        tfCantidad.setMinimumSize(new java.awt.Dimension(22, 32));
         tfCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCantidadActionPerformed(evt);
@@ -378,14 +382,14 @@ public class FrVentas extends SuperFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tfCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tfCantidad)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(tfPesoBalanza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tfPesoBalanza)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -489,17 +493,17 @@ public class FrVentas extends SuperFrame {
         btnConfirmarPesada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
         btnConfirmarPesada.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.btnConfirmarPesada.text")); // NOI18N
         btnConfirmarPesada.setNextFocusableComponent(btnEmitirTicket);
-        btnConfirmarPesada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarPesadaActionPerformed(evt);
-            }
-        });
         btnConfirmarPesada.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 btnConfirmarPesadaFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 btnConfirmarPesadaFocusLost(evt);
+            }
+        });
+        btnConfirmarPesada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarPesadaActionPerformed(evt);
             }
         });
 
@@ -536,6 +540,18 @@ public class FrVentas extends SuperFrame {
         jLabel17.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel17.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel17.text")); // NOI18N
 
+        jLabelPromoCompleta.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabelPromoCompleta.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabelPromoCompleta.text")); // NOI18N
+        jLabelPromoCompleta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelPromoCompleta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelPromoCompletaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelPromoCompletaMousePressed(evt);
+            }
+        });
+
         jLabel18.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel18.setText(org.openide.util.NbBundle.getMessage(FrVentas.class, "FrVentas.jLabel18.text")); // NOI18N
 
@@ -551,18 +567,23 @@ public class FrVentas extends SuperFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addGap(6, 6, 6)
-                                .addComponent(tfDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel15)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(tfDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel15)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel12))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelPromoCompleta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(tfSubtotalGral, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -600,7 +621,8 @@ public class FrVentas extends SuperFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
+                        .addComponent(jLabelPromoCompleta)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -700,6 +722,16 @@ public class FrVentas extends SuperFrame {
         cargarArticuloPeso();
     }//GEN-LAST:event_tfCantidadActionPerformed
 
+    private void jLabelPromoCompletaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPromoCompletaMouseClicked
+        // desplegar la ventana para seleccionar los articulos de la promo.
+        dialogoAgregarPromoCompleta();
+    }//GEN-LAST:event_jLabelPromoCompletaMouseClicked
+
+    private void jLabelPromoCompletaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPromoCompletaMousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabelPromoCompletaMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -735,6 +767,7 @@ public class FrVentas extends SuperFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelPromoCompleta;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -784,7 +817,7 @@ public class FrVentas extends SuperFrame {
         }
 
         cargarTabla();
-
+        jLabelPromoCompleta.setVisible(false);
     }
 
     private void buscarClientePorDNI() {
@@ -853,7 +886,7 @@ public class FrVentas extends SuperFrame {
 
     private void botonesMultilinea() {
         //botones multilinea
-        String htmlButton = "<html><div align=\"center\">Confirmar Pesada</div></html>";
+        String htmlButton = "<html><div align=\"center\">Confirmar</div></html>";
         btnConfirmarPesada.setText(htmlButton);
         String htmlButton2 = "<html><div align=\"center\">Emitir Ticket</div></html>";
         btnEmitirTicket.setText(htmlButton2);
@@ -1370,6 +1403,64 @@ public class FrVentas extends SuperFrame {
                 tfCodigo.requestFocus();
 
             }
+        mostrarMensajeAgregarPromocionCompleta();
+    }
+    
+    private void mostrarMensajeAgregarPromocionCompleta(){
+        if(promocionSeleccionada != null){
+            if(!promocionSeleccionada.getPromocionesArticulos().isEmpty()){
+                //muestro el label, agrego color parpadeante
+                jLabelPromoCompleta.setVisible(true);
+                lp = new LabelParpadea();
+            }
+        }
+    }
+    
+    public class LabelParpadea extends Observable{
+         public LabelParpadea(){
+             java.util.Timer timer = new java.util.Timer();
+             timer.scheduleAtFixedRate(timerTask, 0,750);
+         }
+         TimerTask timerTask = new TimerTask(){
+                    public void run() {
+                        Color c = Color.BLACK;
+                        Random rand = new Random();
+                        int x = rand.nextInt(3) + 1;
+                        switch (x) {
+                            case 1 : c = Color.RED;break;
+                            case 2 : c = Color.BLUE;break;
+                            case 3 : c = Color.GREEN;break;
+                        }
+                        
+                        jLabelPromoCompleta.setForeground(c);
+                        
+                    }
+         };
+    }
+    
+    private void dialogoAgregarPromoCompleta(){
+        if(promocionSeleccionada != null){
+            if(!promocionSeleccionada.getPromocionesArticulos().isEmpty()){
+                //muestro el label, agrego color parpadeante
+                DiagAgregarPromoCompleta dg = new DiagAgregarPromoCompleta(this, true,
+                    promocionSeleccionada.getPromocionesArticulos());
+                dg.setLocationRelativeTo(this);
+                dg.setVisible(true);
+                List<ArticuloCantidad> lista = dg.returnListaCantidades();
+                cargarTablaVentas(lista);
+                lp.timerTask.cancel();
+                jLabelPromoCompleta.setVisible(false);
+            }
+        }
+    }
+    
+    private void cargarTablaVentas(List<ArticuloCantidad> lista){
+        for(ArticuloCantidad a :lista){
+            articulo = a.getArticulo();
+            tfCantidad.setText(a.getTextField().getText());
+            cargarArticulo();
+            agregarArticulo();
+        }
     }
 
     private void inicilizarListas() {
