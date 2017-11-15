@@ -1623,7 +1623,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             jXTaskPnCliente.setVisible(true);
             jXTaskPnVentas.setVisible(true);
             jXTaskPnCaja.setVisible(true);
-            jXTaskPnMovimientos.setVisible(true);
+            //jXTaskPnMovimientos.setVisible(true);
             btnConfiguracion.setEnabled(true);
 
 //            if(usuario.getGrupo().getNombre().contains("admin")&&!sucursal.getNombre().equals("CENTRAl")){
@@ -1912,7 +1912,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jXTaskPnCliente.setVisible(flag);
         jXTaskPnVentas.setVisible(flag);
         jXTaskPnCaja.setVisible(flag);
-        jXTaskPnMovimientos.setVisible(flag);
+        jXTaskPnMovimientos.setVisible(false);
 
     }
 
