@@ -600,27 +600,15 @@ public class DiagPromocion extends javax.swing.JDialog {
                     promocion.setFechaFin(dpFechaFin.getDate());
                     promocion.setEsPorPrecio(rbPrecio.isSelected());
                     List<DiaSemana> dias = new ArrayList<>();
-                    if (chkLunes.isSelected()) {
-                        dias.add(DiaSemana.LUNES);
-                    }
-                    if (chkMartes.isSelected()) {
-                        dias.add(DiaSemana.MARTES);
-                    }
-                    if (chkMiercoles.isSelected()) {
-                        dias.add(DiaSemana.MIERCOLES);
-                    }
-                    if (chkJueves.isSelected()) {
-                        dias.add(DiaSemana.JUEVES);
-                    }
-                    if (chkViernes.isSelected()) {
-                        dias.add(DiaSemana.VIERNES);
-                    }
-                    if (chkSabado.isSelected()) {
-                        dias.add(DiaSemana.SABADO);
-                    }
-                    if (chkDomingo.isSelected()) {
-                        dias.add(DiaSemana.DOMINGO);
-                    }
+                    //HABILITAMOS PROMOS PARA TODOS LOS DIAS
+                    dias.add(DiaSemana.LUNES);
+                    dias.add(DiaSemana.MARTES);
+                    dias.add(DiaSemana.MIERCOLES);
+                    dias.add(DiaSemana.JUEVES);
+                    dias.add(DiaSemana.VIERNES);
+                    dias.add(DiaSemana.SABADO);
+                    dias.add(DiaSemana.DOMINGO);
+
                     promocion.setDiasSemanas(dias);
                     promocion.setPorcentajeATodos(new BigDecimal(tfPorcentajeATodos.getText().replace(",", ".")));
                     promocion.setPrioridad((int) spPrioridad.getValue());
@@ -640,27 +628,14 @@ public class DiagPromocion extends javax.swing.JDialog {
                     promocion.setFechaFin(dpFechaFin.getDate());
                     promocion.setEsPorPrecio(rbPrecio.isSelected());
                     List<DiaSemana> dias = new ArrayList<>();
-                    if (chkLunes.isSelected()) {
-                        dias.add(DiaSemana.LUNES);
-                    }
-                    if (chkMartes.isSelected()) {
-                        dias.add(DiaSemana.MARTES);
-                    }
-                    if (chkMiercoles.isSelected()) {
-                        dias.add(DiaSemana.MIERCOLES);
-                    }
-                    if (chkJueves.isSelected()) {
-                        dias.add(DiaSemana.JUEVES);
-                    }
-                    if (chkViernes.isSelected()) {
-                        dias.add(DiaSemana.VIERNES);
-                    }
-                    if (chkSabado.isSelected()) {
-                        dias.add(DiaSemana.SABADO);
-                    }
-                    if (chkDomingo.isSelected()) {
-                        dias.add(DiaSemana.DOMINGO);
-                    }
+                    //HABILITAMOS PROMOS PARA TODOS LOS DIAS
+                    dias.add(DiaSemana.LUNES);
+                    dias.add(DiaSemana.MARTES);
+                    dias.add(DiaSemana.MIERCOLES);
+                    dias.add(DiaSemana.JUEVES);
+                    dias.add(DiaSemana.VIERNES);
+                    dias.add(DiaSemana.SABADO);
+                    dias.add(DiaSemana.DOMINGO);
                     promocion.setDiasSemanas(dias);
                     promocion.setPorcentajeATodos(new BigDecimal(tfPorcentajeATodos.getText().replace(",", ".")));
                     promocion.setPrioridad((int) spPrioridad.getValue());
@@ -794,14 +769,14 @@ public class DiagPromocion extends javax.swing.JDialog {
                     "La promoción debe tener un porcentaje correcto para todos los articulos", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!chkLunes.isSelected()
-                && !chkMartes.isSelected() && !chkMiercoles.isSelected()
-                && !chkJueves.isSelected() && !chkViernes.isSelected()
-                && !chkSabado.isSelected() && !chkDomingo.isSelected()) {
-            JOptionPane.showMessageDialog(this,
-                    "La promoción debe aplicarse al menos a un dia de la semana", "Mensaje", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+//        if (!chkLunes.isSelected()
+//                && !chkMartes.isSelected() && !chkMiercoles.isSelected()
+//                && !chkJueves.isSelected() && !chkViernes.isSelected()
+//                && !chkSabado.isSelected() && !chkDomingo.isSelected()) {
+//            JOptionPane.showMessageDialog(this,
+//                    "La promoción debe aplicarse al menos a un dia de la semana", "Mensaje", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
         if (PromocionFacade.getInstance().buscarPrioridad((int) spPrioridad.getValue(),sucursal)) {
             JOptionPane.showMessageDialog(this, "La prioridad Seleccionada ya ha sido Asignada a otra promocion", "Mensaje", JOptionPane.ERROR_MESSAGE);
             spPrioridad.requestFocus();
@@ -860,14 +835,14 @@ public class DiagPromocion extends javax.swing.JDialog {
                     "La promoción debe tener un porcentaje correcto para todos los articulos", "Mensaje", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!chkLunes.isSelected()
-                && !chkMartes.isSelected() && !chkMiercoles.isSelected()
-                && !chkJueves.isSelected() && !chkViernes.isSelected()
-                && !chkSabado.isSelected() && !chkDomingo.isSelected()) {
-            JOptionPane.showMessageDialog(this,
-                    "La promoción debe aplicarse al menos a un dia de la semana", "Mensaje", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+//        if (!chkLunes.isSelected()
+//                && !chkMartes.isSelected() && !chkMiercoles.isSelected()
+//                && !chkJueves.isSelected() && !chkViernes.isSelected()
+//                && !chkSabado.isSelected() && !chkDomingo.isSelected()) {
+//            JOptionPane.showMessageDialog(this,
+//                    "La promoción debe aplicarse al menos a un dia de la semana", "Mensaje", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
         if (PromocionFacade.getInstance().buscarPrioridad((int) spPrioridad.getValue(),promocion,sucursal)) {
             
             JOptionPane.showMessageDialog(this, "La prioridad Seleccionada ya ha sido Asignada a otra promocion", "Mensaje", JOptionPane.ERROR_MESSAGE);

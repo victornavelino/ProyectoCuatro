@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * Principal.java
  *
  * Created on 06/10/2009, 22:33:56
@@ -281,19 +281,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         });
         jXTaskPnConfiguracion.add(new AbstractAction() {
             {
-                putValue(Action.NAME, "Tipo de lista de precios");
-                putValue(Action.SHORT_DESCRIPTION, "Agregar un nuevo tipo de lista de precios");
-            }
-
-            public void actionPerformed(ActionEvent e) {
-                DiagGenerico diagGenericoTipoIva = new DiagGenerico(frame, true, "Listas de Precio", "Tipo de lista de precios", ListaPrecio.class);
-
-                //diagGenericoTipoIva.setLocation(Comunes.centrarDialog(administrarEconomicoProyectos));
-                diagGenericoTipoIva.setVisible(true);
-            }
-        });
-        jXTaskPnConfiguracion.add(new AbstractAction() {
-            {
                 putValue(Action.NAME, "Permisos de Grupo");
                 putValue(Action.SHORT_DESCRIPTION, "Agregar permisos de acceso al menu");
             }
@@ -468,7 +455,20 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
 
         });
-         jXTaskPaneArticulos.add(new AbstractAction() {
+        jXTaskPaneArticulos.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Tipo de lista de precios");
+                putValue(Action.SHORT_DESCRIPTION, "Agregar un nuevo tipo de lista de precios");
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagGenerico diagGenericoTipoIva = new DiagGenerico(frame, true, "Listas de Precio", "Tipo de lista de precios", ListaPrecio.class);
+
+                //diagGenericoTipoIva.setLocation(Comunes.centrarDialog(administrarEconomicoProyectos));
+                diagGenericoTipoIva.setVisible(true);
+            }
+        });
+        jXTaskPaneArticulos.add(new AbstractAction() {
             {
                 putValue(Action.NAME, "Precio Articulo");
                 putValue(Action.SHORT_DESCRIPTION, "Asignar Precios Articulos Individual");
@@ -615,7 +615,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                     frVentas.setVisible(true);
                     frVentas.setSize(709, 756);
                     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                    frVentas.setLocation(dim.width/2-frVentas.getSize().width/2, dim.height/2-frVentas.getSize().height/2);
+                    frVentas.setLocation(dim.width / 2 - frVentas.getSize().width / 2, dim.height / 2 - frVentas.getSize().height / 2);
                 } else {
                     JOptionPane.showMessageDialog(null, "No abrio la caja");
                 }
@@ -1550,7 +1550,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         if (!portFound) {
             //  buscarPuerto();
             if (puertoEncontrado != null) {
-              //  abrirPuerto();
+                //  abrirPuerto();
             }
         } else {
             System.out.println("No se pudo abrir el puerto");
@@ -1785,6 +1785,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 //            defaultPort = "COM3";
 //        }
     }
+
     /*
      private void buscarPuerto() {
      //        System.out.println("port lis" + portList);
@@ -1803,7 +1804,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
      }
      */
 
-    /*private void abrirPuerto() {
+ /*private void abrirPuerto() {
         try {
             serialPort = (SerialPort) puertoEncontrado.open("SimpleReadApp", 2000);
         } catch (PortInUseException ex) {
@@ -1811,7 +1812,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         }
 
     }*/
-
     private void cerrarPuertoBalanza() {
         try {
             serialPort.removeEventListener();
@@ -2069,7 +2069,6 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
     }
 
     //El siguiente codigo sirve para poner cambiar el icono de la ventana, es decir para cambiar la taza de java por un logo personalizado
-
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().
@@ -2079,7 +2078,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
     }
 
     private void sincronizarRegistros() {
-       //SincronizaCliente cliente = new SincronizaCliente();
+        //SincronizaCliente cliente = new SincronizaCliente();
         //setCursor(new Cursor(Cursor.WAIT_CURSOR));
         //cliente.enviar();
         // setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
