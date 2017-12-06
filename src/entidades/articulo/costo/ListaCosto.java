@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package entidades.articulo;
+package entidades.articulo.costo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +17,8 @@ import javax.persistence.Table;
  * @author diego
  */
 @Entity
-@Table(name = "precio")
-public class ListaPrecio implements Serializable {
+@Table(name = "articulo_costo_lista")
+public class ListaCosto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,8 +26,6 @@ public class ListaPrecio implements Serializable {
     private Long id;
     @Basic(optional = false)
     private String descripcion;
-    @Column(scale = 2, precision = 12)
-    private BigDecimal margen;
 
     public Long getId() {
         return id;
@@ -47,6 +43,7 @@ public class ListaPrecio implements Serializable {
         this.descripcion = descripcion;
     }
 
+   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -57,10 +54,10 @@ public class ListaPrecio implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ListaPrecio)) {
+        if (!(object instanceof ListaCosto)) {
             return false;
         }
-        ListaPrecio other = (ListaPrecio) object;
+        ListaCosto other = (ListaCosto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

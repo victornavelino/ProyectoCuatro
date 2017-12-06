@@ -4,7 +4,10 @@
  */
 package entidades.articulo;
 
+import entidades.articulo.costo.ValorCosto;
+import entidades.articulo.marca.Marca;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +40,14 @@ public class Articulo implements Serializable {
 
     @OneToOne
     private UnidadMedida unidadMedida;
+
+    @Column(scale = 2, precision = 12)
+    private BigDecimal precioCosto;
+    @OneToOne
+    private ValorCosto descuentoCosto;
+
+    @OneToOne
+    private Marca marca;
 
     public Long getId() {
         return id;
@@ -84,6 +95,30 @@ public class Articulo implements Serializable {
 
     public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
+    }
+
+    public BigDecimal getPrecioCosto() {
+        return precioCosto;
+    }
+
+    public void setPrecioCosto(BigDecimal precioCosto) {
+        this.precioCosto = precioCosto;
+    }
+
+    public ValorCosto getDescuentoCosto() {
+        return descuentoCosto;
+    }
+
+    public void setDescuentoCosto(ValorCosto descuentoCosto) {
+        this.descuentoCosto = descuentoCosto;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     @Override

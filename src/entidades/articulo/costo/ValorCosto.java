@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package entidades.articulo;
+package entidades.articulo.costo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,8 +20,8 @@ import javax.persistence.Table;
  * @author diego
  */
 @Entity
-@Table(name = "precio")
-public class ListaPrecio implements Serializable {
+@Table(name = "articulo_costo_valor")
+public class ValorCosto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -28,9 +29,11 @@ public class ListaPrecio implements Serializable {
     private Long id;
     @Basic(optional = false)
     private String descripcion;
+    @OneToOne(optional = false)
+    private ListaCosto listaCosto;
     @Column(scale = 2, precision = 12)
-    private BigDecimal margen;
-
+    private BigDecimal valor;
+    
     public Long getId() {
         return id;
     }
@@ -47,6 +50,23 @@ public class ListaPrecio implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public ListaCosto getListaCosto() {
+        return listaCosto;
+    }
+
+    public void setListaCosto(ListaCosto listaCosto) {
+        this.listaCosto = listaCosto;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+   
     @Override
     public int hashCode() {
         int hash = 0;
@@ -57,10 +77,10 @@ public class ListaPrecio implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ListaPrecio)) {
+        if (!(object instanceof ValorCosto)) {
             return false;
         }
-        ListaPrecio other = (ListaPrecio) object;
+        ValorCosto other = (ValorCosto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
