@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,6 +37,7 @@ public class ListaPrecio implements Serializable {
     @Column(scale = 2, precision = 12)
     private BigDecimal margen;
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     List<FormaPago> formasDePago;
     @OneToMany
     List<ListaPrecio> permiteCambioAListas;
