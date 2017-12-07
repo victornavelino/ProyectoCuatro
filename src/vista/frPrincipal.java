@@ -104,8 +104,8 @@ import vista.cliente.DiagImportarExportarClientes;
 import vista.configuracion.diagConfiguracion;
 import vista.empleados.DiagEmpleado;
 import vista.generico.DiagGenerico;
-import vista.inventario.movimientoInterno.DiagAdministrarMovimientosInternos;
-import vista.inventario.movimientoInterno.DiagAltaMovimientosInternos;
+//import vista.inventario.movimientoInterno.DiagAdministrarMovimientosInternos;
+//import vista.inventario.movimientoInterno.DiagAltaMovimientosInternos;
 import vista.promocion.DiagAdminPromociones;
 import vista.promocion.DiagCopiarPromocion;
 import vista.sucursal.DiagBuscarSucursal;
@@ -1125,35 +1125,35 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
-        jXTaskPnMovimientos.add(new AbstractAction() {
-            {
-                putValue(Action.NAME, "Alta Mov. Internos");
-                putValue(Action.SHORT_DESCRIPTION, "Alta Mov. Internos");
+//        jXTaskPnMovimientos.add(new AbstractAction() {
+//            {
+//                putValue(Action.NAME, "Alta Mov. Internos");
+//                putValue(Action.SHORT_DESCRIPTION, "Alta Mov. Internos");
+//
+//            }
+//
+//            public void actionPerformed(ActionEvent e) {
+//                DiagAltaMovimientosInternos altaMovimientoInterno = new DiagAltaMovimientosInternos(frame, true, sucursal, usuario);
+//                altaMovimientoInterno.setLocation(Comunes.centrarDialog(altaMovimientoInterno));
+//                altaMovimientoInterno.setVisible(true);
+//
+//            }
+//        });
 
-            }
-
-            public void actionPerformed(ActionEvent e) {
-                DiagAltaMovimientosInternos altaMovimientoInterno = new DiagAltaMovimientosInternos(frame, true, sucursal, usuario);
-                altaMovimientoInterno.setLocation(Comunes.centrarDialog(altaMovimientoInterno));
-                altaMovimientoInterno.setVisible(true);
-
-            }
-        });
-
-        jXTaskPnMovimientos.add(new AbstractAction() {
-            {
-                putValue(Action.NAME, "Admin. Mov. Internos");
-                putValue(Action.SHORT_DESCRIPTION, "Admin. Mov. Internos");
-
-            }
-
-            public void actionPerformed(ActionEvent e) {
-                DiagAdministrarMovimientosInternos movimientoInterno = new DiagAdministrarMovimientosInternos(frame, true, usuario, sucursal);
-                movimientoInterno.setLocation(Comunes.centrarDialog(movimientoInterno));
-                movimientoInterno.setVisible(true);
-
-            }
-        });
+//        jXTaskPnMovimientos.add(new AbstractAction() {
+//            {
+//                putValue(Action.NAME, "Admin. Mov. Internos");
+//                putValue(Action.SHORT_DESCRIPTION, "Admin. Mov. Internos");
+//
+//            }
+//
+//            public void actionPerformed(ActionEvent e) {
+//                DiagAdministrarMovimientosInternos movimientoInterno = new DiagAdministrarMovimientosInternos(frame, true, usuario, sucursal);
+//                movimientoInterno.setLocation(Comunes.centrarDialog(movimientoInterno));
+//                movimientoInterno.setVisible(true);
+//
+//            }
+//        });
 
         if (sucursal.getCodigo().equals("1")) {
             jXTaskPnMovimientos.add(new AbstractAction() {
