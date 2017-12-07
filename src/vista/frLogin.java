@@ -34,7 +34,7 @@ public class frLogin extends SuperFrame {
      * Creates new form frLogin
      */
     public frLogin() {
-        super("Autenticacion - Carnicerias la Tradicion");
+        super("Autenticacion - Arco Iris Pinturería");
         try {
 
             //UIManager.setLookAndFeel("org.fife.plaf.Office2003.Office2003LookAndFeel");
