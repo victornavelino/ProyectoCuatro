@@ -58,6 +58,9 @@
     <class>entidades.inventario.TipoDeMovimiento</class>
     <class>entidades.inventario.NotaPedidoMedia</class>
     <class>entidades.inventario.TipoMediaRes</class>
+    <class>entidades.articulo.costo.ListaCosto</class>
+    <class>entidades.articulo.costo.ValorCosto</class>
+    <class>entidades.articulo.marca.Marca</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/carniceria"/>
       <property name="javax.persistence.jdbc.password" value="123456"/>
