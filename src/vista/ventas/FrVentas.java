@@ -8,6 +8,7 @@ package vista.ventas;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.PrecioArticulo;
+import entidades.articulo.stock.ArticuloSucursal;
 import entidades.caja.Caja;
 import entidades.cliente.Cliente;
 import entidades.promocion.DiaSemana;
@@ -17,6 +18,7 @@ import entidades.usuario.Usuario;
 import entidades.venta.Venta;
 import entidades.venta.VentaArticulo;
 import facade.ArticuloFacade;
+import facade.ArticuloSucursalFacade;
 import facade.CajaFacade;
 import facade.ClienteFacade;
 import facade.EmpleadoFacade;
@@ -729,7 +731,7 @@ public class FrVentas extends SuperFrame {
 
     private void jLabelPromoCompletaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelPromoCompletaMousePressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jLabelPromoCompletaMousePressed
 
     /**
@@ -1392,58 +1394,65 @@ public class FrVentas extends SuperFrame {
             tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
             btnConfirmarPesada.requestFocus();
         } else //por peso
-         if (!tfPesoBalanza.getText().isEmpty()) {
+        if (!tfPesoBalanza.getText().isEmpty()) {
 
-                subTotalArticulo = precioPromocion.multiply(BigDecimal.valueOf(Double.parseDouble(tfPesoBalanza.getText())));
-                tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
-                btnConfirmarPesada.requestFocus();
-            } else {
-                JOptionPane.showMessageDialog(null, "Este es un articulo para pesar!");
-                limpiarCamposArticulo();
-                tfCodigo.requestFocus();
+            subTotalArticulo = precioPromocion.multiply(BigDecimal.valueOf(Double.parseDouble(tfPesoBalanza.getText())));
+            tfSubTotalArticulo.setText(new DecimalFormat("0.00").format(Double.parseDouble(subTotalArticulo.toString())));
+            btnConfirmarPesada.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(null, "Este es un articulo para pesar!");
+            limpiarCamposArticulo();
+            tfCodigo.requestFocus();
 
-            }
+        }
         mostrarMensajeAgregarPromocionCompleta();
     }
-    
-    private void mostrarMensajeAgregarPromocionCompleta(){
-        if(promocionSeleccionada != null){
-            if(!promocionSeleccionada.getPromocionesArticulos().isEmpty()){
+
+    private void mostrarMensajeAgregarPromocionCompleta() {
+        if (promocionSeleccionada != null) {
+            if (!promocionSeleccionada.getPromocionesArticulos().isEmpty()) {
                 //muestro el label, agrego color parpadeante
                 jLabelPromoCompleta.setVisible(true);
                 lp = new LabelParpadea();
             }
         }
     }
-    
-    public class LabelParpadea extends Observable{
-         public LabelParpadea(){
-             java.util.Timer timer = new java.util.Timer();
-             timer.scheduleAtFixedRate(timerTask, 0,750);
-         }
-         TimerTask timerTask = new TimerTask(){
-                    public void run() {
-                        Color c = Color.BLACK;
-                        Random rand = new Random();
-                        int x = rand.nextInt(3) + 1;
-                        switch (x) {
-                            case 1 : c = Color.RED;break;
-                            case 2 : c = Color.BLUE;break;
-                            case 3 : c = Color.GREEN;break;
-                        }
-                        
-                        jLabelPromoCompleta.setForeground(c);
-                        
-                    }
-         };
+
+    public class LabelParpadea extends Observable {
+
+        public LabelParpadea() {
+            java.util.Timer timer = new java.util.Timer();
+            timer.scheduleAtFixedRate(timerTask, 0, 750);
+        }
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+                Color c = Color.BLACK;
+                Random rand = new Random();
+                int x = rand.nextInt(3) + 1;
+                switch (x) {
+                    case 1:
+                        c = Color.RED;
+                        break;
+                    case 2:
+                        c = Color.BLUE;
+                        break;
+                    case 3:
+                        c = Color.GREEN;
+                        break;
+                }
+
+                jLabelPromoCompleta.setForeground(c);
+
+            }
+        };
     }
-    
-    private void dialogoAgregarPromoCompleta(){
-        if(promocionSeleccionada != null){
-            if(!promocionSeleccionada.getPromocionesArticulos().isEmpty()){
+
+    private void dialogoAgregarPromoCompleta() {
+        if (promocionSeleccionada != null) {
+            if (!promocionSeleccionada.getPromocionesArticulos().isEmpty()) {
                 //muestro el label, agrego color parpadeante
                 DiagAgregarPromoCompleta dg = new DiagAgregarPromoCompleta(this, true,
-                    promocionSeleccionada.getPromocionesArticulos());
+                        promocionSeleccionada.getPromocionesArticulos());
                 dg.setLocationRelativeTo(this);
                 dg.setVisible(true);
                 List<ArticuloCantidad> lista = dg.returnListaCantidades();
@@ -1453,9 +1462,9 @@ public class FrVentas extends SuperFrame {
             }
         }
     }
-    
-    private void cargarTablaVentas(List<ArticuloCantidad> lista){
-        for(ArticuloCantidad a :lista){
+
+    private void cargarTablaVentas(List<ArticuloCantidad> lista) {
+        for (ArticuloCantidad a : lista) {
             articulo = a.getArticulo();
             tfCantidad.setText(a.getTextField().getText());
             cargarArticulo();
@@ -1765,22 +1774,22 @@ public class FrVentas extends SuperFrame {
         tfPesoBalanza.getDocument().addDocumentListener(
                 new javax.swing.event.DocumentListener() {
 
-            public void insertUpdate(javax.swing.event.DocumentEvent evt) {
-                actualizarSubtotal();
+                    public void insertUpdate(javax.swing.event.DocumentEvent evt) {
+                        actualizarSubtotal();
 
-            }
+                    }
 
-            public void removeUpdate(javax.swing.event.DocumentEvent evt) {
-                actualizarSubtotal();
+                    public void removeUpdate(javax.swing.event.DocumentEvent evt) {
+                        actualizarSubtotal();
 
-            }
+                    }
 
-            public void changedUpdate(javax.swing.event.DocumentEvent evt) {
-                actualizarSubtotal();
+                    public void changedUpdate(javax.swing.event.DocumentEvent evt) {
+                        actualizarSubtotal();
 
-            }
+                    }
 
-        });
+                });
     }
 
     private void cargarPromoEmpleado() {
@@ -1790,13 +1799,13 @@ public class FrVentas extends SuperFrame {
     }
 
     private void verificarSiEsEmpleado() {
-            if (EmpleadoFacade.getInstance().existeEmpleadoCliente(cliente)) {
+        if (EmpleadoFacade.getInstance().existeEmpleadoCliente(cliente)) {
 
-                cargarPromoEmpleado();
-            } else {
+            cargarPromoEmpleado();
+        } else {
 
-                cargarPrecioComun();
-            }
+            cargarPrecioComun();
+        }
     }
 
     private void actualizarSubtotal() {
@@ -1813,6 +1822,18 @@ public class FrVentas extends SuperFrame {
 
                 }
             }
+        }
+    }
+
+    private void descontarStock() {
+        for (int i = 0; i < listaVentaArticulos.size(); i++) {
+            ArticuloSucursal articuloSucursal = new ArticuloSucursal();
+            articuloSucursal.setArticulo(ArticuloFacade.getInstance().buscarPorCodigo(listaVentaArticulos.get(i).getArticuloCodigo()));
+            articuloSucursal.setSucursal(sucursal);
+            articuloSucursal.setCantidad(Long.parseLong(listaVentaArticulos.get(i).getCantidadPeso().toString()));
+            ArticuloSucursalFacade articuloSucursalFacade = ArticuloSucursalFacade.getInstance();
+            articuloSucursalFacade.eliminarArticulosAlSucursal(articuloSucursal);
+
         }
     }
 }
