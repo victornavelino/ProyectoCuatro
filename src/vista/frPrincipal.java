@@ -104,6 +104,7 @@ import vista.cliente.DiagImportarExportarClientes;
 import vista.configuracion.diagConfiguracion;
 import vista.empleados.DiagEmpleado;
 import vista.generico.DiagGenerico;
+import vista.listaprecio.DiagListaPrecio;
 //import vista.inventario.movimientoInterno.DiagAdministrarMovimientosInternos;
 //import vista.inventario.movimientoInterno.DiagAltaMovimientosInternos;
 import vista.promocion.DiagAdminPromociones;
@@ -462,7 +463,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
 
             public void actionPerformed(ActionEvent e) {
-                DiagGenerico diagGenericoTipoIva = new DiagGenerico(frame, true, "Listas de Precio", "Tipo de lista de precios", ListaPrecio.class);
+                DiagListaPrecio diagGenericoTipoIva = new DiagListaPrecio(frame, true, "Listas de Precio", "Tipo de lista de precios", ListaPrecio.class);
 
                 //diagGenericoTipoIva.setLocation(Comunes.centrarDialog(administrarEconomicoProyectos));
                 diagGenericoTipoIva.setVisible(true);
