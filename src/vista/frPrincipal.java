@@ -16,6 +16,7 @@ import entidades.Configuracion;
 import entidades.Paneles;
 import entidades.Sucursal;
 import entidades.articulo.ListaPrecio;
+import entidades.articulo.costo.ListaCosto;
 import entidades.caja.Caja;
 import entidades.caja.TarjetaDeCredito;
 import entidades.caja.TipoDeFactura;
@@ -104,6 +105,7 @@ import vista.cliente.DiagImportarExportarClientes;
 import vista.configuracion.diagConfiguracion;
 import vista.empleados.DiagEmpleado;
 import vista.generico.DiagGenerico;
+import vista.listacosto.DiagListaCosto;
 import vista.listaprecio.DiagListaPrecio;
 //import vista.inventario.movimientoInterno.DiagAdministrarMovimientosInternos;
 //import vista.inventario.movimientoInterno.DiagAltaMovimientosInternos;
@@ -464,6 +466,21 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             public void actionPerformed(ActionEvent e) {
                 DiagListaPrecio diagGenericoTipoIva = new DiagListaPrecio(frame, true, "Listas de Precio", "Tipo de lista de precios", ListaPrecio.class);
+
+                //diagGenericoTipoIva.setLocation(Comunes.centrarDialog(administrarEconomicoProyectos));
+                diagGenericoTipoIva.setVisible(true);
+            }
+        });
+        
+        //Lista de Costos
+           jXTaskPaneArticulos.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Tipo de lista de costos");
+                putValue(Action.SHORT_DESCRIPTION, "Agregar un nuevo tipo de lista de costo");
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagListaCosto diagGenericoTipoIva = new DiagListaCosto(frame, true, "Listas de Costo", "Tipo de lista de costos", ListaCosto.class);
 
                 //diagGenericoTipoIva.setLocation(Comunes.centrarDialog(administrarEconomicoProyectos));
                 diagGenericoTipoIva.setVisible(true);
