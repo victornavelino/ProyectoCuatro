@@ -104,16 +104,27 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
 
         tblArticulos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Descripcion", "Subcategoria", "Unidad de Medida"
+                "Id", "Nombre", "Descripcion", "Subcategoria", "Unidad de Medida", "Marca", "P.Costo", "L.Costo", "Valor"
             }
         ));
         jScrollPane1.setViewportView(tblArticulos);
+        if (tblArticulos.getColumnModel().getColumnCount() > 0) {
+            tblArticulos.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title0")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title1")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title2")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title3")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(4).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title4")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(5).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title5")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(6).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title6")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(7).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title7")); // NOI18N
+            tblArticulos.getColumnModel().getColumn(8).setHeaderValue(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.tblArticulos.columnModel.title8")); // NOI18N
+        }
 
         jLabel5.setText(org.openide.util.NbBundle.getMessage(DiagAdminArticulos.class, "DiagAdminArticulos.jLabel5.text")); // NOI18N
 
@@ -440,6 +451,10 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
         modeloTablaArticulos.addColumn("Descripcion");
         modeloTablaArticulos.addColumn("Subcategoria");
         modeloTablaArticulos.addColumn("Unidad de Medida");
+         modeloTablaArticulos.addColumn("Marca");
+          modeloTablaArticulos.addColumn("P.Costo");
+           modeloTablaArticulos.addColumn("L.Costo");
+            modeloTablaArticulos.addColumn("Valor");
         tblArticulos.setModel(modeloTablaArticulos);
     }
 
@@ -501,13 +516,18 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
 
     private void cargarArticulo(Articulo articulo) {
 
-        Object[] fila = new Object[6];
+        Object[] fila = new Object[10];
         fila[0] = articulo.getId();
         fila[1] = articulo.getCodigoBarra();
         fila[2] = articulo.getDescripcion();
         fila[3] = articulo.getDescripcionReducida();
         fila[4] = articulo.getSubCategoria();
         fila[5] = articulo.getUnidadMedida();
+        fila[6] = articulo.getMarca().getDescripcion();
+        fila[7] = articulo.getPrecioCosto();
+        fila[8] = articulo.getDescuentoCosto().getListaCosto().getDescripcion();
+        fila[9] = articulo.getDescuentoCosto().getValor();
+        
         modeloTablaArticulos.addRow(fila);
     }
 
