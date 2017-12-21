@@ -105,6 +105,7 @@ import vista.cliente.DiagImportarExportarClientes;
 import vista.configuracion.diagConfiguracion;
 import vista.empleados.DiagEmpleado;
 import vista.generico.DiagGenerico;
+import vista.listacosto.DiagAdminValorCosto;
 import vista.listacosto.DiagListaCosto;
 import vista.listaprecio.DiagListaPrecio;
 //import vista.inventario.movimientoInterno.DiagAdministrarMovimientosInternos;
@@ -486,6 +487,23 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 diagGenericoTipoIva.setVisible(true);
             }
         });
+           
+             jXTaskPaneArticulos.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Valores de Costo");
+                putValue(Action.SHORT_DESCRIPTION, "Asignar valor de costo");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagAdminValorCosto diagAdminValorCosto = new DiagAdminValorCosto(frame, true);
+                diagAdminValorCosto.setLocation(Comunes.centrarDialog(diagAdminValorCosto));
+                diagAdminValorCosto.setVisible(true);
+            }
+
+        });
+           
+           
         jXTaskPaneArticulos.add(new AbstractAction() {
             {
                 putValue(Action.NAME, "Precio Articulo");

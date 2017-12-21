@@ -89,6 +89,16 @@ public class ValorCostoFacade {
         return qu.getResultList();
     }
 
+    public List<ValorCosto> todosOrderByDescripcion (){
+        Query qu = em.createQuery("SELECT l FROM ValorCosto l ORDER BY l.descripcion");
+        
+        return qu.getResultList();
+    }
+     public List<ValorCosto> todosOrderByListaCosto (){
+        Query qu = em.createQuery("SELECT l FROM ValorCosto l ORDER BY l.listaCosto");
+        
+        return qu.getResultList();
+    }
     public ValorCosto getPorDescripcion(String descripcion) {
         Query qu = em.createQuery("SELECT l FROM ValorCosto l WHERE l.descripcion=:descripcion");
         qu.setParameter("descripcion", descripcion);
