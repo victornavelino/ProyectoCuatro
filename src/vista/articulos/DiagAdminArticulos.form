@@ -170,13 +170,87 @@
             <Component class="javax.swing.JTable" name="tblArticulos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="4">
+                  <Table columnCount="9" rowCount="4">
                     <Column editable="true" title="Id" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre" type="java.lang.Object"/>
                     <Column editable="true" title="Descripcion" type="java.lang.Object"/>
                     <Column editable="true" title="Subcategoria" type="java.lang.Object"/>
                     <Column editable="true" title="Unidad de Medida" type="java.lang.Object"/>
+                    <Column editable="true" title="Marca" type="java.lang.Object"/>
+                    <Column editable="true" title="P.Costo" type="java.lang.Object"/>
+                    <Column editable="true" title="L.Costo" type="java.lang.Object"/>
+                    <Column editable="true" title="Valor" type="java.lang.Object"/>
                   </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title0" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title1" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title2" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title3" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title4" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title5" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title6" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title7" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                        <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagAdminArticulos.tblArticulos.columnModel.title8" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      </Title>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
             </Component>

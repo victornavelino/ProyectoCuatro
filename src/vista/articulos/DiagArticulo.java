@@ -8,10 +8,18 @@ package vista.articulos;
 import entidades.articulo.Articulo;
 import entidades.articulo.SubCategoria;
 import entidades.articulo.UnidadMedida;
+import entidades.articulo.costo.ListaCosto;
+import entidades.articulo.costo.ValorCosto;
+import entidades.articulo.marca.Marca;
 import facade.ArticuloFacade;
+import facade.ListaCostoFacade;
+import facade.MarcaFacade;
 import facade.SubCategoriaFacade;
 import facade.UnidadMedidaFacade;
+import facade.ValorCostoFacade;
 import includes.Comunes;
+import static includes.Comunes.redondear;
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import vista.categorias.DiagSubCategoria;
 
@@ -70,7 +78,16 @@ public class DiagArticulo extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         cboUnidadDeMedida = new javax.swing.JComboBox();
         btnNuevaUnidadMedida = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        tfprecocosto = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        cboMarca = new javax.swing.JComboBox();
         btnAceptar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        cboListaCosto = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        cboValor = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,38 +129,50 @@ public class DiagArticulo extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel6.text")); // NOI18N
+
+        tfprecocosto.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.tfprecocosto.text")); // NOI18N
+
+        jLabel9.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel9.text")); // NOI18N
+
+        cboMarca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(tfDescripcionRed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(cboUnidadDeMedida, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tfCodigoBarra, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(cboSubCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cboSubCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfprecocosto, javax.swing.GroupLayout.Alignment.LEADING))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnNuevaSubcategoria)
                                 .addComponent(btnNuevaUnidadMedida))
-                            .addGap(42, 42, 42))
-                        .addComponent(tfDescripcionRed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                            .addContainerGap(94, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(54, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,7 +198,14 @@ public class DiagArticulo extends javax.swing.JDialog {
                         .addComponent(btnNuevaSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
                         .addComponent(btnNuevaUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(tfprecocosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)))
         );
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
@@ -180,46 +216,103 @@ public class DiagArticulo extends javax.swing.JDialog {
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jPanel2.border.title"))); // NOI18N
+
+        jLabel7.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel7.text")); // NOI18N
+
+        cboListaCosto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboListaCosto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboListaCostoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel8.text")); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cboValor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(304, 304, 304))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cboListaCosto, 0, 98, Short.MAX_VALUE)
+                        .addGap(326, 326, 326))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboListaCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(215, 215, 215)
-                        .addComponent(btnAceptar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGap(210, 210, 210)
+                        .addComponent(btnAceptar)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        jPanel2.getAccessibleContext().setAccessibleName(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jPanel2.AccessibleContext.accessibleName")); // NOI18N
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevaSubcategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubcategoriaActionPerformed
-        agregarNuevaSubcategoria();
-        Comunes.cargarJCombo(cboSubCategoria, SubCategoriaFacade.getInstance().getTodos());
-    }//GEN-LAST:event_btnNuevaSubcategoriaActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        aceptar();
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnNuevaUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaUnidadMedidaActionPerformed
         agregarUnidadMedida();
         Comunes.cargarJCombo(cboUnidadDeMedida, UnidadMedidaFacade.getInstance().getTodos());
     }//GEN-LAST:event_btnNuevaUnidadMedidaActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        aceptar();
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    private void btnNuevaSubcategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubcategoriaActionPerformed
+        agregarNuevaSubcategoria();
+        Comunes.cargarJCombo(cboSubCategoria, SubCategoriaFacade.getInstance().getTodos());
+    }//GEN-LAST:event_btnNuevaSubcategoriaActionPerformed
+
+    private void cboListaCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboListaCostoActionPerformed
+ Comunes.cargarJCombo(cboValor, ValorCostoFacade.getInstance().buscarPorid((ListaCosto)cboListaCosto.getSelectedItem()));    
+    }//GEN-LAST:event_cboListaCostoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,17 +360,26 @@ public class DiagArticulo extends javax.swing.JDialog {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnNuevaSubcategoria;
     private javax.swing.JButton btnNuevaUnidadMedida;
+    private javax.swing.JComboBox cboListaCosto;
+    private javax.swing.JComboBox cboMarca;
     private javax.swing.JComboBox cboSubCategoria;
     private javax.swing.JComboBox cboUnidadDeMedida;
+    private javax.swing.JComboBox cboValor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tfCodigoBarra;
     private javax.swing.JTextField tfDescripcion;
     private javax.swing.JTextField tfDescripcionRed;
+    private javax.swing.JTextField tfprecocosto;
     // End of variables declaration//GEN-END:variables
 
     private void agregarNuevaSubcategoria() {
@@ -291,6 +393,9 @@ public class DiagArticulo extends javax.swing.JDialog {
         this.setTitle("Articulo");
         Comunes.cargarJCombo(cboSubCategoria, SubCategoriaFacade.getInstance().getTodos());
         Comunes.cargarJCombo(cboUnidadDeMedida, UnidadMedidaFacade.getInstance().getTodos());
+         Comunes.cargarJCombo(cboListaCosto, ListaCostoFacade.getInstance().getTodos());
+            Comunes.cargarJCombo(cboMarca, MarcaFacade.getInstance().getTodos());
+              
         if (tipoOperacion.equals("Modificación")) {
             cargarDatosArticulo();
         }
@@ -305,6 +410,11 @@ public class DiagArticulo extends javax.swing.JDialog {
                 articulo.setDescripcionReducida(tfDescripcionRed.getText().toUpperCase());
                 articulo.setSubCategoria((SubCategoria) cboSubCategoria.getSelectedItem());
                 articulo.setUnidadMedida((UnidadMedida) cboUnidadDeMedida.getSelectedItem());
+                articulo.setPrecioCosto(redondear(new BigDecimal(tfprecocosto.getText())));
+                articulo.setMarca((Marca)cboMarca.getSelectedItem());
+                articulo.setDescuentoCosto((ValorCosto)cboValor.getSelectedItem());
+               
+               
                 ArticuloFacade.getInstance().alta(articulo);
                 JOptionPane.showMessageDialog(this, "Articulo agregado!");
                 this.dispose();
@@ -318,6 +428,9 @@ public class DiagArticulo extends javax.swing.JDialog {
                 articulo.setDescripcionReducida(tfDescripcionRed.getText());
                 articulo.setSubCategoria((SubCategoria) cboSubCategoria.getSelectedItem());
                 articulo.setUnidadMedida((UnidadMedida) cboUnidadDeMedida.getSelectedItem());
+                 articulo.setPrecioCosto(redondear(new BigDecimal(tfprecocosto.getText())));
+                articulo.setMarca((Marca)cboMarca.getSelectedItem());
+                articulo.setDescuentoCosto((ValorCosto)cboValor.getSelectedItem());
                 ArticuloFacade.getInstance().modificar(articulo);
                 JOptionPane.showMessageDialog(this, "Articulo modificado!");
                 this.dispose();
@@ -344,12 +457,33 @@ public class DiagArticulo extends javax.swing.JDialog {
 
         }
         try {
+            tfprecocosto.setText(articulo.getPrecioCosto().toString());
+        } catch (Exception e) {
+
+        }
+        try {
             cboSubCategoria.setSelectedItem(articulo.getSubCategoria());
         } catch (Exception e) {
 
         }
         try {
             cboUnidadDeMedida.setSelectedItem(articulo.getUnidadMedida());
+        } catch (Exception e) {
+
+        }
+        
+        try {
+            cboMarca.setSelectedItem(articulo.getMarca());
+        } catch (Exception e) {
+
+        }
+        try {
+            cboValor.setSelectedItem(articulo.getDescuentoCosto());
+        } catch (Exception e) {
+
+        }
+        try {
+            cboListaCosto.setSelectedItem(articulo.getDescuentoCosto().getListaCosto());
         } catch (Exception e) {
 
         }

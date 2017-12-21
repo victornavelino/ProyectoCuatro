@@ -7,7 +7,9 @@ package facade;
 
 import controladores.ValorCostoJpaController;
 import controladores.exceptions.NonexistentEntityException;
+import entidades.articulo.costo.ListaCosto;
 import entidades.articulo.costo.ValorCosto;
+import static entidades.articulo.costo.ValorCosto_.listaCosto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +90,12 @@ public class ValorCostoFacade {
         qu.setParameter("descripcion", "%" + descripcion + "%");
         return qu.getResultList();
     }
+    public List<ValorCosto> buscarPorid(ListaCosto valor) {
+        Query qu = em.createQuery("SELECT l FROM ValorCosto l WHERE l.listaCosto =:valor");
+        qu.setParameter("valor",valor);
+        return qu.getResultList();
+    }
+
 
     public ValorCosto getPorDescripcion(String descripcion) {
         Query qu = em.createQuery("SELECT l FROM ValorCosto l WHERE l.descripcion=:descripcion");
