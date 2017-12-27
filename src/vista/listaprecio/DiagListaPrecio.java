@@ -7,6 +7,7 @@ package vista.listaprecio;
 import Recursos.JButtonEditor;
 import Recursos.JButtonRender;
 import entidades.articulo.TipoIva;
+import entidades.caja.FormaPago;
 import facade.GenericoFacade;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -47,6 +48,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
         aModel.addColumn("Código");
         aModel.addColumn("Descripción");
         aModel.addColumn("Margen(%)");
+        aModel.addColumn("Formas de Pago");
 
         Dimension dim = new Dimension(20, 1);
         jtGenerico.setIntercellSpacing(new Dimension(dim));
@@ -77,6 +79,8 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
         jtGenerico.getColumnModel().getColumn(2).setPreferredWidth(80);
 
         jtGenerico.getColumnModel().getColumn(3).setPreferredWidth(150);
+        
+        jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(0);
 
         //jtUnidadMedida.getColumnModel().getColumn(3).setCellEditor(new TextAreaEditor());
         this.jbNuevo.addActionListener(new EventoBoton(this, jtGenerico, 0, titulo, entidad));
@@ -281,7 +285,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                 Class[] sinParametro = null;
                 for (T a : lstGenerico) {
 
-                    Object[] arrayG = new Object[5];
+                    Object[] arrayG = new Object[6];
                     //id
                     campo = entidad.getDeclaredMethod("getId", sinParametro);
                     objeto = campo.invoke(a, new Object[]{});
@@ -289,12 +293,12 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
 
                     /*Method[] methods = entidad.getDeclaredMethods();
             
-            System.out.println("cant campos: " + methods.length);
+                     System.out.println("cant campos: " + methods.length);
             
-            for(int i=0; i < methods.length; i++){
-                System.out.println("Nombre del campo: " + 
-                        methods[i].getName());
-            }//fin for*/
+                     for(int i=0; i < methods.length; i++){
+                     System.out.println("Nombre del campo: " + 
+                     methods[i].getName());
+                     }//fin for*/
                     //Descripcion
                     campo = entidad.getDeclaredMethod("getDescripcion", sinParametro);
                     objeto = campo.invoke(a, new Object[]{});
@@ -307,8 +311,18 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
 
                     arrayG[4] = objeto;
 
+                    campo = entidad.getDeclaredMethod("getFormasDePago", sinParametro);
+                    objeto = campo.invoke(a, new Object[]{});
+                    arrayG[5] = objeto;
+
                     dtm.addRow(arrayG);
                 }//fin for
+                
+                // jTable.removeColumn(ListadoTable.getColumnModel().getColumn(1));
+     
+                jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(0);
+                  jtGenerico.getColumnModel().getColumn(5).setWidth(0);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontraron datos", "Mensaje", JOptionPane.ERROR_MESSAGE);
             }
@@ -330,29 +344,29 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
     public void actualizarCamposEnTabla(T entidad, int iRowSelect, int tipoOp) {
 
         /*DefaultTableModel dtm = (DefaultTableModel) jtGenerico.getModel();
-        Object[] arrayA = new Object[4];
-        arrayA[2] = a.getId();
-        arrayA[3] = a.getNombre();
+         Object[] arrayA = new Object[4];
+         arrayA[2] = a.getId();
+         arrayA[3] = a.getNombre();
 
-        int iTamaño = a.getLstUnidadMedida().size();
-        String sUnidades = "";
-        for (int i = 0; i < iTamaño; i++) {
-            sUnidades += a.getLstUnidadMedida().get(i).getNombre();
-            if (i + 1 < iTamaño) {
-                sUnidades += ", ";
-            }//fin if
-        }//fin for
-        arrayA[4] = sUnidades;
-        arrayA[5] = a.getDescripcion();
+         int iTamaño = a.getLstUnidadMedida().size();
+         String sUnidades = "";
+         for (int i = 0; i < iTamaño; i++) {
+         sUnidades += a.getLstUnidadMedida().get(i).getNombre();
+         if (i + 1 < iTamaño) {
+         sUnidades += ", ";
+         }//fin if
+         }//fin for
+         arrayA[4] = sUnidades;
+         arrayA[5] = a.getDescripcion();
          
 
-        lstAnalisis.remove(iRowSelect);
-        dtm.removeRow(iRowSelect);
-        //modificar
-        if(tipoOp == 1){
-            lstAnalisis.add(iRowSelect, a);
-            dtm.insertRow(iRowSelect, arrayA);
-        }//fin if
+         lstAnalisis.remove(iRowSelect);
+         dtm.removeRow(iRowSelect);
+         //modificar
+         if(tipoOp == 1){
+         lstAnalisis.add(iRowSelect, a);
+         dtm.insertRow(iRowSelect, arrayA);
+         }//fin if
         
         
 
@@ -361,8 +375,8 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
          //arrayUM[2] = new JButton();
          
         
-        //this.cargarTabla();
-        System.out.println("Termino");*/
+         //this.cargarTabla();
+         System.out.println("Termino");*/
     }//fin actualizarCamposEnTabla
 
     public class EventoBoton implements ActionListener {
@@ -398,12 +412,11 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                     break;
                 case 1://Modificar
                     if (jTable.getSelectedRow() != -1) {
-                    dgE = new DiagListaPrecioEdit(this.jdPadre, Boolean.TRUE, titulo, "  Modificar", this.entidad);
+                        dgE = new DiagListaPrecioEdit(this.jdPadre, Boolean.TRUE, titulo, "  Modificar", this.entidad);
 
-                    rowSelect = jTable.getSelectedRow();
-                    dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)));
-                    }
-                    else {
+                        rowSelect = jTable.getSelectedRow();
+                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), (List) jTable.getValueAt(rowSelect, 5));
+                    } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar una lista");
                     }
                     break;
@@ -413,7 +426,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                         dgE = new DiagListaPrecioEdit(this.jdPadre, Boolean.TRUE, titulo, "  Eliminar", this.entidad);
 
                         rowSelect = jTable.getSelectedRow();
-                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)));
+                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), (List) jTable.getValueAt(rowSelect, 5));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar una lista");
                     }
@@ -430,8 +443,8 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
             //System.out.println("Fila seleccionada: " + rowSelect);
             //si si modifica o elimina actualiza los datos
             /*if(rowSelect>=0 && dgA.getRstOperacion()){
-                ((DiagGenerico)jdPadre).actualizarCamposEnTabla(dgA.getAnalisis(), rowSelect, tipoOperacion);
-            }*/
+             ((DiagGenerico)jdPadre).actualizarCamposEnTabla(dgA.getAnalisis(), rowSelect, tipoOperacion);
+             }*/
         }//fin actionPerformed
 
     }//fin EventoBoton
