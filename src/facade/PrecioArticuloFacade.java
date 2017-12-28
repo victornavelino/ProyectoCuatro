@@ -259,4 +259,18 @@ public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
             return null;
         }
     }
+
+
+ public List<PrecioArticulo> buscarPorDescDescCortayCodigo(String descripcion) {
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        Query qu = em.createQuery("SELECT p FROM PrecioArticulo p WHERE "
+                + "p.articulo.descripcionReducida LIKE :descripcion OR "
+                + "p.articulo.codigoBarra LIKE :descripcion OR "
+                + "p.articulo.descripcion LIKE :descripcion ORDER BY p.articulo.descripcion ASC");
+        qu.setParameter("descripcion", "%" + descripcion.toUpperCase() + "%");
+        em.getEntityManagerFactory().getCache().evictAll();
+        return qu.getResultList();
+    }
+ 
 }

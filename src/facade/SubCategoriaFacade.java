@@ -90,7 +90,11 @@ public class SubCategoriaFacade {
         Query qu = em.createQuery("SELECT s FROM SubCategoria s ORDER BY s.descripcion ASC");
         return qu.getResultList();
     }
-
+public List<SubCategoria> buscarPorid(Categoria categoria) {
+        Query qu = em.createQuery("SELECT l FROM SubCategoria l WHERE l.categoria =:categoria");
+        qu.setParameter("categoria",categoria);
+        return qu.getResultList();
+    }
     public SubCategoria buscarPorDescripcion(String descripcion) {
 
         try {

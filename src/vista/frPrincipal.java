@@ -99,6 +99,7 @@ import vista.articulos.DiagAdminPrecioArticulo;
 import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
+import vista.articulos.DiagPrecios;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
 import vista.cliente.DiagImportarExportarClientes;
@@ -456,6 +457,20 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 DiagAdminArticulos diagAdminArticulos = new DiagAdminArticulos(frame, true);
                 diagAdminArticulos.setLocation(Comunes.centrarDialog(diagAdminArticulos));
                 diagAdminArticulos.setVisible(true);
+            }
+
+        });
+         jXTaskPaneArticulos.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Modificar Precio");
+                putValue(Action.SHORT_DESCRIPTION, "Modificar Precio");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagPrecios diagprecios = new DiagPrecios(frame, true);
+                diagprecios.setLocation(Comunes.centrarDialog(diagprecios));
+                diagprecios.setVisible(true);
             }
 
         });
@@ -1592,7 +1607,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             System.out.println("No se pudo abrir el puerto");
         }
         if (serialPort != null) {
-            leerPuerto();
+           // leerPuerto();
         }
     }
 
@@ -1858,7 +1873,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
     }
 
-    private void leerPuerto() {
+   /* private void leerPuerto() {
 
         try {
             inputStream = serialPort.getInputStream();
@@ -1882,7 +1897,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
         } catch (UnsupportedCommOperationException e) {
         }
-    }
+    }*/
 
     public void serialEvent(SerialPortEvent event) {
 
