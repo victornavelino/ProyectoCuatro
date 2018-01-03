@@ -16,6 +16,8 @@ import entidades.articulo.Articulo;
 import entidades.articulo.Categoria;
 import entidades.articulo.ListaPrecio;
 import entidades.articulo.PrecioArticulo;
+import entidades.articulo.SubCategoria;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -131,6 +133,19 @@ public class PrecioArticuloFacade {
                 + "and p.sucursal = :sucursal");
         quBuscar.setParameter("listaPrecio", listaPrecio);
         quBuscar.setParameter("sucursal", sucursal);
+        ema.getEntityManagerFactory().getCache().evictAll();
+
+        try {
+            return (List<PrecioArticulo>) quBuscar.getResultList();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    public List<PrecioArticulo> getTodosActual() {
+        
+        EntityManager ema = emf.createEntityManager();
+        Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p");
+        
         ema.getEntityManagerFactory().getCache().evictAll();
 
         try {
@@ -272,5 +287,60 @@ public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
         em.getEntityManagerFactory().getCache().evictAll();
         return qu.getResultList();
     }
- 
+ public void actualizarPreciosCategoria(BigDecimal porcentaje,Categoria categoria,ListaPrecio listaprecios,Sucursal sucursal) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo.subCategoria.categoria=:categoria and p.sucursal=:sucursal");
+       q.setParameter("porcentaje", porcentaje);
+       q.setParameter("categoria", categoria);
+       q.setParameter("listaprecio", listaprecios);
+        q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+       
+        em.getTransaction().commit();
+    }
+ public void actualizarPreciosSubCategoria(BigDecimal porcentaje,SubCategoria subCategoria,ListaPrecio listaprecios,Sucursal sucursal) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo.subCategoria=:subCategoria  and p.sucursal=:sucursal");
+       q.setParameter("porcentaje", porcentaje);
+       q.setParameter("subCategoria", subCategoria);
+       q.setParameter("listaprecio", listaprecios);
+       q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+       
+        em.getTransaction().commit();
+    }
+ public void actualizarPreciosArticuloPorPorcentaje(BigDecimal porcentaje,Articulo articulo,ListaPrecio listaprecios,Sucursal sucursal) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo=:articulo  and p.sucursal=:sucursal");
+       q.setParameter("porcentaje", porcentaje);
+       q.setParameter("articulo", articulo);
+       q.setParameter("listaprecio", listaprecios);
+      q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+       
+        em.getTransaction().commit();
+    }
+ public void actualizarPreciosArticuloPorPrecio(BigDecimal precio,Articulo articulo,ListaPrecio listaprecios,Sucursal sucursal) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE PrecioArticulo p SET p.precio =:precio WHERE p.listaPrecio=:listaprecio and p.articulo=:articulo  and p.sucursal=:sucursal");
+       q.setParameter("precio", precio);
+       q.setParameter("articulo", articulo);
+       q.setParameter("listaprecio", listaprecios);
+      q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+       
+        em.getTransaction().commit();
+    }
 }

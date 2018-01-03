@@ -468,7 +468,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
 
             public void actionPerformed(ActionEvent e) {
-                DiagPrecios diagprecios = new DiagPrecios(frame, true);
+                DiagPrecios diagprecios = new DiagPrecios(frame, true,sucursal);
                 diagprecios.setLocation(Comunes.centrarDialog(diagprecios));
                 diagprecios.setVisible(true);
             }
