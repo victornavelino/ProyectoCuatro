@@ -94,7 +94,7 @@
                           <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="241" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="248" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -118,7 +118,9 @@
                                                   </Group>
                                               </Group>
                                           </Group>
-                                          <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jckTodasListas" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="labelCategoria" min="-2" max="-2" attributes="0"/>
@@ -139,7 +141,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="cboSubCategoria" pref="136" max="32767" attributes="0"/>
+                                  <Component id="cboSubCategoria" pref="144" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -179,7 +181,7 @@
                       <Component id="rbPorPorcentaje" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbPorPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace pref="9" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="tfArticulo" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="labelNombreArticulo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -189,6 +191,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cboListaPrecios" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelListaPrecios" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jckTodasListas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -523,6 +526,16 @@
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rbPorPorcentajeItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="jckTodasListas">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="vista/articulos/Bundle.properties" key="DiagPrecios.jckTodasListas.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jckTodasListasItemStateChanged"/>
           </Events>
         </Component>
       </SubComponents>
