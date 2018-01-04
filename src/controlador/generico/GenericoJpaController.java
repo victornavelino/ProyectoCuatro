@@ -152,7 +152,6 @@ public class GenericoJpaController<T> implements Serializable {
             query = ema.createQuery("SELECT g FROM " + nombreEntidad + " g ORDER BY g.descripcion");
             ema.getEntityManagerFactory().getCache().evictAll();
         }
-        System.out.println("lista de entidades: " + query.getResultList());
         return query.getResultList();
 
     }//fin findLike

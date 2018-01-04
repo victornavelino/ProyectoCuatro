@@ -9,6 +9,7 @@ import Recursos.JButtonRender;
 import entidades.articulo.TipoIva;
 import entidades.caja.FormaPago;
 import facade.GenericoFacade;
+import includes.Comunes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -79,7 +80,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
         jtGenerico.getColumnModel().getColumn(2).setPreferredWidth(80);
 
         jtGenerico.getColumnModel().getColumn(3).setPreferredWidth(150);
-        
+
         jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(0);
 
         //jtUnidadMedida.getColumnModel().getColumn(3).setCellEditor(new TextAreaEditor());
@@ -317,12 +318,11 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
 
                     dtm.addRow(arrayG);
                 }//fin for
-                
+
                 // jTable.removeColumn(ListadoTable.getColumnModel().getColumn(1));
-     
                 jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(0);
-                  jtGenerico.getColumnModel().getColumn(5).setWidth(0);
-                
+                jtGenerico.getColumnModel().getColumn(5).setWidth(0);
+
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontraron datos", "Mensaje", JOptionPane.ERROR_MESSAGE);
             }
@@ -402,8 +402,6 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
 
             int rowSelect = -1;
 
-            System.out.println("titulo " + titulo);
-
             switch (this.tipoOperacion) {
 
                 case 0:
@@ -415,7 +413,13 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                         dgE = new DiagListaPrecioEdit(this.jdPadre, Boolean.TRUE, titulo, "  Modificar", this.entidad);
 
                         rowSelect = jTable.getSelectedRow();
-                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), (List) jTable.getValueAt(rowSelect, 5));
+                        List list = null;
+                        try {
+                            list = (List) jTable.getValueAt(rowSelect, 5);
+                        } catch (Exception ex) {
+                            Comunes.mensajeError(ex, "No se puede cargar: " + jTable.getValueAt(rowSelect, 5));
+                        }
+                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), list);
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar una lista");
                     }
