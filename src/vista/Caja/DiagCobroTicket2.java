@@ -10,6 +10,7 @@ import entidades.caja.Caja;
 import entidades.caja.CobroVenta;
 import entidades.caja.CuentaCorriente;
 import entidades.caja.CuponTarjeta;
+import entidades.caja.FormaPago;
 import entidades.cliente.Cliente;
 import entidades.usuario.Usuario;
 import entidades.venta.Venta;
@@ -29,6 +30,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,6 +73,7 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
     List<VentaArticulo> listaArticulos = new ArrayList<>();
     List<CuponTarjeta> listaCuponesTarjeta = new ArrayList<>();
     private Caja caja;
+    private Cliente cliente;
 
     /**
      * Creates new form DiagCobroTicket
@@ -89,6 +92,18 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
         this.caja = caja;
         inicializarComponentes();
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+   
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -556,6 +571,10 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
         ActualizarTickets();
         modeloTablaPagos = new ModeloTablaNoEditable();
         cargarEncabezadosTablaPagos(modeloTablaPagos);
+        
+        btnEfectivo.setEnabled(false);
+        btnCuentaCorriente.setEnabled(false);
+        btnTarjetaVale.setEnabled(false);
 
     }
 
@@ -816,6 +835,49 @@ public class DiagCobroTicket2 extends javax.swing.JDialog {
             tfTotal.setText(new DecimalFormat("0.00").format(saldo));
             aPagarEfectivo = ticket.getMonto();
 //            tfApagarEfectivo.setText(new DecimalFormat("0.00").format(aPagarEfectivo));
+            
+            // para buscar las formas de pago
+             this.setCliente(ClienteFacade.getInstance().getPersonaXDni(ticket.getDniCliente()));
+        
+             
+             Iterator<FormaPago> iter  = cliente.getListaPrecio().getFormasDePago().iterator();
+             while (iter.hasNext()){
+                 FormaPago f = (FormaPago) iter.next();
+                 if(f.equals(FormaPago.EFECTIVO)){
+                     btnEfectivo.setEnabled(true);
+                 }
+                  if(f.equals(FormaPago.CUENTA_CORRIENTE)){
+                     btnCuentaCorriente.setEnabled(true);
+                 }
+                   if(f.equals(FormaPago.TARJETA)){
+                     btnTarjetaVale.setEnabled(true);
+                 }
+             }
+             
+             /*
+                  for(int i=0;i<=formaPago.size()-1;i++){
+           
+            if (formaPago.get(i).equals(FormaPago.EFECTIVO)){
+           
+                this.jRadioButton1.setSelected(true);
+            }
+            if (formaPago.get(i).equals(FormaPago.TARJETA)){
+                this.jRadioButton2.setSelected(true);
+            }
+            if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)){
+                this.jRadioButton3.setSelected(true);
+            }
+            if (formaPago.get(i).equals(FormaPago.CHEQUE)){
+                this.jRadioButton4.setSelected(true);
+            }
+            if (formaPago.get(i).equals(FormaPago.DEPOSITO)){
+                this.jRadioButton5.setSelected(true);
+            }
+            if (formaPago.get(i).equals(FormaPago.RAPIPAGO)){
+                this.jRadioButton6.setSelected(true);
+            }
+        } 
+             */
 
         }
         btnEfectivo.requestFocus();
