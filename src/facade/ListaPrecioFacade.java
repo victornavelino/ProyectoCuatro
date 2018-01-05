@@ -177,5 +177,15 @@ public class ListaPrecioFacade {
         }
 
     }
+    
+   public ListaPrecio getListaPrecio(Long id) {
+        Query qu = em.createQuery("SELECT l FROM ListaPrecio l WHERE l.id=:id");
+        qu.setParameter("id", id);
+        try {
+            return (ListaPrecio) qu.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
 
+    }
 }

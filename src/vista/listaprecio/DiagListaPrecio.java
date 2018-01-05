@@ -6,6 +6,7 @@ package vista.listaprecio;
 
 import Recursos.JButtonEditor;
 import Recursos.JButtonRender;
+import entidades.articulo.ListaPrecio;
 import entidades.articulo.TipoIva;
 import entidades.caja.FormaPago;
 import facade.GenericoFacade;
@@ -50,6 +51,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
         aModel.addColumn("Descripción");
         aModel.addColumn("Margen(%)");
         aModel.addColumn("Formas de Pago");
+        aModel.addColumn("Cambio de Listas");
 
         Dimension dim = new Dimension(20, 1);
         jtGenerico.setIntercellSpacing(new Dimension(dim));
@@ -286,7 +288,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                 Class[] sinParametro = null;
                 for (T a : lstGenerico) {
 
-                    Object[] arrayG = new Object[6];
+                    Object[] arrayG = new Object[7];
                     //id
                     campo = entidad.getDeclaredMethod("getId", sinParametro);
                     objeto = campo.invoke(a, new Object[]{});
@@ -315,6 +317,9 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                     campo = entidad.getDeclaredMethod("getFormasDePago", sinParametro);
                     objeto = campo.invoke(a, new Object[]{});
                     arrayG[5] = objeto;
+                    campo = entidad.getDeclaredMethod("getPermiteCambioAListas", sinParametro);
+                    objeto = campo.invoke(a, new Object[]{});
+                    arrayG[6] = objeto;
 
                     dtm.addRow(arrayG);
                 }//fin for
@@ -414,12 +419,14 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
 
                         rowSelect = jTable.getSelectedRow();
                         List list = null;
+                        List listaPrecio=null;
                         try {
                             list = (List) jTable.getValueAt(rowSelect, 5);
+                            listaPrecio= (List)jTable.getValueAt(rowSelect, 6);
                         } catch (Exception ex) {
                             Comunes.mensajeError(ex, "No se puede cargar: " + jTable.getValueAt(rowSelect, 5));
                         }
-                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), list);
+                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), list,listaPrecio);
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar una lista");
                     }
@@ -430,7 +437,7 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
                         dgE = new DiagListaPrecioEdit(this.jdPadre, Boolean.TRUE, titulo, "  Eliminar", this.entidad);
 
                         rowSelect = jTable.getSelectedRow();
-                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), (List) jTable.getValueAt(rowSelect, 5));
+                        dgE.cargarCampos(String.valueOf(jTable.getValueAt(rowSelect, 2)), (String) jTable.getValueAt(rowSelect, 3), String.valueOf(jTable.getValueAt(rowSelect, 4)), (List) jTable.getValueAt(rowSelect, 5),(List) jTable.getValueAt(rowSelect, 6));
                     } else {
                         JOptionPane.showMessageDialog(null, "Debe seleccionar una lista");
                     }

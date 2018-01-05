@@ -8,6 +8,8 @@ import entidades.articulo.ListaPrecio;
 import entidades.articulo.TipoIva;
 import entidades.caja.FormaPago;
 import facade.GenericoFacade;
+import facade.ListaPrecioFacade;
+import includes.Comunes;
 import static includes.Comunes.redondear;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -31,6 +33,7 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private Class<T> entidad;
     private ListaPrecio listaPrecio;
     private List<FormaPago> formasPago;
+    private List<ListaPrecio> lstPrecioDentro = new ArrayList<ListaPrecio>();
 
     /**
      * Creates new form dgAtributoEdit
@@ -39,18 +42,23 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
         super(parent, modal);
         this.setLocationRelativeTo(parent);
         initComponents();
+        this.jlSubTitulo.setText(subTitulo);
         this.initComponentes();
 
         this.setTitle(titulo);
-        this.jlSubTitulo.setText(subTitulo);
+
         this.entidad = entidad;
         this.formasPago = new ArrayList<FormaPago>();
-
+        this.lstPrecioDentro = new ArrayList<>();
     }
 
     private void initComponentes() {
         this.jtfId.setEditable(Boolean.FALSE);
-        
+        System.out.println("el subtitulo es" + "ppp" + jlSubTitulo.getText());
+        if (jlSubTitulo.getText().equals("  Nuevo")) {
+            Comunes.cargarJList(jlListaFuera, ListaPrecioFacade.getInstance().getTodos());
+        }
+
     }//fin initComponentes
 
     public Boolean getRstOperacion() {
@@ -102,6 +110,13 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlListaDentro = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlListaFuera = new javax.swing.JList();
+        jButton1 = new javax.swing.JButton();
+        quitar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -206,6 +221,26 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             }
         });
 
+        jScrollPane2.setViewportView(jlListaDentro);
+
+        jScrollPane3.setViewportView(jlListaFuera);
+
+        jButton1.setText("agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        quitar.setText("quitar");
+        quitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Permite Cambio de Lista:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -238,23 +273,36 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tmargen, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton4))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton5))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton6)
-                                    .addComponent(jRadioButton3))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(67, 67, 67)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jRadioButton1)
+                                            .addComponent(jRadioButton4)))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jRadioButton2)
+                                            .addComponent(jRadioButton5))
+                                        .addGap(36, 36, 36)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jRadioButton6)
+                                            .addComponent(jRadioButton3)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton1)
+                                            .addComponent(quitar))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(38, 38, 38))))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +321,7 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tmargen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -288,10 +336,23 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jRadioButton4)
                                 .addComponent(jRadioButton5)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbAction, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbSalir, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(quitar)))
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbAction, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbSalir, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -334,42 +395,62 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-       
-        if(jRadioButton1.isSelected())
-        formasPago.add(FormaPago.EFECTIVO);
-        else formasPago.remove(FormaPago.EFECTIVO);
-        
+
+        if (jRadioButton1.isSelected()) {
+            formasPago.add(FormaPago.EFECTIVO);
+        } else {
+            formasPago.remove(FormaPago.EFECTIVO);
+        }
+
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-         if(jRadioButton2.isSelected())
-        formasPago.add(FormaPago.TARJETA);
-        else formasPago.remove(FormaPago.TARJETA);
+        if (jRadioButton2.isSelected()) {
+            formasPago.add(FormaPago.TARJETA);
+        } else {
+            formasPago.remove(FormaPago.TARJETA);
+        }
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        if(jRadioButton3.isSelected())
-        formasPago.add(FormaPago.CUENTA_CORRIENTE);
-        else formasPago.remove(FormaPago.CUENTA_CORRIENTE);
+        if (jRadioButton3.isSelected()) {
+            formasPago.add(FormaPago.CUENTA_CORRIENTE);
+        } else {
+            formasPago.remove(FormaPago.CUENTA_CORRIENTE);
+        }
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-         if(jRadioButton4.isSelected())
-        formasPago.add(FormaPago.CHEQUE);
-        else formasPago.remove(FormaPago.CHEQUE);
+        if (jRadioButton4.isSelected()) {
+            formasPago.add(FormaPago.CHEQUE);
+        } else {
+            formasPago.remove(FormaPago.CHEQUE);
+        }
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-      if(jRadioButton5.isSelected())
-        formasPago.add(FormaPago.DEPOSITO);
-        else formasPago.remove(FormaPago.DEPOSITO);
+        if (jRadioButton5.isSelected()) {
+            formasPago.add(FormaPago.DEPOSITO);
+        } else {
+            formasPago.remove(FormaPago.DEPOSITO);
+        }
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-         if(jRadioButton6.isSelected())
-        formasPago.add(FormaPago.RAPIPAGO);
-        else formasPago.remove(FormaPago.RAPIPAGO);
+        if (jRadioButton6.isSelected()) {
+            formasPago.add(FormaPago.RAPIPAGO);
+        } else {
+            formasPago.remove(FormaPago.RAPIPAGO);
+        }
     }//GEN-LAST:event_jRadioButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        agregarListaPrecios();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void quitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarActionPerformed
+        quitarListaPrecios();
+    }//GEN-LAST:event_quitarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -417,10 +498,12 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -430,12 +513,17 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbAction;
     private javax.swing.JButton jbSalir;
+    private javax.swing.JList jlListaDentro;
+    private javax.swing.JList jlListaFuera;
     private javax.swing.JLabel jlSubTitulo;
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNombre;
+    private javax.swing.JButton quitar;
     private javax.swing.JTextField tmargen;
     // End of variables declaration//GEN-END:variables
 
@@ -453,6 +541,34 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                 break;
         }//fin switch
     }//fin action
+
+    private void agregarListaPrecios() {
+        if (jlListaFuera.getSelectedIndex() != -1) {
+
+            lstPrecioDentro.add((ListaPrecio) jlListaFuera.getSelectedValue());
+            List<ListaPrecio> listaPrecioFuera = ListaPrecioFacade.getInstance().getTodos();
+            listaPrecioFuera.removeAll(lstPrecioDentro);
+            Comunes.cargarJList(jlListaFuera, listaPrecioFuera);
+
+            Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe escoger una Lista", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void quitarListaPrecios() {
+        if (jlListaDentro.getSelectedIndex() != -1) {
+
+            lstPrecioDentro.remove((ListaPrecio) jlListaDentro.getSelectedValue());
+            List<ListaPrecio> lstListasFuera = ListaPrecioFacade.getInstance().getTodos();
+            lstListasFuera.removeAll(lstPrecioDentro);
+            Comunes.cargarJList(jlListaFuera, lstListasFuera);
+
+            Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+
+        }
+    }
 
     private void guardar() {
 
@@ -493,7 +609,11 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
+            cArg[0] = List.class;
+            campo = entidad.getDeclaredMethod("setPermiteCambioAListas", cArg);
+
+            campo.invoke(o, lstPrecioDentro);
+
             System.out.println("paso: " + o.toString());
 
             GenericoFacade.getInstance().alta(o);
@@ -533,18 +653,21 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             campo = entidad.getDeclaredMethod("setDescripcion", cArg);
 
             campo.invoke(o, jtfNombre.getText().toUpperCase().trim());
-            
+
             //Margen
             cArg[0] = BigDecimal.class;
             campo = entidad.getDeclaredMethod("setMargen", cArg);
-             campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
-          //  campo.invoke(o, tmargen.getText().toUpperCase().trim());
+            campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
+            //  campo.invoke(o, tmargen.getText().toUpperCase().trim());
 
-              cArg[0] = List.class;
+            cArg[0] = List.class;
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
+            cArg[0] = List.class;
+            campo = entidad.getDeclaredMethod("setPermiteCambioAListas", cArg);
+
+            campo.invoke(o, lstPrecioDentro);
             System.out.println("Antes de modificar" + formasPago);
             GenericoFacade.getInstance().modificar(o);
 
@@ -581,13 +704,13 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             //Margen
             cArg[0] = BigDecimal.class;
             campo = entidad.getDeclaredMethod("setMargen", cArg);
-             campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
+            campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
 
-              cArg[0] = List.class;
+            cArg[0] = List.class;
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
+
             GenericoFacade.getInstance().eliminar(o);
 
             sMensaje = "El dato fue eliminado";
@@ -629,45 +752,48 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
     }//fin 
 
-    public void cargarCampos(String id, String descripcion,String margen, List formaPago) {
+    public void cargarCampos(String id, String descripcion, String margen, List formaPago, List listaPrecio) {
 
         this.jtfId.setText(id);
         this.jtfNombre.setText(descripcion);
         this.tmargen.setText(margen);
-        
-      
-        
-        for(int i=0;i<=formaPago.size()-1;i++){
-           
-            if (formaPago.get(i).equals(FormaPago.EFECTIVO)){
-           
+
+        for (int i = 0; i <= formaPago.size() - 1; i++) {
+
+            if (formaPago.get(i).equals(FormaPago.EFECTIVO)) {
+
                 this.jRadioButton1.setSelected(true);
                 formasPago.add(FormaPago.EFECTIVO);
             }
-            if (formaPago.get(i).equals(FormaPago.TARJETA)){
+            if (formaPago.get(i).equals(FormaPago.TARJETA)) {
                 this.jRadioButton2.setSelected(true);
                 formasPago.add(FormaPago.TARJETA);
             }
-            if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)){
+            if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)) {
                 System.out.println("---+++++++++++");
                 this.jRadioButton3.setSelected(true);
                 formasPago.add(FormaPago.CUENTA_CORRIENTE);
             }
-            if (formaPago.get(i).equals(FormaPago.CHEQUE)){
+            if (formaPago.get(i).equals(FormaPago.CHEQUE)) {
                 this.jRadioButton4.setSelected(true);
                 formasPago.add(FormaPago.CHEQUE);
             }
-            if (formaPago.get(i).equals(FormaPago.DEPOSITO)){
+            if (formaPago.get(i).equals(FormaPago.DEPOSITO)) {
                 this.jRadioButton5.setSelected(true);
                 formasPago.add(FormaPago.DEPOSITO);
             }
-            if (formaPago.get(i).equals(FormaPago.RAPIPAGO)){
+            if (formaPago.get(i).equals(FormaPago.RAPIPAGO)) {
                 this.jRadioButton6.setSelected(true);
                 formasPago.add(FormaPago.RAPIPAGO);
             }
-        } 
+        }
+        lstPrecioDentro = listaPrecio;
+
+        Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+        List<ListaPrecio> lstListaPrecioFuera = ListaPrecioFacade.getInstance().getTodos();
+        lstListaPrecioFuera.removeAll(lstPrecioDentro);
+        Comunes.cargarJList(jlListaFuera, lstListaPrecioFuera);
 
     }//fin cargarCampos
 
-    
 }
