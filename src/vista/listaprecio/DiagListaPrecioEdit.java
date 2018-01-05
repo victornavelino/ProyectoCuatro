@@ -277,10 +277,11 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jRadioButton1)
+                                .addComponent(jRadioButton3)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton6)
@@ -333,30 +334,41 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
+       
+        if(jRadioButton1.isSelected())
         formasPago.add(FormaPago.EFECTIVO);
+        else formasPago.remove(FormaPago.EFECTIVO);
         
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+         if(jRadioButton2.isSelected())
         formasPago.add(FormaPago.TARJETA);
+        else formasPago.remove(FormaPago.TARJETA);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        if(jRadioButton3.isSelected())
         formasPago.add(FormaPago.CUENTA_CORRIENTE);
+        else formasPago.remove(FormaPago.CUENTA_CORRIENTE);
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+         if(jRadioButton4.isSelected())
         formasPago.add(FormaPago.CHEQUE);
+        else formasPago.remove(FormaPago.CHEQUE);
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        // TODO add your handling code here:
+      if(jRadioButton5.isSelected())
         formasPago.add(FormaPago.DEPOSITO);
+        else formasPago.remove(FormaPago.DEPOSITO);
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        // TODO add your handling code here:
+         if(jRadioButton6.isSelected())
         formasPago.add(FormaPago.RAPIPAGO);
+        else formasPago.remove(FormaPago.RAPIPAGO);
     }//GEN-LAST:event_jRadioButton6ActionPerformed
 
     /**
@@ -533,7 +545,7 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
             campo.invoke(o, formasPago);
             
-            System.out.println("Antes de modificar");
+            System.out.println("Antes de modificar" + formasPago);
             GenericoFacade.getInstance().modificar(o);
 
             sMensaje = "El dato fue modificado";
@@ -630,21 +642,28 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             if (formaPago.get(i).equals(FormaPago.EFECTIVO)){
            
                 this.jRadioButton1.setSelected(true);
+                formasPago.add(FormaPago.EFECTIVO);
             }
             if (formaPago.get(i).equals(FormaPago.TARJETA)){
                 this.jRadioButton2.setSelected(true);
+                formasPago.add(FormaPago.TARJETA);
             }
             if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)){
+                System.out.println("---+++++++++++");
                 this.jRadioButton3.setSelected(true);
+                formasPago.add(FormaPago.CUENTA_CORRIENTE);
             }
             if (formaPago.get(i).equals(FormaPago.CHEQUE)){
                 this.jRadioButton4.setSelected(true);
+                formasPago.add(FormaPago.CHEQUE);
             }
             if (formaPago.get(i).equals(FormaPago.DEPOSITO)){
                 this.jRadioButton5.setSelected(true);
+                formasPago.add(FormaPago.DEPOSITO);
             }
             if (formaPago.get(i).equals(FormaPago.RAPIPAGO)){
                 this.jRadioButton6.setSelected(true);
+                formasPago.add(FormaPago.RAPIPAGO);
             }
         } 
 
