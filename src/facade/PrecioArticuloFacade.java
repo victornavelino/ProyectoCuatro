@@ -114,7 +114,7 @@ public class PrecioArticuloFacade {
 
     public PrecioArticulo getComun(Articulo articulo, Sucursal sucursal) {
         Query quBuscar = em.createQuery("SELECT p FROM PrecioArticulo p where p.articulo = :articulo "
-                + "and LOWER(p.listaPrecio.descripcion)='comun' and p.sucursal = :sucursal");
+                + "and LOWER(p.listaPrecio.descripcion)='minorista' and p.sucursal = :sucursal");
         quBuscar.setParameter("articulo", articulo);
         quBuscar.setParameter("sucursal", sucursal);
 
