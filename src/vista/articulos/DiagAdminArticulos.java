@@ -515,7 +515,7 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
     }
 
     private void cargarArticulo(Articulo articulo) {
-
+         
         Object[] fila = new Object[10];
         fila[0] = articulo.getId();
         fila[1] = articulo.getCodigoBarra();

@@ -77,11 +77,12 @@ public class DiagArticulo extends javax.swing.JDialog {
         btnNuevaSubcategoria = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         cboUnidadDeMedida = new javax.swing.JComboBox();
-        btnNuevaUnidadMedida = new javax.swing.JButton();
+        btnNuevaMarca = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         tfprecocosto = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cboMarca = new javax.swing.JComboBox();
+        btnNuevaUnidadMedida = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -120,12 +121,17 @@ public class DiagArticulo extends javax.swing.JDialog {
         jLabel5.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel5.text")); // NOI18N
 
         cboUnidadDeMedida.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnNuevaUnidadMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
-        btnNuevaUnidadMedida.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.btnNuevaUnidadMedida.text")); // NOI18N
-        btnNuevaUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+        cboUnidadDeMedida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaUnidadMedidaActionPerformed(evt);
+                cboUnidadDeMedidaActionPerformed(evt);
+            }
+        });
+
+        btnNuevaMarca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
+        btnNuevaMarca.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.btnNuevaMarca.text")); // NOI18N
+        btnNuevaMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaMarcaActionPerformed(evt);
             }
         });
 
@@ -136,6 +142,14 @@ public class DiagArticulo extends javax.swing.JDialog {
         jLabel9.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jLabel9.text")); // NOI18N
 
         cboMarca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnNuevaUnidadMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
+        btnNuevaUnidadMedida.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.btnNuevaUnidadMedida.text")); // NOI18N
+        btnNuevaUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaUnidadMedidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,14 +175,19 @@ public class DiagArticulo extends javax.swing.JDialog {
                                 .addComponent(tfCodigoBarra, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(cboSubCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tfprecocosto, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGap(18, 18, 18)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnNuevaSubcategoria)
-                                .addComponent(btnNuevaUnidadMedida))
-                            .addContainerGap(94, Short.MAX_VALUE)))
+                                .addComponent(btnNuevaMarca))
+                            .addContainerGap(82, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(54, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(266, Short.MAX_VALUE)
+                    .addComponent(btnNuevaUnidadMedida)
+                    .addGap(205, 205, 205)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,16 +215,20 @@ public class DiagArticulo extends javax.swing.JDialog {
                             .addComponent(jLabel5)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNuevaSubcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
-                        .addComponent(btnNuevaUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(44, 44, 44)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
                     .addComponent(tfprecocosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)))
+                    .addComponent(jLabel9)
+                    .addComponent(btnNuevaMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(119, Short.MAX_VALUE)
+                    .addComponent(btnNuevaUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(59, 59, 59)))
         );
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
@@ -267,13 +290,11 @@ public class DiagArticulo extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(210, 210, 210)
                         .addComponent(btnAceptar)))
@@ -300,10 +321,10 @@ public class DiagArticulo extends javax.swing.JDialog {
         aceptar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private void btnNuevaUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaUnidadMedidaActionPerformed
-        agregarUnidadMedida();
-        Comunes.cargarJCombo(cboUnidadDeMedida, UnidadMedidaFacade.getInstance().getTodos());
-    }//GEN-LAST:event_btnNuevaUnidadMedidaActionPerformed
+    private void btnNuevaMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaMarcaActionPerformed
+        agregarMarca();
+        Comunes.cargarJCombo(cboMarca, MarcaFacade.getInstance().getTodos());
+    }//GEN-LAST:event_btnNuevaMarcaActionPerformed
 
     private void btnNuevaSubcategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubcategoriaActionPerformed
         agregarNuevaSubcategoria();
@@ -313,6 +334,15 @@ public class DiagArticulo extends javax.swing.JDialog {
     private void cboListaCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboListaCostoActionPerformed
  Comunes.cargarJCombo(cboValor, ValorCostoFacade.getInstance().buscarPorid((ListaCosto)cboListaCosto.getSelectedItem()));    
     }//GEN-LAST:event_cboListaCostoActionPerformed
+
+    private void cboUnidadDeMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboUnidadDeMedidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboUnidadDeMedidaActionPerformed
+
+    private void btnNuevaUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaUnidadMedidaActionPerformed
+          agregarUnidadMedida();
+        Comunes.cargarJCombo(cboUnidadDeMedida, UnidadMedidaFacade.getInstance().getTodos());
+    }//GEN-LAST:event_btnNuevaUnidadMedidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,6 +388,7 @@ public class DiagArticulo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnNuevaMarca;
     private javax.swing.JButton btnNuevaSubcategoria;
     private javax.swing.JButton btnNuevaUnidadMedida;
     private javax.swing.JComboBox cboListaCosto;
@@ -520,6 +551,12 @@ public class DiagArticulo extends javax.swing.JDialog {
         DiagUnidadMedida diagUnidadMedida = new DiagUnidadMedida(null, true, "Alta");
         diagUnidadMedida.setLocationRelativeTo(null);
         diagUnidadMedida.setVisible(true);
+    }
+    
+      private void agregarMarca() {
+        DiagMarca diagMarca = new DiagMarca(null, true, "Alta");
+        diagMarca.setLocationRelativeTo(null);
+        diagMarca.setVisible(true);
     }
 
     private void eliminarUnidadMedida() {
