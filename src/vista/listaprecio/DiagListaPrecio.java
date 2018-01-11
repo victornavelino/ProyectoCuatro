@@ -82,7 +82,8 @@ public class DiagListaPrecio<T> extends javax.swing.JDialog {
         jtGenerico.getColumnModel().getColumn(2).setPreferredWidth(80);
 
         jtGenerico.getColumnModel().getColumn(3).setPreferredWidth(150);
-
+        jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(5);
+        jtGenerico.getColumnModel().getColumn(6).setPreferredWidth(5);
         jtGenerico.getColumnModel().getColumn(5).setPreferredWidth(0);
 
         //jtUnidadMedida.getColumnModel().getColumn(3).setCellEditor(new TextAreaEditor());
