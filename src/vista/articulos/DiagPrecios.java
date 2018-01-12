@@ -734,9 +734,9 @@ public class DiagPrecios extends javax.swing.JDialog {
     private void modificarArticulo() {
         if (tblArticulos.getSelectedRow() != -1) {
             Articulo articulo = ArticuloFacade.getInstance().buscar((Long) tblArticulos.getValueAt(tblArticulos.getSelectedRow(), 0));
-            DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo);
-            diagArticulo.setLocation(Comunes.centrarDialog(diagArticulo));
-            diagArticulo.setVisible(true);
+            //DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo);
+            //diagArticulo.setLocation(Comunes.centrarDialog(diagArticulo));
+            //diagArticulo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
         }
