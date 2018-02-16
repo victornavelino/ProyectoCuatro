@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
@@ -288,6 +290,11 @@ public class DiagArticulo extends javax.swing.JDialog {
                 cboValorItemStateChanged(evt);
             }
         });
+        cboValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboValorActionPerformed(evt);
+            }
+        });
 
         jbActualizarPrecio.setText(org.openide.util.NbBundle.getMessage(DiagArticulo.class, "DiagArticulo.jbActualizarPrecio.text")); // NOI18N
         jbActualizarPrecio.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +316,7 @@ public class DiagArticulo extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(cboValor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(342, 342, 342))
+                        .addGap(289, 289, 289))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(cboListaCosto, 0, 98, Short.MAX_VALUE)
                         .addGap(326, 326, 326))))
@@ -432,6 +439,11 @@ public class DiagArticulo extends javax.swing.JDialog {
     private void tfprecocostoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfprecocostoKeyPressed
         btnAceptar.setEnabled(false);
     }//GEN-LAST:event_tfprecocostoKeyPressed
+
+    private void cboValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboValorActionPerformed
+        
+    
+    }//GEN-LAST:event_cboValorActionPerformed
     private void cargarTablaArticulos() {
         if (Comunes.validarBigDecimal(tfprecocosto.getText())) {
             modeloTablaPrecioArticulo = new ModeloTablaNoEditable();
@@ -439,7 +451,7 @@ public class DiagArticulo extends javax.swing.JDialog {
             configurarTabla(tblPrecios);
             try {
                 if (tipoOperacion.equals("Modificación")) {
-                    System.out.println("entro por modificacion");
+                   
                     cargarPreciosListaPreciosParaEditar();
                 } else {
                     lstPrecioArticulo = new ArrayList<PrecioArticulo>();
@@ -492,7 +504,7 @@ public class DiagArticulo extends javax.swing.JDialog {
             precioListaCosto = BigDecimal.valueOf((Double.parseDouble(tfprecocosto.getText()))).subtract(BigDecimal.valueOf((Double.parseDouble(tfprecocosto.getText()))).multiply(porcentajeListaCosto));
             nuevoPrecio = precioListaCosto.add(precioListaCosto.multiply(porcentajeListaPrecio));
             PrecioArticulo a = new PrecioArticulo();
-            System.out.println("el nuevo precio es" + nuevoPrecio);
+            //System.out.println("el nuevo precio es" + nuevoPrecio);
             a.setPrecio(nuevoPrecio);
             //a.setArticulo(articulo);
             a.setListaPrecio(listaPrecio);
@@ -707,7 +719,7 @@ public class DiagArticulo extends javax.swing.JDialog {
                 while (itartprecio.hasNext()) {
 
                     PrecioArticulo precioArt = itartprecio.next();
-                    System.out.println("el id es" + precioArt.getId());
+                 //   System.out.println("el id es" + precioArt.getId());
                     precioArt.setArticulo(articulo);
                     PrecioArticuloFacade.getInstance().modificar(precioArt);
 
