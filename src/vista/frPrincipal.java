@@ -17,6 +17,7 @@ import entidades.Paneles;
 import entidades.Sucursal;
 import entidades.articulo.ListaPrecio;
 import entidades.articulo.costo.ListaCosto;
+import entidades.articulo.stock.Deposito;
 import entidades.caja.Caja;
 import entidades.caja.TarjetaDeCredito;
 import entidades.caja.TipoDeFactura;
@@ -100,6 +101,7 @@ import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
 import vista.articulos.DiagPrecios;
+import vista.articulos.stock.DiagDeposito;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
 import vista.cliente.DiagImportarExportarClientes;
@@ -1176,6 +1178,52 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
+        
+        //STOCK
+         jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Alta de Deposito");
+                putValue(Action.SHORT_DESCRIPTION, "Alta de Deposito");
+
+            }
+
+             
+            public void actionPerformed(ActionEvent e) {
+                DiagDeposito depositoAlta = new DiagDeposito(frame, true, "Alta");
+                depositoAlta.setLocation(Comunes.centrarDialog(depositoAlta));
+                depositoAlta.setVisible(true);
+
+            }
+        });
+        jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Stock Articulos");
+                putValue(Action.SHORT_DESCRIPTION, "Stock Articulos");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagUsuarioAlta usuarioAlta = new DiagUsuarioAlta(frame, true, "Alta");
+                usuarioAlta.setLocation(Comunes.centrarDialog(usuarioAlta));
+                usuarioAlta.setVisible(true);
+
+            }
+        });
+
+        jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Stock Depósito");
+                putValue(Action.SHORT_DESCRIPTION, "Stock Depósito");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagUsuarioModificacion usuarioModificacion = new DiagUsuarioModificacion();
+                usuarioModificacion.setLocation(Comunes.centrarDialog(usuarioModificacion));
+                usuarioModificacion.setVisible(true);
+            }
+        });
+
 //        jXTaskPnMovimientos.add(new AbstractAction() {
 //            {
 //                putValue(Action.NAME, "Alta Mov. Internos");
@@ -1278,6 +1326,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jXTaskPnVentas = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPnCaja = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPnMovimientos = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPnStock = new org.jdesktop.swingx.JXTaskPane();
 
         jMenu7.setText("Impresión");
         jMenu7.setActionCommand("jMenu7");
@@ -1463,6 +1512,10 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jXTaskPnMovimientos.setName("jXTaskPnMovimientos"); // NOI18N
         jXTaskPaneContainer1.add(jXTaskPnMovimientos);
 
+        jXTaskPnStock.setTitle("Stock");
+        jXTaskPnStock.setName("jXTaskPnStock"); // NOI18N
+        jXTaskPaneContainer1.add(jXTaskPnStock);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1567,6 +1620,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
     private org.jdesktop.swingx.JXTaskPane jXTaskPnConfiguracion;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnEmpleados;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnMovimientos;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPnStock;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnSucursal;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnUsuarios;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnVentas;
