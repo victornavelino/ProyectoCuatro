@@ -88,22 +88,27 @@ public class ArticuloDepositoFacade {
     }
 
     public ArticuloDeposito buscar(Articulo articulo, Deposito deposito) {
-        EntityManager em = emf.createEntityManager();
-        ArticuloDeposito articuloDeposito = new ArticuloDeposito();
-        quArticuloDeposito = em.createQuery("SELECT "
-                + "ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo "
-                + "' AND ad.deposito = :deposito");
-        quArticuloDeposito.setParameter("articulo", articulo);
-        quArticuloDeposito.setParameter("deposito", deposito);
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+       EntityManager em = emfa.createEntityManager();
+       
+        Query qu= em.createQuery("SELECT ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo AND ad.deposito = :deposito");
+        qu.setParameter("articulo", articulo);
+        qu.setParameter("deposito", deposito);
+        //ArticuloDeposito articuloDeposito= new ArticuloDeposito();
+         //articuloDeposito = (ArticuloDeposito) qu.getSingleResult();
 
-        articuloDeposito = (ArticuloDeposito) quArticuloDeposito.getSingleResult();
-
-        return articuloDeposito;
+         
+         try {
+            return (ArticuloDeposito) qu.getResultList().get(0);
+        } catch (Exception ex) {
+            return null;
+        }
+       
     }
 
     public void agregarArticulosAlDeposito(ArticuloDeposito articuloDeposito) {
         ArticuloDeposito articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
-        if (articuloDepositoCompleto.getId() != null) {
+        if (articuloDepositoCompleto != null) {
             articuloDepositoCompleto.setCantidad(articuloDepositoCompleto.getCantidad() + articuloDeposito.getCantidad());
             modificar(articuloDepositoCompleto);
         } else {

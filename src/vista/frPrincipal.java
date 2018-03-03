@@ -101,6 +101,7 @@ import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
 import vista.articulos.DiagPrecios;
+import vista.articulos.stock.DiagArticuloDepositoAlta;
 import vista.articulos.stock.DiagDeposito;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
@@ -1218,9 +1219,9 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
 
             public void actionPerformed(ActionEvent e) {
-                DiagUsuarioModificacion usuarioModificacion = new DiagUsuarioModificacion();
-                usuarioModificacion.setLocation(Comunes.centrarDialog(usuarioModificacion));
-                usuarioModificacion.setVisible(true);
+                DiagArticuloDepositoAlta diagArticuloDepositoAlta = new DiagArticuloDepositoAlta(frame, true);
+                diagArticuloDepositoAlta.setLocation(Comunes.centrarDialog(diagArticuloDepositoAlta));
+                diagArticuloDepositoAlta.setVisible(true);
             }
         });
 
