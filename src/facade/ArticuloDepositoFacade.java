@@ -88,6 +88,7 @@ public class ArticuloDepositoFacade {
     }
 
     public ArticuloDeposito buscar(Articulo articulo, Deposito deposito) {
+
         System.out.println("+++++++++++++++++++++++++++++++++++++++++" +articulo.getId() + "¿¿¿¿¿¿¿¿¿¿¿¿¿" +deposito.getId());
         EntityManager em = emf.createEntityManager();
         ArticuloDeposito articuloDeposito = new ArticuloDeposito();
@@ -95,14 +96,22 @@ public class ArticuloDepositoFacade {
         quArticuloDeposito.setParameter("articulo", articulo);
         quArticuloDeposito.setParameter("deposito", deposito);
 
-        articuloDeposito = (ArticuloDeposito) quArticuloDeposito.getSingleResult();
+        //ArticuloDeposito articuloDeposito= new ArticuloDeposito();
+         //articuloDeposito = (ArticuloDeposito) qu.getSingleResult();
 
-        return articuloDeposito;
+
+         
+         try {
+            return (ArticuloDeposito) quArticuloDeposito.getResultList().get(0);
+        } catch (Exception ex) {
+            return null;
+        }
+       
     }
 
     public void agregarArticulosAlDeposito(ArticuloDeposito articuloDeposito) {
         ArticuloDeposito articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
-        if (articuloDepositoCompleto.getId() != null) {
+        if (articuloDepositoCompleto != null) {
             articuloDepositoCompleto.setCantidad(articuloDepositoCompleto.getCantidad() + articuloDeposito.getCantidad());
             modificar(articuloDepositoCompleto);
         } else {
