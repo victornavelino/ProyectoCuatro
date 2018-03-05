@@ -101,7 +101,9 @@ import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
 import vista.articulos.DiagPrecios;
+import vista.articulos.stock.DiagArticuloSucursalAlta;
 import vista.articulos.stock.DiagDeposito;
+import vista.articulos.stock.infrArticuloDepositoAlta;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
 import vista.cliente.DiagImportarExportarClientes;
@@ -1202,11 +1204,10 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
 
-            public void actionPerformed(ActionEvent e) {
-                DiagUsuarioAlta usuarioAlta = new DiagUsuarioAlta(frame, true, "Alta");
-                usuarioAlta.setLocation(Comunes.centrarDialog(usuarioAlta));
-                usuarioAlta.setVisible(true);
-
+           public void actionPerformed(ActionEvent e) {
+                DiagArticuloSucursalAlta articuloSucursalAlta = new DiagArticuloSucursalAlta();
+                articuloSucursalAlta.setLocation(Comunes.centrarDialog(articuloSucursalAlta));
+                articuloSucursalAlta.setVisible(true);
             }
         });
 
@@ -1217,10 +1218,10 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
 
-            public void actionPerformed(ActionEvent e) {
-                DiagUsuarioModificacion usuarioModificacion = new DiagUsuarioModificacion();
-                usuarioModificacion.setLocation(Comunes.centrarDialog(usuarioModificacion));
-                usuarioModificacion.setVisible(true);
+             public void actionPerformed(ActionEvent e) {
+                DiagArticuloSucursalAlta articuloSucursalAlta = new DiagArticuloSucursalAlta();
+                articuloSucursalAlta.setLocation(Comunes.centrarDialog(articuloSucursalAlta));
+                articuloSucursalAlta.setVisible(true);
             }
         });
 
