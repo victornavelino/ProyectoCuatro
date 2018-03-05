@@ -102,6 +102,7 @@ import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
 import vista.articulos.DiagPrecios;
 import vista.articulos.stock.DiagArticuloDepositoAlta;
+import vista.articulos.stock.DiagArticuloSucursalAlta;
 import vista.articulos.stock.DiagDeposito;
 import vista.articulos.stock.infrArticuloDepositoAlta;
 import vista.cliente.DiagCliente;
