@@ -88,9 +88,7 @@ public class ArticuloSucursalFacade {
     public ArticuloSucursal buscar(Articulo articulo, Sucursal sucursal) {
         ArticuloSucursal articuloSucursal = new ArticuloSucursal();
         EntityManager em = emf.createEntityManager();
-        quArticuloSucursal = em.createQuery("SELECT "
-                + "ad FROM ArticuloSucursal ad WHERE ad.articulo = :articulo "
-                + "' AND ad.sucursal = :sucursal ");
+        quArticuloSucursal = em.createQuery("SELECT ad FROM ArticuloSucursal ad WHERE ad.articulo = :articulo AND ad.sucursal = :sucursal ");
         quArticuloSucursal.setParameter("articulo", articulo);
         quArticuloSucursal.setParameter("sucursal", sucursal);
         articuloSucursal = (ArticuloSucursal) quArticuloSucursal.getSingleResult();

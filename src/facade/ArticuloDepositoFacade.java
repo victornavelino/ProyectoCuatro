@@ -88,11 +88,10 @@ public class ArticuloDepositoFacade {
     }
 
     public ArticuloDeposito buscar(Articulo articulo, Deposito deposito) {
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++" +articulo.getId() + "¿¿¿¿¿¿¿¿¿¿¿¿¿" +deposito.getId());
         EntityManager em = emf.createEntityManager();
         ArticuloDeposito articuloDeposito = new ArticuloDeposito();
-        quArticuloDeposito = em.createQuery("SELECT "
-                + "ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo "
-                + "' AND ad.deposito = :deposito");
+        quArticuloDeposito = em.createQuery("SELECT ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo AND ad.deposito = :deposito");
         quArticuloDeposito.setParameter("articulo", articulo);
         quArticuloDeposito.setParameter("deposito", deposito);
 
