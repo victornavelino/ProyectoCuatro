@@ -91,8 +91,11 @@ public class ArticuloSucursalFacade {
         quArticuloSucursal = em.createQuery("SELECT ad FROM ArticuloSucursal ad WHERE ad.articulo = :articulo AND ad.sucursal = :sucursal ");
         quArticuloSucursal.setParameter("articulo", articulo);
         quArticuloSucursal.setParameter("sucursal", sucursal);
-        articuloSucursal = (ArticuloSucursal) quArticuloSucursal.getSingleResult();
-        return articuloSucursal;
+           try {
+            return (ArticuloSucursal) quArticuloSucursal.getResultList().get(0);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     /*public void agregarArticulosAlSucursal(ArticuloSucursal articuloSucursal) {
@@ -127,12 +130,15 @@ public class ArticuloSucursalFacade {
         ArticuloDeposito articuloDeposito = new ArticuloDepositoFacade().buscar(articuloDepositoParam.getArticulo(), articuloDepositoParam.getDeposito());
         if (articuloDeposito.getId() != null) {
             ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), sucursal);
-            if (articuloSucursal.getId() != null) {
+             System.out.println("ARTICULO SUCURSALLLLLLL +++++++++ " +articuloSucursal);
+            if (articuloSucursal != null) {
                 if (new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad)) {
                     agregarArticulosAlSucursal(articuloSucursal, cantidad);
                     new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito);
                 }
             } else {
+                articuloSucursal = new ArticuloSucursal();
+                System.out.println("ENTRO AL ELSE +++++++++ " +articuloDeposito);
                 articuloSucursal.setArticulo(articuloDeposito.getArticulo());
                 articuloSucursal.setSucursal(sucursal);
                 articuloSucursal.setCantidad(cantidad);
