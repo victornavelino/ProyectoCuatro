@@ -130,7 +130,7 @@ public class ArticuloSucursalFacade {
         ArticuloDeposito articuloDeposito = new ArticuloDepositoFacade().buscar(articuloDepositoParam.getArticulo(), articuloDepositoParam.getDeposito());
         if (articuloDeposito.getId() != null) {
             ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), sucursal);
-             System.out.println("ARTICULO SUCURSALLLLLLL +++++++++ " +articuloSucursal);
+            
             if (articuloSucursal != null) {
                 if (new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad)) {
                     agregarArticulosAlSucursal(articuloSucursal, cantidad);
@@ -138,7 +138,7 @@ public class ArticuloSucursalFacade {
                 }
             } else {
                 articuloSucursal = new ArticuloSucursal();
-                System.out.println("ENTRO AL ELSE +++++++++ " +articuloDeposito);
+                
                 articuloSucursal.setArticulo(articuloDeposito.getArticulo());
                 articuloSucursal.setSucursal(sucursal);
                 articuloSucursal.setCantidad(cantidad);
