@@ -24,7 +24,8 @@ import javax.swing.DefaultListModel;
  * @author alumno
  */
 public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
-  EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
+
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
     EntityManager em = emf.createEntityManager();
     Query quArticulo = em.createQuery("SELECT a FROM Articulo a");
     List listArticulo = quArticulo.getResultList();
@@ -34,11 +35,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     List listDeposito = quDeposito.getResultList();
     ArticuloDeposito articuloDeposito = new ArticuloDeposito();
     ArticuloDepositoFacade ArticuloDepositoFacade;
+
     /**
      * Creates new form DiagArticuloDepositoAlta
      */
     public DiagArticuloDepositoAlta(java.awt.Frame parent, boolean modal) {
-                
 
         super(parent, modal);
         initComponents();
@@ -67,6 +68,9 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         tfCantidad = new javax.swing.JTextField();
         btAsignar = new javax.swing.JButton();
         btEliminar = new javax.swing.JButton();
+        tfStock = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,6 +84,9 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             }
         });
         tfDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfDescripcionKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tfDescripcionKeyReleased(evt);
             }
@@ -158,6 +165,7 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
 
         jLabel1.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jLabel1.text")); // NOI18N
 
+        tfCantidad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tfCantidad.setEnabled(false);
         tfCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -189,6 +197,31 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             }
         });
 
+        tfStock.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tfStock.setEnabled(false);
+        tfStock.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfStockFocusGained(evt);
+            }
+        });
+        tfStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfStockKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfStockKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jLabel2.text")); // NOI18N
+
+        jButton1.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,34 +229,50 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jXPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btEliminar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btEliminar))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(81, 81, 81))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAsignar)
                     .addComponent(btEliminar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jXPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -234,11 +283,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDescripcionKeyReleased
-        filtrarListaArticulos();
+        /*filtrarListaArticulos();
         if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
             jlistArticulosFiltrados.requestFocus();
             jlistArticulosFiltrados.setSelectedIndex(0);
-        }
+        }*/
     }//GEN-LAST:event_tfDescripcionKeyReleased
 
     private void jlistArticulosFiltradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlistArticulosFiltradosMouseClicked
@@ -263,11 +312,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         if (!Comunes.validarInteger(tfCantidad.getText())) {
             if (tfCantidad.getText().length() > 1) {
                 tfCantidad.setText(tfCantidad.getText().substring(0,
-                    tfCantidad.getText().length() - 1));
-        } else {
-            tfCantidad.setText("");
-            btAsignar.setEnabled(false);
-        }
+                        tfCantidad.getText().length() - 1));
+            } else {
+                tfCantidad.setText("");
+                btAsignar.setEnabled(false);
+            }
         } else {
             btAsignar.setEnabled(true);
             btEliminar.setEnabled(true);
@@ -276,19 +325,45 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
 
     private void btAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAsignarActionPerformed
         asignar();
-        this.dispose();
+        buscarStock();
+        tfCantidad.setText("");
+
     }//GEN-LAST:event_btAsignarActionPerformed
 
     private void btEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEliminarActionPerformed
-         quitar();
-       
+        quitar();
+        buscarStock();
+        tfCantidad.setText("");
     }//GEN-LAST:event_btEliminarActionPerformed
 
     private void tfDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDescripcionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfDescripcionActionPerformed
-public void inicializarComponentes() {
-    this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
+
+    private void tfStockFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfStockFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStockFocusGained
+
+    private void tfStockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfStockKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStockKeyPressed
+
+    private void tfStockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfStockKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStockKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        buscarStock();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tfDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDescripcionKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            filtrarListaArticulos();
+        }
+    }//GEN-LAST:event_tfDescripcionKeyPressed
+    public void inicializarComponentes() {
+        this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
         cargarListaArticuloTodos();
         cargarComboBoxDeposito();
     }
@@ -296,10 +371,10 @@ public void inicializarComponentes() {
     public void filtrarListaArticulos() {
         emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
         em = emf.createEntityManager();
-       
+
         quArticulo = em.createQuery("SELECT a FROM Articulo a WHERE a.descripcion LIKE '%" + tfDescripcion.getText().toUpperCase() + "%'");
         listArticulosFiltrados = quArticulo.getResultList();
-       
+
         cargarListaArticulos();
     }
 
@@ -333,24 +408,34 @@ public void inicializarComponentes() {
     }
 
     public void asignar() {
-        System.out.println("el nombre del articulo es " +(Articulo) jlistArticulosFiltrados.getSelectedValue());
-        System.out.println("el nombre del deposito es  " +(Deposito) cboDeposito.getSelectedItem());
+        System.out.println("el nombre del articulo es " + (Articulo) jlistArticulosFiltrados.getSelectedValue());
+        System.out.println("el nombre del deposito es  " + (Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
         articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setCantidad(Long.parseLong(tfCantidad.getText()));
         ArticuloDepositoFacade.agregarArticulosAlDeposito(articuloDeposito);
         articuloDeposito = new ArticuloDeposito();
     }
-    
+
+    public void buscarStock() {
+        articuloDeposito = ArticuloDepositoFacade.buscar((Articulo) jlistArticulosFiltrados.getSelectedValue(), (Deposito) cboDeposito.getSelectedItem());
+        if (articuloDeposito != null) {
+            tfStock.setText(articuloDeposito.getCantidad().toString());
+        } else {
+            tfStock.setText("0");
+        }
+    }
+
     public void quitar() {
-        System.out.println("el nombre del articulo es " +(Articulo) jlistArticulosFiltrados.getSelectedValue());
-        System.out.println("el nombre del deposito es  " +(Deposito) cboDeposito.getSelectedItem());
+        System.out.println("el nombre del articulo es " + (Articulo) jlistArticulosFiltrados.getSelectedValue());
+        System.out.println("el nombre del deposito es  " + (Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
         articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setCantidad(Long.parseLong(tfCantidad.getText()));
         ArticuloDepositoFacade.eliminarArticulosAlDeposito(articuloDeposito);
         articuloDeposito = new ArticuloDeposito();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -397,7 +482,9 @@ public void inicializarComponentes() {
     private javax.swing.JButton btAsignar;
     private javax.swing.JButton btEliminar;
     private javax.swing.JComboBox cboDeposito;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private org.jdesktop.swingx.JXPanel jXPanel6;
     private org.jdesktop.swingx.JXPanel jXPanel7;
@@ -407,5 +494,6 @@ public void inicializarComponentes() {
     private javax.swing.JLabel lbDescripcionSeleccionada;
     private javax.swing.JTextField tfCantidad;
     private javax.swing.JTextField tfDescripcion;
+    private javax.swing.JTextField tfStock;
     // End of variables declaration//GEN-END:variables
 }
