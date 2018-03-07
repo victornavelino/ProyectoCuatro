@@ -188,4 +188,8 @@ public class ArticuloSucursalFacade {
 //            }
 //        }
 //    }
+    
+       public List<ArticuloSucursal> getTodos() {
+        return new ArticuloSucursalJpaController(emf).findArticuloSucursalEntities();
+    }
 }

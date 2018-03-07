@@ -104,6 +104,7 @@ import vista.articulos.DiagPrecios;
 import vista.articulos.stock.DiagArticuloDepositoAlta;
 import vista.articulos.stock.DiagArticuloSucursalAlta;
 import vista.articulos.stock.DiagDeposito;
+import vista.articulos.stock.DiagStockGeneral;
 import vista.articulos.stock.infrArticuloDepositoAlta;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
@@ -1223,6 +1224,19 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 DiagArticuloDepositoAlta diagArticuloDepositoAlta = new DiagArticuloDepositoAlta(frame, true);
                 diagArticuloDepositoAlta.setLocation(Comunes.centrarDialog(diagArticuloDepositoAlta));
                 diagArticuloDepositoAlta.setVisible(true);
+            }
+        });
+          jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Stock General");
+                putValue(Action.SHORT_DESCRIPTION, "Stock General");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagStockGeneral diagStockGeneral = new DiagStockGeneral(frame, true);
+                diagStockGeneral.setLocation(Comunes.centrarDialog(diagStockGeneral));
+                diagStockGeneral.setVisible(true);
             }
         });
 

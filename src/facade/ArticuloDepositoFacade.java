@@ -60,6 +60,9 @@ public class ArticuloDepositoFacade {
         throw new CloneNotSupportedException();
     }
 
+      public List<ArticuloDeposito> getTodos() {
+        return new ArticuloDepositoJpaController(emf).findArticuloDepositoEntities();
+    }
     
     public void alta(ArticuloDeposito articuloDeposito) {
         articuloDepositoJpa.create(articuloDeposito);
