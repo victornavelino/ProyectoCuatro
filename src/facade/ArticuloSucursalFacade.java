@@ -127,6 +127,7 @@ public class ArticuloSucursalFacade {
     }
 
     public void transferirArticuloDesdeDepositoASucursal(ArticuloDeposito articuloDepositoParam, Sucursal sucursal, Long cantidad) {
+      
         ArticuloDeposito articuloDeposito = new ArticuloDepositoFacade().buscar(articuloDepositoParam.getArticulo(), articuloDepositoParam.getDeposito());
         if (articuloDeposito.getId() != null) {
             ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), sucursal);
@@ -134,7 +135,7 @@ public class ArticuloSucursalFacade {
             if (articuloSucursal != null) {
                 if (new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad)) {
                     agregarArticulosAlSucursal(articuloSucursal, cantidad);
-                    new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito);
+                   // new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad);
                 }
             } else {
                 articuloSucursal = new ArticuloSucursal();

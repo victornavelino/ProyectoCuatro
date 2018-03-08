@@ -94,49 +94,48 @@ public class DiagStockGeneral extends javax.swing.JDialog {
 
         tblStockGeneral.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Articulo", "Stock total", "Sucursal 1", "Sucursal 2", "Deposito 1", "Deposito 2"
+                "Articulo", "Stock total", "Sucursal 1", "Sucursal 2", "Sucursal 3", "Sucursal 4", "Sucursal 5", "Deposito 1", "Deposito 2", "Deposito 3", "Deposito 4"
             }
         ));
         jScrollPane2.setViewportView(tblStockGeneral);
         if (tblStockGeneral.getColumnModel().getColumnCount() > 0) {
-            tblStockGeneral.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tblStockGeneral.getColumnModel().getColumn(2).setPreferredWidth(1);
+            tblStockGeneral.getColumnModel().getColumn(1).setPreferredWidth(1);
+            tblStockGeneral.getColumnModel().getColumn(2).setPreferredWidth(2);
             tblStockGeneral.getColumnModel().getColumn(3).setPreferredWidth(1);
             tblStockGeneral.getColumnModel().getColumn(4).setPreferredWidth(1);
             tblStockGeneral.getColumnModel().getColumn(5).setPreferredWidth(1);
-            tblStockGeneral.getColumnModel().getColumn(6).setPreferredWidth(1);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,7 +252,7 @@ public class DiagStockGeneral extends javax.swing.JDialog {
             modeloTablaStockGeneral = new ModeloTablaNoEditable();
             cargarEncabezadosTablaStockGeneral(modeloTablaStockGeneral);
            /* for (Deposito deposito : depositos) {
-                cargarDeposito(deposito);
+                cargarStock(deposito);
             }*/
 
             tblStockGeneral.setModel(modeloTablaStockGeneral);
@@ -262,7 +261,7 @@ public class DiagStockGeneral extends javax.swing.JDialog {
         }
     }
 
-    private void cargarDeposito(ArticuloDeposito artDeposito, ArticuloSucursal artSucursal ) {
+    private void cargarStock (ArticuloDeposito artDeposito, ArticuloSucursal artSucursal ) {
 
         Object[] fila = new Object[5];
       //  fila[0] = deposito.getId();

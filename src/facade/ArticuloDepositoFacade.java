@@ -102,7 +102,7 @@ public class ArticuloDepositoFacade {
         //ArticuloDeposito articuloDeposito= new ArticuloDeposito();
          //articuloDeposito = (ArticuloDeposito) qu.getSingleResult();
 
-
+       
          
          try {
             return (ArticuloDeposito) quArticuloDeposito.getSingleResult();
@@ -138,18 +138,19 @@ public class ArticuloDepositoFacade {
         }
     }
 
-    public boolean eliminarArticulosAlDeposito(ArticuloDeposito articuloDeposito) {
+    public boolean eliminarArticulosAlDeposito(ArticuloDeposito articuloDeposito, Long cantidadAquitar) {
         boolean flag = false;
-        Long cantidadAquitar = articuloDeposito.getCantidad();
+       
+        
         ArticuloDeposito articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
         if (articuloDepositoCompleto != null) {
             if (articuloDepositoCompleto.getCantidad() >= articuloDeposito.getCantidad()) {
-                articuloDeposito.setCantidad(articuloDepositoCompleto.getCantidad() - articuloDeposito.getCantidad());
+                articuloDeposito.setCantidad(articuloDepositoCompleto.getCantidad() - cantidadAquitar);
                 articuloDeposito.setId(articuloDepositoCompleto.getId());
                 modificar(articuloDeposito);
                 flag = true;
-                JOptionPane.showMessageDialog(null, "Se quitaron "
-                + cantidadAquitar + " " + articuloDeposito.getArticulo()
+                JOptionPane.showMessageDialog(null, "Quedan "
+                + articuloDeposito.getCantidad() + " " + articuloDeposito.getArticulo()
                 + " a " + articuloDeposito.getDeposito().getDescripcion());
             } else {
                 JOptionPane.showMessageDialog(null, "No dispone del stock suficiente de "

@@ -1201,8 +1201,8 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         });
         jXTaskPnStock.add(new AbstractAction() {
             {
-                putValue(Action.NAME, "Stock Articulos");
-                putValue(Action.SHORT_DESCRIPTION, "Stock Articulos");
+                putValue(Action.NAME, "Mover inventario a sucursal");
+                putValue(Action.SHORT_DESCRIPTION, "Asignación de articulos de depósito a sucursal");
 
             }
 

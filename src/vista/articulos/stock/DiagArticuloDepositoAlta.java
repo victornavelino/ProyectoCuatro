@@ -204,6 +204,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                 tfStockFocusGained(evt);
             }
         });
+        tfStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfStockActionPerformed(evt);
+            }
+        });
         tfStock.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfStockKeyPressed(evt);
@@ -362,6 +367,10 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             filtrarListaArticulos();
         }
     }//GEN-LAST:event_tfDescripcionKeyPressed
+
+    private void tfStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStockActionPerformed
     public void inicializarComponentes() {
         this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
         cargarListaArticuloTodos();
@@ -408,8 +417,7 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     }
 
     public void asignar() {
-        System.out.println("el nombre del articulo es " + (Articulo) jlistArticulosFiltrados.getSelectedValue());
-        System.out.println("el nombre del deposito es  " + (Deposito) cboDeposito.getSelectedItem());
+      
         articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
         articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setCantidad(Long.parseLong(tfCantidad.getText()));
@@ -427,12 +435,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     }
 
     public void quitar() {
-        System.out.println("el nombre del articulo es " + (Articulo) jlistArticulosFiltrados.getSelectedValue());
-        System.out.println("el nombre del deposito es  " + (Deposito) cboDeposito.getSelectedItem());
+        
         articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
         articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
         articuloDeposito.setCantidad(Long.parseLong(tfCantidad.getText()));
-        ArticuloDepositoFacade.eliminarArticulosAlDeposito(articuloDeposito);
+        ArticuloDepositoFacade.eliminarArticulosAlDeposito(articuloDeposito, articuloDeposito.getCantidad());
         articuloDeposito = new ArticuloDeposito();
     }
 
