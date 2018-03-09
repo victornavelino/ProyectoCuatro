@@ -131,7 +131,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
             pagina.drawString(venta.getSucursal().getNombre(), 10, 25 + suma);//SUCURSAL
             pagina.drawString(venta.getSucursal().getDomicilio().toString(), 10, 40 + suma);//SUCURSAL DOMICILIO
             pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy' 'HH:mm:ss", new Locale("es_ES")).format(
@@ -223,7 +223,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
             pagina.drawString(venta.getSucursal().getNombre(), 10, 25 + suma);//SUCURSAL
             pagina.drawString(venta.getSucursal().getDomicilio().toString(), 10, 40 + suma);//SUCURSAL DOMICILIO
             pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy' 'HH:mm:ss", new Locale("es_ES")).format(
@@ -423,7 +423,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
             pagina.drawString(cierreVentas.getSucursal().getNombre(), 10, 25 + suma);//SUCURSAL
             //pagina.drawString(cierreVentas.getSucursal().getDomicilio().toString(), 90, 25 + suma);//SUCURSAL DOMICILIO
             pagina.drawString("Fecha Cierre: " + new SimpleDateFormat("dd'/'MM'/'yyyy' 'HH:mm:ss", new Locale("es_ES")).format(
@@ -561,7 +561,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
             pagina.drawString(venta.getSucursal().getNombre(), 10, 25 + suma);//SUCURSAL
             pagina.drawString(venta.getSucursal().getDomicilio().toString(), 90, 25 + suma);//SUCURSAL DOMICILIO
             pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy' 'HH:mm:ss", new Locale("es_ES")).format(
@@ -715,7 +715,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO
             pagina.drawString("SUCURSAL: " + caja.getSucursal().getNombre(), 10, 25 + suma);//SUCURSAL
             pagina.drawString("USUARIO: " + caja.getUsuario().toString(), 10, 40 + suma);//USUario
             //pagina.drawString(cierreVentas.getSucursal().getDomicilio().toString(), 90, 25 + suma);//SUCURSAL DOMICILIO
@@ -791,7 +791,7 @@ public class Impresora {
             pagina.setFont(fuente);
             pagina.setColor(Color.black);
             //ORIGINAL
-            pagina.drawString("LA TRADICION CARNICERIAS", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO    
+            pagina.drawString("ARCOIRIS PINTURERIA", 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO    
             pagina.drawString(tipo, 10, 10 + suma); //LEER DE BASE NOMBRE DEL NEGOCIO    
             //pagina.drawString("Fecha: " + new SimpleDateFormat("dd'/'MM'/'yyyy", new Locale("es_ES")).format(
             //fecha), 10, 55 + suma); //FECHA          
