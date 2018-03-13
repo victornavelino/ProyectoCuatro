@@ -7,12 +7,14 @@ package entidades.articulo.stock;
 
 import entidades.articulo.Articulo;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -26,6 +28,9 @@ public class ArticuloDeposito implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+     private int numero;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fecha;
     @ManyToOne
     private Articulo articulo;
     @ManyToOne
@@ -34,6 +39,22 @@ public class ArticuloDeposito implements Serializable {
 
     public Articulo getArticulo() {
         return articulo;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public void setArticulo(Articulo articulo) {
