@@ -88,6 +88,7 @@ public class FrVentas extends SuperFrame {
     private PromocionArticulo promocionArticulo;
     private List<PromocionArticulo> listapromocionArticulos = new ArrayList<>();
     private List<VentaArticulo> listaVentaArticulos = new ArrayList<>();
+      private List<VentaArticulo> listaVentaArticulos2 = new ArrayList<>();
     private List<Promocion> listaPromocionesHabilitadas;
     private List<Promocion> listaPromocionesDeHoy;
     private List<Promocion> listaPromocionesPorcentajeTodosDeHoy;
@@ -164,7 +165,7 @@ public class FrVentas extends SuperFrame {
         tfListaPrecio = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jcbCambioLista = new javax.swing.JComboBox<>();
+        jcbCambioLista = new javax.swing.JComboBox<String>();
         jPanel3 = new javax.swing.JPanel();
         tfCodigo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -249,6 +250,17 @@ public class FrVentas extends SuperFrame {
         jCheckBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCheckBox1ItemStateChanged(evt);
+            }
+        });
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jcbCambioLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCambioListaActionPerformed(evt);
             }
         });
 
@@ -713,6 +725,7 @@ public class FrVentas extends SuperFrame {
         inicilizarListas();
         //articulo = new Articulo();
         listaVentaArticulos = new ArrayList<>();
+        listaVentaArticulos2 = new ArrayList<>();
         ftfDocumento.selectAll();
         tfCodigo.requestFocus();
         quitarDescuentoGral();
@@ -786,6 +799,14 @@ public class FrVentas extends SuperFrame {
         }
 
     }//GEN-LAST:event_jCheckBox1ItemStateChanged
+
+    private void jcbCambioListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCambioListaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCambioListaActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -969,6 +990,7 @@ public class FrVentas extends SuperFrame {
         subTotalArticulo = null;
         total = null;
         listaVentaArticulos = null;
+        listaVentaArticulos2 = null;
         super.dispose();
     }
 
@@ -1094,7 +1116,7 @@ public class FrVentas extends SuperFrame {
     private void cargarTablaArticulos(List<VentaArticulo> listaVentaArticulos) {
         modeloTablaArticulos = new ModeloTablaNoEditable();
         cargarEncabezadosTablaArticulos(modeloTablaArticulos);
-        configurarTabla(tblArticulos);
+         configurarTabla(tblArticulos);
         try {
             cargarArticulos(listaVentaArticulos);
         } catch (Exception ex) {
@@ -1190,7 +1212,19 @@ public class FrVentas extends SuperFrame {
             tfPesoBalanza.setEnabled(true);
         }
     }
-
+/*
+    Pruebaaa    
+    */
+        private void pruebaActualizarPrecios(){
+              for (VentaArticulo va : listaVentaArticulos) {
+//            System.out.println("vaaa" + va.getPrecio());
+                  
+            subTotal = subTotal.add(va.getPrecio());
+//            System.out.println("suptotal: " + subTotal);
+        }
+        }
+    
+    //fin prueba
     private void calcularSubtotalGral() {
         subTotal = BigDecimal.ZERO;
         for (VentaArticulo va : listaVentaArticulos) {
@@ -1652,7 +1686,7 @@ public class FrVentas extends SuperFrame {
     }
 
     public void realizarVenta() {
-
+        System.out.println("ENTRO A REALIZAR VENTA");
         Caja cajaAbierta = CajaFacade.getInstance().getCajaAbierta(sucursal);
         if (cajaAbierta != null) {
             if (validarVenta()) {
@@ -1678,6 +1712,7 @@ public class FrVentas extends SuperFrame {
                 venta.setUsuario(usuario);
                 venta.setSucursal(sucursal);
                 VentaFacade.getInstance().alta(venta);
+                descontarStock();
                 JOptionPane.showMessageDialog(null, "Venta realizada!");
                 limpiarCampos();
                 try {
@@ -1685,7 +1720,7 @@ public class FrVentas extends SuperFrame {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error imprimiendo, compruebe impresora!");
 
-                }
+                } 
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyDispaycher);
                 keyDispaycher = null;
                 eventosDeTeclas();
@@ -1893,7 +1928,7 @@ public class FrVentas extends SuperFrame {
             ArticuloSucursal articuloSucursal = new ArticuloSucursal();
             articuloSucursal.setArticulo(ArticuloFacade.getInstance().buscarPorCodigo(listaVentaArticulos.get(i).getArticuloCodigo()));
             articuloSucursal.setSucursal(sucursal);
-            articuloSucursal.setCantidad(Long.parseLong(listaVentaArticulos.get(i).getCantidadPeso().toString()));
+            articuloSucursal.setCantidad(listaVentaArticulos.get(i).getCantidadPeso().longValue());
             ArticuloSucursalFacade articuloSucursalFacade = ArticuloSucursalFacade.getInstance();
             articuloSucursalFacade.eliminarArticulosAlSucursal(articuloSucursal);
 

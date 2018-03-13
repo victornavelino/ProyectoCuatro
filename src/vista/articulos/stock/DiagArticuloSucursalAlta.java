@@ -13,13 +13,20 @@ package vista.articulos.stock;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.stock.ArticuloDeposito;
+import entidades.articulo.stock.ArticuloSucursal;
 import entidades.articulo.stock.Deposito;
+import entidades.inventario.MovimientoInterno;
+import entidades.usuario.Usuario;
 import facade.ArticuloDepositoFacade;
 import facade.ArticuloSucursalFacade;
+import facade.MovimientoInternoFacade;
 import includes.Comunes;
+import includes.Impresora;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,6 +35,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
@@ -55,10 +63,19 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     ArticuloSucursalFacade ArticuloSucursalFacade;
     ArticuloDepositoFacade ArticuloDepositoFacade;
     private ModeloTablaNoEditable modeloTablaArticulosAsignar;
+    private List<ArticuloDeposito> listaArticuloDeposito;
+    private ArrayList<MovimientoInterno> datos;
+    private MovimientoInterno nuevoMovimiento;
+    private Sucursal sucursal;
+    private Sucursal sucursalDestino;
+    private Usuario usuario;
 
     public DiagArticuloSucursalAlta() {
 
         this.ArticuloSucursalFacade = ArticuloSucursalFacade.getInstance();
+        datos = new ArrayList<>();
+        this.sucursal = sucursal;
+        this.usuario = usuario;
         initComponents();
         inicializarComponentes();
     }
@@ -77,6 +94,8 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
+        datePickerAddon1 = new org.jdesktop.swingx.plaf.DatePickerAddon();
+        datePickerAddon2 = new org.jdesktop.swingx.plaf.DatePickerAddon();
         jXPanel6 = new org.jdesktop.swingx.JXPanel();
         lbDescripcion = new javax.swing.JLabel();
         tfDescripcion = new javax.swing.JTextField();
@@ -98,6 +117,10 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         tblArticulosAsignar = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        dpFecha = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        jTremito = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -169,6 +192,11 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         lbDescripcion1.setText("Descrip.");
 
         cboDeposito.setEnabled(false);
+        cboDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboDepositoActionPerformed(evt);
+            }
+        });
 
         jButton1.setText(org.openide.util.NbBundle.getMessage(DiagArticuloSucursalAlta.class, "DiagArticuloDepositoAlta.jButton1.text")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -304,6 +332,16 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Fecha:");
+
+        jTremito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTremitoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Remito");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -313,67 +351,93 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
                 .addComponent(jXPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(84, 84, 84)
+                                .addComponent(jButton2)
+                                .addContainerGap(261, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(57, 57, 57)
-                                        .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(57, 57, 57)
+                                                .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(33, 33, 33)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(33, 33, 33)))
-                        .addContainerGap(121, Short.MAX_VALUE))
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(5, 5, 5)
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTremito, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jXPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(42, 42, 42)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jButton2)
-                                    .addGap(192, 192, 192))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButton3)
-                                    .addGap(16, 16, 16)))))))
+                            .addComponent(jXPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)))
+                        .addContainerGap(51, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTremito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addComponent(jXPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btAsignar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)
-                        .addGap(85, 85, 85)))
-                .addComponent(jXPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btAsignar)
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addGap(178, 178, 178)))
+                .addContainerGap())
             .addComponent(jXPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -442,11 +506,11 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       
+
         cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
         tfCantidad.setText("");
         tfStock.setText("");
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -457,28 +521,42 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
-         cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
+        cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
         tfCantidad.setText("");
         tfStock.setText("");
         tfDescripcion.requestFocus();
     }//GEN-LAST:event_jButton2KeyPressed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-         buscarStock();
+        buscarStock();
     }//GEN-LAST:event_jButton1KeyPressed
+
+    private void cboDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDepositoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboDepositoActionPerformed
+
+    private void jTremitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTremitoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTremitoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAsignar;
     private javax.swing.JComboBox cboDeposito;
     private javax.swing.JComboBox cboPuesto;
+    private org.jdesktop.swingx.plaf.DatePickerAddon datePickerAddon1;
+    private org.jdesktop.swingx.plaf.DatePickerAddon datePickerAddon2;
+    private com.toedter.calendar.JDateChooser dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTremito;
     private org.jdesktop.swingx.JXPanel jXPanel6;
     private org.jdesktop.swingx.JXPanel jXPanel7;
     private org.jdesktop.swingx.JXPanel jXPanel8;
@@ -499,7 +577,7 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         cargarComboBoxDeposito();
         cargarComboBoxPuesto();
         modeloTablaArticulosAsignar = new ModeloTablaNoEditable();
-       cargarEncabezadosTablaArticulosAsignar(modeloTablaArticulosAsignar);
+        cargarEncabezadosTablaArticulosAsignar(modeloTablaArticulosAsignar);
 
     }
 
@@ -554,18 +632,23 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         int fils = tblArticulosAsignar.getRowCount();
 
         for (int i = 0; i < fils; i++) {
-           
+
             articuloDeposito.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
             articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
             ArticuloSucursalFacade.transferirArticuloDesdeDepositoASucursal(articuloDeposito, (Sucursal) cboPuesto.getSelectedItem(), (Long) tblArticulosAsignar.getValueAt(i, 1));
+
+            //  ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), cboPuesto.getSelectedItem());
+          //  listaArticuloDeposito.add(articuloDeposito);
+            agregarMovimiento((Sucursal) cboPuesto.getSelectedItem(), (Long) tblArticulosAsignar.getValueAt(i, 1), (Articulo) tblArticulosAsignar.getValueAt(i, 0));
             articuloDeposito = new ArticuloDeposito();
         }
-/*
-        articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
-        articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
-        ArticuloSucursalFacade.transferirArticuloDesdeDepositoASucursal(articuloDeposito, (Sucursal) cboPuesto.getSelectedItem(), Long.parseLong(tfCantidad.getText()));
-        articuloDeposito = new ArticuloDeposito();
-        */
+       guardarMovimiento();
+        /*
+         articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
+         articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
+         ArticuloSucursalFacade.transferirArticuloDesdeDepositoASucursal(articuloDeposito, (Sucursal) cboPuesto.getSelectedItem(), Long.parseLong(tfCantidad.getText()));
+         articuloDeposito = new ArticuloDeposito();
+         */
     }
 
     public void buscarStock() {
@@ -579,27 +662,27 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     }
 
     private void cargarTablaArticulosAsignar(Articulo art, Long cantidad) {
-        
-       // configurarTabla(tblArticulosAsignar);
+
+        // configurarTabla(tblArticulosAsignar);
         try {
             cargarArticuloAsignar(art, cantidad);
         } catch (Exception ex) {
-            
-        }
-         tblArticulosAsignar.setModel(modeloTablaArticulosAsignar);
-    }
-    /*
-       private void cargarTablaDepositos(List<Deposito> depositos) {
-        modeloTablaDepositos = new ModeloTablaNoEditable();
-        cargarEncabezadosTablaDepositos(modeloTablaDepositos);
-        configurarTabla(tblDepositos);
-        try {
-            cargarDepositos(depositos);
-        } catch (Exception ex) {
 
         }
+        tblArticulosAsignar.setModel(modeloTablaArticulosAsignar);
     }
-    */
+    /*
+     private void cargarTablaDepositos(List<Deposito> depositos) {
+     modeloTablaDepositos = new ModeloTablaNoEditable();
+     cargarEncabezadosTablaDepositos(modeloTablaDepositos);
+     configurarTabla(tblDepositos);
+     try {
+     cargarDepositos(depositos);
+     } catch (Exception ex) {
+
+     }
+     }
+     */
 
     private void cargarEncabezadosTablaArticulosAsignar(ModeloTablaNoEditable modeloTablaArtAsig) {
         modeloTablaArtAsig.addColumn("Articulo");
@@ -657,9 +740,117 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         fila[1] = cantidad;
 
         modeloTablaArticulosAsignar.addRow(fila);
-        
-       
+
+    }
+
+  
+
+    private void agregarMovimiento(Sucursal sucursalDesti, Long cantidad, Articulo art) {
+
+        nuevoMovimiento = new MovimientoInterno();
+
+        nuevoMovimiento.setFecha(dpFecha.getDate());
+        nuevoMovimiento.setSucursal(this.sucursal);
+        nuevoMovimiento.setUsuarioEnvia(usuario);
+        nuevoMovimiento.setSucursalDestino(sucursalDesti);
+        nuevoMovimiento.setCantidad(new BigDecimal(cantidad));
+        nuevoMovimiento.setMonto(art.getPrecioCosto());
+        nuevoMovimiento.setTipoDeMovimiento("EGRE");
+        nuevoMovimiento.setArticuloCodigo(art.getCodigoBarra());
+        nuevoMovimiento.setArticuloDescripcion(art.getDescripcion());
+        nuevoMovimiento.setAnulado(false);
+        /*
+         // Si el movimiento es un egreso, toma la sucursal elegida, sino es la
+         // propia sucursal
+         if (moviSeleccionado.equals("EGRE")) {
+         nuevoMovimiento.setSucursalDestino(sucursalDestino);
+         nuevoMovimiento.setEstado("abierto");
+         } else {
+         nuevoMovimiento.setSucursalDestino(this.sucursal);
+         nuevoMovimiento.setEstado("-");
+         }
+
+         if (moviSeleccionado.equals("TRE")) {
+         nuevoMovimiento.setIdTransformado(Long.parseLong(tfNumeroOrigen.getText()));
+         } else {
+         nuevoMovimiento.setIdTransformado(Long.parseLong("0"));
+         }*/
+
+        // Verifico si ya tiene número de lote asignado, si lo tiene lo recupero
+        // y sumo uno mas al numero de movimiento, si no tiene lo obtengo y 
+        // cambio la variable boleana
+        //  if (loteAsignado) {
+        //      numLote = numLote;
+        //       num++;
+        //    } else {
+        //        numLote = MovimientoInternoFacade.getInstance().getUltimoNumeroLote() + 1;
+        //        num = MovimientoInternoFacade.getInstance().getUltimoNumero() + 1;
+        //        loteAsignado = true;
+    //}
+
+    nuevoMovimiento.setNumeroLote (Integer.parseInt(jTremito.getText())); //en este caso será numero de remito
+
+    nuevoMovimiento.setNumero (0);
+    datos.add(nuevoMovimiento);
+    //  calcularTotales(datos);
+
+
 
     }
     
+     private void guardarMovimiento() {        
+        int reply = JOptionPane.showConfirmDialog(null,
+                "¿Desea confirmar el envio?", "Alta Movimientos Internos",
+                JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            try {
+                // Creo una lista movimientos a imprimir que solo son los egresos
+                // a partir de la lista original
+                List<MovimientoInterno> moviImp = new ArrayList<>();                
+               
+                for(int i = 0; i < datos.size(); i++){
+                    if(datos.get(i).getTipoDeMovimiento().equals("EGRE")){                        
+                        moviImp.add(datos.get(i));       
+                        MovimientoInterno moviIngreso = new MovimientoInterno();
+                        
+                        moviIngreso.setNumero(datos.get(i).getNumero());
+                        moviIngreso.setFecha(datos.get(i).getFecha());        
+                        moviIngreso.setSucursal(datos.get(i).getSucursal());
+                        moviIngreso.setSucursalDestino(datos.get(i).getSucursalDestino());
+                        moviIngreso.setUsuarioEnvia(datos.get(i).getUsuarioEnvia());
+                        moviIngreso.setCantidad(datos.get(i).getCantidad());
+                        moviIngreso.setMonto(datos.get(i).getMonto());
+                        moviIngreso.setTipoDeMovimiento("ING");
+                        moviIngreso.setArticuloCodigo(datos.get(i).getArticuloCodigo());
+                        moviIngreso.setArticuloDescripcion(datos.get(i).getArticuloDescripcion());        
+                        moviIngreso.setAnulado(datos.get(i).isAnulado());       
+                        moviIngreso.setNumeroLote(datos.get(i).getNumeroLote());
+                        moviIngreso.setEstado(datos.get(i).getEstado());
+                        
+                        MovimientoInternoFacade.getInstance().alta(moviIngreso);
+                    }
+                    MovimientoInternoFacade.getInstance().alta(datos.get(i));
+                }
+                JOptionPane.showMessageDialog(null, "Envío realizado exitosamente");
+                
+                /***** IMPRESION DEL COMPROBANTE *****/                
+                try {
+                    new Impresora().imprimir(moviImp,"ORIGINAL");
+                    new Impresora().imprimir(moviImp,"COPIA");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error imprimiendo, compruebe impresora!");
+                }
+                
+                this.dispose();
+            } catch (java.lang.NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "No se han guardado los cambios \n"
+                        + "Es posible que haya ingresado un valor incorrecto",
+                        "Error Guardando", JOptionPane.ERROR_MESSAGE);
+            }            
+        } else {
+            JOptionPane.showMessageDialog(null, "No se han guardado los cambios");
+            this.dispose();
+        }        
+    }    
+
 }
