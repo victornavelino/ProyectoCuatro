@@ -1,7 +1,9 @@
 package includes;
 
+import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.TipoIva;
+import entidades.articulo.stock.ArticuloDeposito;
 import entidades.caja.Caja;
 import entidades.caja.CuentaCorriente;
 import entidades.caja.CuponTarjeta;
@@ -816,6 +818,7 @@ public class Impresora {
                 pagina.drawString("Tipo de Movimiento: " + movimiento.getTipoDeMovimiento(), 10, salto += 10);
                 pagina.drawString("Artículo: " + movimiento.getArticuloDescripcion(), 10, salto += 10);
                 pagina.drawString("Cantidad: " + movimiento.getCantidad(), 10, salto += 10);
+                 pagina.drawString("Precio Costo: " + movimiento.getMonto(), 10, salto += 10);
                 BigDecimal totalReg = movimiento.getCantidad().
                         multiply(movimiento.getMonto()).setScale(2, BigDecimal.ROUND_CEILING);
                 pagina.drawString("                ", 10, salto += 10);
@@ -836,4 +839,5 @@ public class Impresora {
 
     }
 
+  
 }
