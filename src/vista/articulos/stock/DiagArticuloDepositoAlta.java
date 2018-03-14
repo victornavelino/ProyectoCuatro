@@ -8,8 +8,10 @@ package vista.articulos.stock;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.stock.ArticuloDeposito;
+import entidades.articulo.stock.ArticuloDepositoMovimiento;
 import entidades.articulo.stock.Deposito;
 import facade.ArticuloDepositoFacade;
+import facade.ArticuloDepositoMovimientoFacade;
 import includes.Comunes;
 import includes.ModeloTablaNoEditable;
 import java.awt.event.KeyEvent;
@@ -38,8 +40,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     Query quDeposito = em.createQuery("SELECT d FROM Deposito d");
     List listDeposito = quDeposito.getResultList();
     ArticuloDeposito articuloDeposito = new ArticuloDeposito();
+    ArticuloDepositoMovimiento articuloDepositoMovimiento = new ArticuloDepositoMovimiento();
     ArticuloDepositoFacade ArticuloDepositoFacade;
+    ArticuloDepositoMovimientoFacade ArticuloDepositoMovimientoFacade;
     private ModeloTablaNoEditable modeloTablaArticulosAsignar;
+    int numLote = 0;
 
     /**
      * Creates new form DiagArticuloDepositoAlta
@@ -66,7 +71,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jlistArticulosFiltrados = new javax.swing.JList();
         lbDescripcionSeleccionada = new javax.swing.JLabel();
-        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         jXPanel7 = new org.jdesktop.swingx.JXPanel();
         lbDescripcion1 = new javax.swing.JLabel();
         cboDeposito = new javax.swing.JComboBox();
@@ -81,6 +85,8 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         tblArticulosAsignar = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jbconfirmar = new javax.swing.JButton();
+        dpFecha = new org.jdesktop.swingx.JXDatePicker();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -131,10 +137,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                             .addComponent(lbDescripcionSeleccionada))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jXPanel6Layout.createSequentialGroup()
-                .addGap(141, 141, 141)
-                .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jXPanel6Layout.setVerticalGroup(
             jXPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,8 +149,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbDescripcionSeleccionada)
-                .addGap(32, 32, 32)
-                .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -272,6 +272,15 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             }
         });
 
+        dpFecha.setFormats("dd/MM/yyyy");
+        dpFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpFechaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jLabel3.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -281,9 +290,15 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                 .addComponent(jXPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jXPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -297,51 +312,54 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton3))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jbconfirmar)
-                            .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(125, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)))
+                        .addGap(18, 18, 18)
+                        .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jXPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+            .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addComponent(jbconfirmar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addComponent(jXPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(99, 99, 99)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAsignar)
-                    .addComponent(btEliminar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1)
+                                    .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(26, 26, 26)
+                        .addComponent(jbconfirmar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(99, 99, 99)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btAsignar)
+                            .addComponent(btEliminar)))))
         );
 
         pack();
@@ -483,8 +501,13 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         tfStock.setText("");
         tfDescripcion.requestFocus();
     }//GEN-LAST:event_jbconfirmarKeyPressed
+
+    private void dpFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpFechaActionPerformed
+        //deshabilitarFecha();
+    }//GEN-LAST:event_dpFechaActionPerformed
     public void inicializarComponentes() {
         this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
+        this.ArticuloDepositoMovimientoFacade= ArticuloDepositoMovimientoFacade.getInstance();
         cargarListaArticuloTodos();
         cargarComboBoxDeposito();
         modeloTablaArticulosAsignar = new ModeloTablaNoEditable();
@@ -542,14 +565,31 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
 
         int fils = tblArticulosAsignar.getRowCount();
         System.out.println("la tabla es " + fils);
+        numLote = ArticuloDepositoMovimientoFacade.getInstance().getUltimoNumeroLote()+ 1;
         for (int i = 0; i < fils; i++) {
 
             articuloDeposito = new ArticuloDeposito();
+         
+            
             articuloDeposito.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
             articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
             articuloDeposito.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
             ArticuloDepositoFacade.agregarArticulosAlDeposito(articuloDeposito);
+            
+            articuloDepositoMovimiento.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
+            articuloDepositoMovimiento.setDeposito((Deposito) cboDeposito.getSelectedItem());
+            articuloDepositoMovimiento.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
+            articuloDepositoMovimiento.setNumero(numLote);
+            articuloDepositoMovimiento.setFecha(dpFecha.getDate());
+            articuloDepositoMovimiento.setFactura("");
+            System.out.println("articulo"+articuloDepositoMovimiento.getArticulo());
+            System.out.println("deposito"+articuloDepositoMovimiento.getDeposito());
+            System.out.println("fecha"+articuloDepositoMovimiento.getFecha());
+            System.out.println("numero"+articuloDepositoMovimiento.getNumero());
+            ArticuloDepositoMovimientoFacade.alta(articuloDepositoMovimiento);
+            
             articuloDeposito = new ArticuloDeposito();
+            articuloDepositoMovimiento= new ArticuloDepositoMovimiento();
         }
 
     }
@@ -618,13 +658,14 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     private javax.swing.JButton btAsignar;
     private javax.swing.JButton btEliminar;
     private javax.swing.JComboBox cboDeposito;
+    private org.jdesktop.swingx.JXDatePicker dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXPanel jXPanel6;
     private org.jdesktop.swingx.JXPanel jXPanel7;
     private javax.swing.JButton jbconfirmar;

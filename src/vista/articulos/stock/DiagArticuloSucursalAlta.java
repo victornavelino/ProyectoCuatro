@@ -94,8 +94,6 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
-        datePickerAddon1 = new org.jdesktop.swingx.plaf.DatePickerAddon();
-        datePickerAddon2 = new org.jdesktop.swingx.plaf.DatePickerAddon();
         jXPanel6 = new org.jdesktop.swingx.JXPanel();
         lbDescripcion = new javax.swing.JLabel();
         tfDescripcion = new javax.swing.JTextField();
@@ -543,8 +541,6 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     private javax.swing.JButton btAsignar;
     private javax.swing.JComboBox cboDeposito;
     private javax.swing.JComboBox cboPuesto;
-    private org.jdesktop.swingx.plaf.DatePickerAddon datePickerAddon1;
-    private org.jdesktop.swingx.plaf.DatePickerAddon datePickerAddon2;
     private com.toedter.calendar.JDateChooser dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

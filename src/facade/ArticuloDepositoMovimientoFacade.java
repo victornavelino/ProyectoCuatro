@@ -6,10 +6,12 @@
 package facade;
 
 import controladores.ArticuloDepositoJpaController;
+import controladores.ArticuloDepositoMovimientoJpaController;
 import controladores.exceptions.NonexistentEntityException;
 import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.stock.ArticuloDeposito;
+import entidades.articulo.stock.ArticuloDepositoMovimiento;
 import entidades.articulo.stock.ArticuloSucursal;
 import entidades.articulo.stock.Deposito;
 import java.util.List;
@@ -25,21 +27,21 @@ import javax.swing.JOptionPane;
  *
  * @author franco
  */
-public class ArticuloDepositoFacade {
+public class ArticuloDepositoMovimientoFacade {
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
 
-    ArticuloDepositoJpaController articuloDepositoJpa = new ArticuloDepositoJpaController(emf);
+    ArticuloDepositoMovimientoJpaController articuloDepositoJpa = new ArticuloDepositoMovimientoJpaController(emf);
 
-    Query quArticuloDeposito;
-    List listArticuloDeposito;
+    Query quArticuloDepositoMovimiento;
+    List listArticuloDepositoMovimiento;
 
-     private static ArticuloDepositoFacade instance = null;
+     private static ArticuloDepositoMovimientoFacade instance = null;
 
-    protected ArticuloDepositoFacade() {
+    protected ArticuloDepositoMovimientoFacade() {
     }
 
-    public static ArticuloDepositoFacade getInstance() {
+    public static ArticuloDepositoMovimientoFacade getInstance() {
         if (instance == null) {
             createInstance();
         }
@@ -50,7 +52,7 @@ public class ArticuloDepositoFacade {
 
     private synchronized static void createInstance() {
         if (instance == null) {
-            instance = new ArticuloDepositoFacade();
+            instance = new ArticuloDepositoMovimientoFacade();
         }
     }
 
@@ -64,17 +66,17 @@ public class ArticuloDepositoFacade {
         return new ArticuloDepositoJpaController(emf).findArticuloDepositoEntities();
     }
     
-    public void alta(ArticuloDeposito articuloDeposito) {
+    public void alta(ArticuloDepositoMovimiento articuloDeposito) {
         articuloDepositoJpa.create(articuloDeposito);
     }
 
-    public void modificar(ArticuloDeposito articuloDeposito) {
+    public void modificar(ArticuloDepositoMovimiento articuloDeposito) {
         try {
             articuloDepositoJpa.edit(articuloDeposito);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(ArticuloDepositoFacade.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticuloDepositoMovimientoFacade.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ArticuloDepositoFacade.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticuloDepositoMovimientoFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,22 +84,22 @@ public class ArticuloDepositoFacade {
         try {
             articuloDepositoJpa.destroy(id);
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(ArticuloDepositoFacade.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ArticuloDepositoMovimientoFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public ArticuloDeposito buscar(long id) {
-        return articuloDepositoJpa.findArticuloDeposito(id);
+    public ArticuloDepositoMovimiento buscar(long id) {
+        return articuloDepositoJpa.findArticuloDepositoMovimiento(id);
     }
 
-    public ArticuloDeposito buscar(Articulo articulo, Deposito deposito) {
+    public ArticuloDepositoMovimiento buscar(Articulo articulo, Deposito deposito) {
 
         
         EntityManager em = emf.createEntityManager();
         ArticuloDeposito articuloDeposito = new ArticuloDeposito();
-        quArticuloDeposito = em.createQuery("SELECT ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo AND ad.deposito = :deposito");
-        quArticuloDeposito.setParameter("articulo", articulo);
-        quArticuloDeposito.setParameter("deposito", deposito);
+        quArticuloDepositoMovimiento = em.createQuery("SELECT ad FROM ArticuloDeposito ad WHERE ad.articulo = :articulo AND ad.deposito = :deposito");
+        quArticuloDepositoMovimiento.setParameter("articulo", articulo);
+        quArticuloDepositoMovimiento.setParameter("deposito", deposito);
 
         //ArticuloDeposito articuloDeposito= new ArticuloDeposito();
          //articuloDeposito = (ArticuloDeposito) qu.getSingleResult();
@@ -105,15 +107,15 @@ public class ArticuloDepositoFacade {
        
          
          try {
-            return (ArticuloDeposito) quArticuloDeposito.getSingleResult();
+            return (ArticuloDepositoMovimiento) quArticuloDepositoMovimiento.getSingleResult();
         } catch (Exception ex) {
             return null;
         }
        
     }
 
-    public void agregarArticulosAlDeposito(ArticuloDeposito articuloDeposito) {
-        ArticuloDeposito articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
+    public void agregarArticulosAlDeposito(ArticuloDepositoMovimiento articuloDeposito) {
+        ArticuloDepositoMovimiento articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
         if (articuloDepositoCompleto != null) {
             articuloDepositoCompleto.setCantidad(articuloDepositoCompleto.getCantidad() + articuloDeposito.getCantidad());
             modificar(articuloDepositoCompleto);
@@ -126,11 +128,11 @@ public class ArticuloDepositoFacade {
     }
 
     public void agregarArticulosAlDeposito(Articulo articulo, Deposito deposito, Long cantidad) {
-        ArticuloDeposito articuloDepositoCompleto = buscar(articulo, deposito);
+        ArticuloDepositoMovimiento articuloDepositoCompleto = buscar(articulo, deposito);
         if (articuloDepositoCompleto != null) {
             articuloDepositoCompleto.setCantidad(articuloDepositoCompleto.getCantidad() + cantidad);
         } else {
-            ArticuloDeposito articuloDeposito = new ArticuloDeposito();
+            ArticuloDepositoMovimiento articuloDeposito = new ArticuloDepositoMovimiento();
             articuloDeposito.setArticulo(articulo);
             articuloDeposito.setCantidad(cantidad);
             articuloDeposito.setDeposito(deposito);
@@ -141,7 +143,7 @@ public class ArticuloDepositoFacade {
         EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU",ConexionFacade.PROPIEDADES);
         //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
-        Query quBuscar = ema.createQuery("SELECT MAX(m.numero) FROM ArticuloDeposito m");
+        Query quBuscar = ema.createQuery("SELECT MAX(m.numero) FROM ArticuloDepositoMovimiento m");
         quBuscar.setMaxResults(1);
         try {
             return (int) quBuscar.getSingleResult();
@@ -150,11 +152,11 @@ public class ArticuloDepositoFacade {
         }
     }
 
-    public boolean eliminarArticulosAlDeposito(ArticuloDeposito articuloDeposito, Long cantidadAquitar) {
+    public boolean eliminarArticulosAlDeposito(ArticuloDepositoMovimiento articuloDeposito, Long cantidadAquitar) {
         boolean flag = false;
        
         
-        ArticuloDeposito articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
+        ArticuloDepositoMovimiento articuloDepositoCompleto = buscar(articuloDeposito.getArticulo(), articuloDeposito.getDeposito());
         if (articuloDepositoCompleto != null) {
             if (articuloDepositoCompleto.getCantidad() >= articuloDeposito.getCantidad()) {
                 articuloDeposito.setCantidad(articuloDepositoCompleto.getCantidad() - cantidadAquitar);
@@ -180,7 +182,7 @@ public class ArticuloDepositoFacade {
         return flag;
     }
 
-    public boolean eliminarArticulosAlDeposito(ArticuloDeposito articuloDeposito, long cantidad) {
+    public boolean eliminarArticulosAlDeposito(ArticuloDepositoMovimiento articuloDeposito, long cantidad) {
         boolean flag = false;
         if (articuloDeposito.getCantidad() >= cantidad) {
             articuloDeposito.setCantidad(articuloDeposito.getCantidad() - cantidad);
