@@ -63,6 +63,7 @@
     <class>entidades.articulo.marca.Marca</class>
     <class>entidades.articulo.stock.ArticuloSucursal</class>
     <class>entidades.articulo.stock.ArticuloDeposito</class>
+    <class>entidades.articulo.stock.ArticuloDepositoMovimiento</class>
     <class>entidades.articulo.stock.Deposito</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/carniceria"/>

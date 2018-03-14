@@ -143,7 +143,7 @@ public class ArticuloDepositoMovimientoFacade {
         EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU",ConexionFacade.PROPIEDADES);
         //EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoDosPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
-        Query quBuscar = ema.createQuery("SELECT MAX(m.numero) FROM ArticuloDepositoMovimiento m");
+        Query quBuscar = ema.createQuery("SELECT MAX(a.numero) FROM ArticuloDepositoMovimiento a");
         quBuscar.setMaxResults(1);
         try {
             return (int) quBuscar.getSingleResult();
