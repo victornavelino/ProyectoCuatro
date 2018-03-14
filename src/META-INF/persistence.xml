@@ -65,6 +65,7 @@
     <class>entidades.articulo.stock.ArticuloDeposito</class>
     <class>entidades.articulo.stock.ArticuloDepositoMovimiento</class>
     <class>entidades.articulo.stock.Deposito</class>
+    <class>entidades.proveedor.Proveedor</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/carniceria"/>
       <property name="javax.persistence.jdbc.password" value="123456"/>

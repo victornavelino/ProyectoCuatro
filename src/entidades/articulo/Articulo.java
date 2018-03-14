@@ -144,7 +144,7 @@ public class Articulo implements Serializable {
     @Override
     public String toString() {
         try {
-            return descripcionReducida;
+            return descripcion;
         } catch (Exception e) {
             return "";
         }

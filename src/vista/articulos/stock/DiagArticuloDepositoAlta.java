@@ -10,8 +10,10 @@ import entidades.articulo.Articulo;
 import entidades.articulo.stock.ArticuloDeposito;
 import entidades.articulo.stock.ArticuloDepositoMovimiento;
 import entidades.articulo.stock.Deposito;
+import entidades.proveedor.Proveedor;
 import facade.ArticuloDepositoFacade;
 import facade.ArticuloDepositoMovimientoFacade;
+import facade.ProveedorFacade;
 import includes.Comunes;
 import includes.ModeloTablaNoEditable;
 import java.awt.event.KeyEvent;
@@ -83,11 +85,13 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblArticulosAsignar = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
-        jbconfirmar = new javax.swing.JButton();
         dpFecha = new org.jdesktop.swingx.JXDatePicker();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jtfactura = new javax.swing.JTextField();
+        cboProveedor = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        btnNuevaUnidadMedida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -147,10 +151,10 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                     .addComponent(tfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbDescripcion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbDescripcionSeleccionada)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jXPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jXPanel7.border.title"))); // NOI18N
@@ -235,6 +239,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
+            }
+        });
 
         tblArticulosAsignar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,18 +259,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
-            }
-        });
-
-        jbconfirmar.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jbconfirmar.text")); // NOI18N
-        jbconfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbconfirmarActionPerformed(evt);
-            }
-        });
-        jbconfirmar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jbconfirmarKeyPressed(evt);
             }
         });
 
@@ -283,6 +280,23 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             }
         });
 
+        cboProveedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboProveedorActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.jLabel5.text")); // NOI18N
+
+        btnNuevaUnidadMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/add.png"))); // NOI18N
+        btnNuevaUnidadMedida.setText(org.openide.util.NbBundle.getMessage(DiagArticuloDepositoAlta.class, "DiagArticuloDepositoAlta.btnNuevaUnidadMedida.text")); // NOI18N
+        btnNuevaUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaUnidadMedidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,54 +304,62 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jXPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jbconfirmar)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel1))
-                                    .addComponent(jButton1))
-                                .addGap(18, 18, 18)
-                                .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jButton3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel1))
+                                            .addComponent(jButton1))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(45, 245, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(75, 75, 75)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jtfactura, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnNuevaUnidadMedida)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfactura)))
-                        .addGap(45, 45, 45))))
+                        .addGap(121, 121, 121)
+                        .addComponent(btAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jXPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jXPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,26 +370,33 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
-                                    .addComponent(jtfactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jtfactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cboProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5))
+                                    .addComponent(btnNuevaUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfStock, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(tfCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addComponent(jbconfirmar)
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btAsignar))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(155, 155, 155)
                                 .addComponent(jButton3)
-                                .addGap(122, 122, 122))))))
+                                .addGap(111, 111, 111))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAsignar))))
+                    .addComponent(jXPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -392,11 +421,26 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     }//GEN-LAST:event_jlistArticulosFiltradosValueChanged
 
     private void tfCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCantidadFocusGained
-        tfCantidad.selectAll();
+        // tfCantidad.selectAll();
     }//GEN-LAST:event_tfCantidadFocusGained
 
     private void tfCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCantidadKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
+            if (jlistArticulosFiltrados.getSelectedIndex() != -1) {
+                if (Comunes.validarInteger(tfCantidad.getText())) {
+                    cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
+                    tfCantidad.setText("");
+                    tfStock.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe Ingresar Cantidad a agregar");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
+            }
+            tfDescripcion.requestFocus();
+
+        }
     }//GEN-LAST:event_tfCantidadKeyPressed
 
     private void tfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCantidadKeyReleased
@@ -417,7 +461,7 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     private void btAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAsignarActionPerformed
         asignar();
 //        buscarStock();
-        this.dispose();
+        
         tfCantidad.setText("");
 
     }//GEN-LAST:event_btAsignarActionPerformed
@@ -462,21 +506,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jbconfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbconfirmarActionPerformed
-        // TODO add your handling code here:
-        if (jlistArticulosFiltrados.getSelectedIndex() != -1) {
-            if (Comunes.validarInteger(tfCantidad.getText())) {
-                cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
-                tfCantidad.setText("");
-                tfStock.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe Ingresar Cantidad a agregar");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
-        }
-    }//GEN-LAST:event_jbconfirmarActionPerformed
     private void cargarTablaArticulosAsignar(Articulo art, Long cantidad) {
 
         // configurarTabla(tblArticulosAsignar);
@@ -497,13 +526,6 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         modeloTablaArticulosAsignar.addRow(fila);
 
     }
-    private void jbconfirmarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbconfirmarKeyPressed
-        cargarTablaArticulosAsignar((Articulo) jlistArticulosFiltrados.getSelectedValue(), Long.parseLong(tfCantidad.getText()));
-        tfCantidad.setText("");
-        tfStock.setText("");
-        tfDescripcion.requestFocus();
-    }//GEN-LAST:event_jbconfirmarKeyPressed
-
     private void dpFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpFechaActionPerformed
         //deshabilitarFecha();
     }//GEN-LAST:event_dpFechaActionPerformed
@@ -511,13 +533,38 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     private void jtfacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfacturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfacturaActionPerformed
+
+    private void cboProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboProveedorActionPerformed
+
+    private void btnNuevaUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaUnidadMedidaActionPerformed
+        agregarProveedor();
+        Comunes.cargarJCombo(cboProveedor, ProveedorFacade.getInstance().getTodos());
+    }//GEN-LAST:event_btnNuevaUnidadMedidaActionPerformed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarStock();
+            tfCantidad.requestFocus();
+
+        }
+    }//GEN-LAST:event_jButton1KeyPressed
     public void inicializarComponentes() {
+        Comunes.cargarJCombo(cboProveedor, ProveedorFacade.getInstance().getTodos());
         this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
-        this.ArticuloDepositoMovimientoFacade= ArticuloDepositoMovimientoFacade.getInstance();
+        this.ArticuloDepositoMovimientoFacade = ArticuloDepositoMovimientoFacade.getInstance();
         cargarListaArticuloTodos();
         cargarComboBoxDeposito();
         modeloTablaArticulosAsignar = new ModeloTablaNoEditable();
         cargarEncabezadosTablaArticulosAsignar(modeloTablaArticulosAsignar);
+    }
+
+    private void agregarProveedor() {
+        DiagProveedor diagproveedor = new DiagProveedor(null, true, "Alta");
+        diagproveedor.setLocationRelativeTo(null);
+        diagproveedor.setVisible(true);
     }
 
     private void cargarEncabezadosTablaArticulosAsignar(ModeloTablaNoEditable modeloTablaArtAsig) {
@@ -567,34 +614,46 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
         cboDeposito.setModel(modeloCombo);
     }
 
+    private boolean validarArticulo() {
+        //boolean flag=Boolean.TRUE;
+        if (jtfactura.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe Ingresar la Factura", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+ 
+        return true;
+    }
+
     public void asignar() {
 
-        int fils = tblArticulosAsignar.getRowCount();
-        System.out.println("la tabla es " + fils);
-        numLote = ArticuloDepositoMovimientoFacade.getInstance().getUltimoNumeroLote()+ 1;
-        for (int i = 0; i < fils; i++) {
+        if (validarArticulo()) {
+            int fils = tblArticulosAsignar.getRowCount();
+            System.out.println("la tabla es " + fils);
+            numLote = ArticuloDepositoMovimientoFacade.getInstance().getUltimoNumeroLote() + 1;
+            for (int i = 0; i < fils; i++) {
 
-            articuloDeposito = new ArticuloDeposito();
-         
-            
-            articuloDeposito.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
-            articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
-            articuloDeposito.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
-            ArticuloDepositoFacade.agregarArticulosAlDeposito(articuloDeposito);
-            
-            articuloDepositoMovimiento.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
-            articuloDepositoMovimiento.setDeposito((Deposito) cboDeposito.getSelectedItem());
-            articuloDepositoMovimiento.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
-            articuloDepositoMovimiento.setNumero(numLote);
-            articuloDepositoMovimiento.setFecha(dpFecha.getDate());
-            articuloDepositoMovimiento.setFactura(jtfactura.getText());
-            
-            ArticuloDepositoMovimientoFacade.alta(articuloDepositoMovimiento);
-            
-            articuloDeposito = new ArticuloDeposito();
-            articuloDepositoMovimiento= new ArticuloDepositoMovimiento();
+                articuloDeposito = new ArticuloDeposito();
+
+                articuloDeposito.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
+                articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
+                articuloDeposito.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
+                ArticuloDepositoFacade.agregarArticulosAlDeposito(articuloDeposito);
+
+                articuloDepositoMovimiento.setArticulo((Articulo) tblArticulosAsignar.getValueAt(i, 0));
+                articuloDepositoMovimiento.setProveedor((Proveedor) cboProveedor.getSelectedItem());
+                articuloDepositoMovimiento.setDeposito((Deposito) cboDeposito.getSelectedItem());
+                articuloDepositoMovimiento.setCantidad((Long) tblArticulosAsignar.getValueAt(i, 1));
+                articuloDepositoMovimiento.setNumero(numLote);
+                articuloDepositoMovimiento.setFecha(dpFecha.getDate());
+                articuloDepositoMovimiento.setFactura(jtfactura.getText());
+
+                ArticuloDepositoMovimientoFacade.alta(articuloDepositoMovimiento);
+
+                articuloDeposito = new ArticuloDeposito();
+                articuloDepositoMovimiento = new ArticuloDepositoMovimiento();
+            }
+            this.dispose();
         }
-
     }
 
     public void buscarStock() {
@@ -659,7 +718,9 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAsignar;
+    private javax.swing.JButton btnNuevaUnidadMedida;
     private javax.swing.JComboBox cboDeposito;
+    private javax.swing.JComboBox cboProveedor;
     private org.jdesktop.swingx.JXDatePicker dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
@@ -667,11 +728,11 @@ public class DiagArticuloDepositoAlta extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private org.jdesktop.swingx.JXPanel jXPanel6;
     private org.jdesktop.swingx.JXPanel jXPanel7;
-    private javax.swing.JButton jbconfirmar;
     private javax.swing.JList jlistArticulosFiltrados;
     private javax.swing.JTextField jtfactura;
     private javax.swing.JLabel lbDescripcion;

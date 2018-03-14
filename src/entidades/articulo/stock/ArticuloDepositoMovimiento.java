@@ -6,6 +6,7 @@
 package entidades.articulo.stock;
 
 import entidades.articulo.Articulo;
+import entidades.proveedor.Proveedor;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -35,10 +36,20 @@ public class ArticuloDepositoMovimiento implements Serializable {
     private Articulo articulo;
     @ManyToOne
     private Deposito deposito;
+    @ManyToOne
+    private Proveedor proveedor;
     private Long cantidad;
     private String factura;
     public Long getId() {
         return id;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public void setId(Long id) {
