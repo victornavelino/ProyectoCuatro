@@ -19,28 +19,41 @@ import entidades.inventario.MovimientoInterno;
 import entidades.usuario.Usuario;
 import facade.ArticuloDepositoFacade;
 import facade.ArticuloSucursalFacade;
+import facade.ConexionFacade;
 import facade.MovimientoInternoFacade;
 import includes.Comunes;
 import includes.Impresora;
 import includes.ModeloTablaNoEditable;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.query.JRJpaQueryExecuterFactory;
+import net.sf.jasperreports.swing.JRViewer;
+import reportes.Reportes;
 
 /**
  *
@@ -49,7 +62,8 @@ import javax.swing.table.TableColumnModel;
 public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
     // Atributos    
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU");
+    //  EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoUnoPU", ConexionFacade.PROPIEDADES);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
     EntityManager em = emf.createEntityManager();
     Query quArticulo = em.createQuery("SELECT a FROM Articulo a");
     List listArticulo = quArticulo.getResultList();
@@ -69,6 +83,7 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     private Sucursal sucursal;
     private Sucursal sucursalDestino;
     private Usuario usuario;
+    private Integer numLote;
 
     public DiagArticuloSucursalAlta() {
 
@@ -115,10 +130,10 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         tblArticulosAsignar = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        dpFecha = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jTremito = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        dpFecha = new org.jdesktop.swingx.JXDatePicker();
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -340,6 +355,12 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
         jLabel4.setText("Remito");
 
+        dpFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpFechaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -372,15 +393,15 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addGap(5, 5, 5)
                                         .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTremito, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap())))
+                                        .addComponent(jTremito, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(17, 17, 17))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,11 +436,11 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
                         .addGap(34, 34, 34)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(23, 23, 23)
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(dpFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTremito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
@@ -537,11 +558,15 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTremitoActionPerformed
 
+    private void dpFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dpFechaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAsignar;
     private javax.swing.JComboBox cboDeposito;
     private javax.swing.JComboBox cboPuesto;
-    private com.toedter.calendar.JDateChooser dpFecha;
+    private org.jdesktop.swingx.JXDatePicker dpFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -566,6 +591,14 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     private javax.swing.JTextField tfDescripcion;
     private javax.swing.JTextField tfStock;
     // End of variables declaration//GEN-END:variables
+
+    public Integer getNumLote() {
+        return numLote;
+    }
+
+    public void setNumLote(Integer numLote) {
+        this.numLote = numLote;
+    }
 
     public void inicializarComponentes() {
         this.ArticuloDepositoFacade = ArticuloDepositoFacade.getInstance();
@@ -634,11 +667,11 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
             ArticuloSucursalFacade.transferirArticuloDesdeDepositoASucursal(articuloDeposito, (Sucursal) cboPuesto.getSelectedItem(), (Long) tblArticulosAsignar.getValueAt(i, 1));
 
             //  ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), cboPuesto.getSelectedItem());
-          //  listaArticuloDeposito.add(articuloDeposito);
+            //  listaArticuloDeposito.add(articuloDeposito);
             agregarMovimiento((Sucursal) cboPuesto.getSelectedItem(), (Long) tblArticulosAsignar.getValueAt(i, 1), (Articulo) tblArticulosAsignar.getValueAt(i, 0));
             articuloDeposito = new ArticuloDeposito();
         }
-       guardarMovimiento();
+        guardarMovimiento();
         /*
          articuloDeposito.setArticulo((Articulo) jlistArticulosFiltrados.getSelectedValue());
          articuloDeposito.setDeposito((Deposito) cboDeposito.getSelectedItem());
@@ -739,8 +772,6 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
 
     }
 
-  
-
     private void agregarMovimiento(Sucursal sucursalDesti, Long cantidad, Articulo art) {
 
         nuevoMovimiento = new MovimientoInterno();
@@ -782,19 +813,16 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
         //        numLote = MovimientoInternoFacade.getInstance().getUltimoNumeroLote() + 1;
         //        num = MovimientoInternoFacade.getInstance().getUltimoNumero() + 1;
         //        loteAsignado = true;
-    //}
+        //}
+        nuevoMovimiento.setNumeroLote(Integer.parseInt(jTremito.getText())); //en este caso será numero de remito
 
-    nuevoMovimiento.setNumeroLote (Integer.parseInt(jTremito.getText())); //en este caso será numero de remito
-
-    nuevoMovimiento.setNumero (0);
-    datos.add(nuevoMovimiento);
-    //  calcularTotales(datos);
-
-
+        nuevoMovimiento.setNumero(0);
+        datos.add(nuevoMovimiento);
+        //  calcularTotales(datos);
 
     }
-    
-     private void guardarMovimiento() {        
+
+    private void guardarMovimiento() {
         int reply = JOptionPane.showConfirmDialog(null,
                 "¿Desea confirmar el envio?", "Alta Movimientos Internos",
                 JOptionPane.YES_NO_OPTION);
@@ -802,15 +830,15 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
             try {
                 // Creo una lista movimientos a imprimir que solo son los egresos
                 // a partir de la lista original
-                List<MovimientoInterno> moviImp = new ArrayList<>();                
-               
-                for(int i = 0; i < datos.size(); i++){
-                    if(datos.get(i).getTipoDeMovimiento().equals("EGRE")){                        
-                        moviImp.add(datos.get(i));       
+                List<MovimientoInterno> moviImp = new ArrayList<>();
+
+                for (int i = 0; i < datos.size(); i++) {
+                    if (datos.get(i).getTipoDeMovimiento().equals("EGRE")) {
+                        moviImp.add(datos.get(i));
                         MovimientoInterno moviIngreso = new MovimientoInterno();
-                        
+
                         moviIngreso.setNumero(datos.get(i).getNumero());
-                        moviIngreso.setFecha(datos.get(i).getFecha());        
+                        moviIngreso.setFecha(datos.get(i).getFecha());
                         moviIngreso.setSucursal(datos.get(i).getSucursal());
                         moviIngreso.setSucursalDestino(datos.get(i).getSucursalDestino());
                         moviIngreso.setUsuarioEnvia(datos.get(i).getUsuarioEnvia());
@@ -818,35 +846,72 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
                         moviIngreso.setMonto(datos.get(i).getMonto());
                         moviIngreso.setTipoDeMovimiento("ING");
                         moviIngreso.setArticuloCodigo(datos.get(i).getArticuloCodigo());
-                        moviIngreso.setArticuloDescripcion(datos.get(i).getArticuloDescripcion());        
-                        moviIngreso.setAnulado(datos.get(i).isAnulado());       
+                        moviIngreso.setArticuloDescripcion(datos.get(i).getArticuloDescripcion());
+                        moviIngreso.setAnulado(datos.get(i).isAnulado());
                         moviIngreso.setNumeroLote(datos.get(i).getNumeroLote());
                         moviIngreso.setEstado(datos.get(i).getEstado());
-                        
+
                         MovimientoInternoFacade.getInstance().alta(moviIngreso);
                     }
                     MovimientoInternoFacade.getInstance().alta(datos.get(i));
+                    this.setNumLote(datos.get(0).getNumeroLote());
                 }
                 JOptionPane.showMessageDialog(null, "Envío realizado exitosamente");
-                
-                /***** IMPRESION DEL COMPROBANTE *****/                
+
+                /**
+                 * *** IMPRESION DEL COMPROBANTE ****
+                 */
                 try {
-                    new Impresora().imprimir(moviImp,"ORIGINAL");
-                    new Impresora().imprimir(moviImp,"COPIA");
+                    System.out.println("AAAAA");
+                    reporteRemito(numLote);
+                    new Impresora().imprimir(moviImp, "ORIGINAL");
+                    //   new Impresora().imprimir(moviImp,"COPIA");
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error imprimiendo, compruebe impresora!");
                 }
-                
+
                 this.dispose();
             } catch (java.lang.NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "No se han guardado los cambios \n"
                         + "Es posible que haya ingresado un valor incorrecto",
                         "Error Guardando", JOptionPane.ERROR_MESSAGE);
-            }            
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No se han guardado los cambios");
             this.dispose();
-        }        
-    }    
+        }
+    }
+
+    public void dialogoReporte(JasperPrint jasperPrint, String titulo) {
+        //abro el reporte en un dialog
+        System.out.println("CCCCCC");
+
+        JDialog dialogo = new JDialog();
+        dialogo.getContentPane().add(new JRViewer(jasperPrint));
+        dialogo.setModal(true);
+        dialogo.setTitle(titulo);
+        dialogo.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        dialogo.pack();
+        dialogo.setVisible(true);
+    }
+
+    public void reporteRemito(Integer remito) {
+        try {
+            System.out.println("BBBBBBBB");
+
+            Map parameters = new HashMap();
+            System.out.println("BBBBBBBB");
+            parameters.put("numeroRemito", remito);
+            System.out.println("BBBBBBBB");
+            parameters.put(JRJpaQueryExecuterFactory.PARAMETER_JPA_ENTITY_MANAGER, em);
+            System.out.println("BBBBBBBB");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(getClass().getResourceAsStream("/reportes/RemitoStock.jasper"), parameters);
+            System.out.println("BBBBBBBB");
+            dialogoReporte(jasperPrint, "Remito");
+
+        } catch (JRException ex) {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
