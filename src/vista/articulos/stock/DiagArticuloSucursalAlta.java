@@ -649,6 +649,10 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     }
 
     public void asignar() {
+         int reply = JOptionPane.showConfirmDialog(null,
+                "¿Desea confirmar el envio?", "Asignación de Artículos",
+                JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
         int fils = tblArticulosAsignar.getRowCount();
 
         for (int i = 0; i < fils; i++) {
@@ -669,6 +673,11 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
          ArticuloSucursalFacade.transferirArticuloDesdeDepositoASucursal(articuloDeposito, (Sucursal) cboPuesto.getSelectedItem(), Long.parseLong(tfCantidad.getText()));
          articuloDeposito = new ArticuloDeposito();
          */
+    }
+        else {
+            JOptionPane.showMessageDialog(null, "No se han guardado los cambios");
+            this.dispose();
+        }
     }
 
     public void buscarStock() {
@@ -814,10 +823,7 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
     }
 
     private void guardarMovimiento() {
-        int reply = JOptionPane.showConfirmDialog(null,
-                "¿Desea confirmar el envio?", "Alta Movimientos Internos",
-                JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
+        
             try {
                 // Creo una lista movimientos a imprimir que solo son los egresos
                 // a partir de la lista original
@@ -868,10 +874,7 @@ public class DiagArticuloSucursalAlta extends javax.swing.JDialog {
                         + "Es posible que haya ingresado un valor incorrecto",
                         "Error Guardando", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se han guardado los cambios");
-            this.dispose();
-        }
+       
     }
 
     public void dialogoReporte(JasperPrint jasperPrint, String titulo) {
