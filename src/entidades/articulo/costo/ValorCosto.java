@@ -89,7 +89,7 @@ public class ValorCosto implements Serializable {
 
     @Override
     public String toString() {
-        return descripcion;
+        return descripcion + " - " + valor + "%";
     }
 
 }

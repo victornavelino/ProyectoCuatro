@@ -16,6 +16,8 @@ import entidades.articulo.Articulo;
 import entidades.articulo.Categoria;
 import entidades.articulo.ListaPrecio;
 import entidades.articulo.PrecioArticulo;
+import entidades.articulo.SubCategoria;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -112,7 +114,7 @@ public class PrecioArticuloFacade {
 
     public PrecioArticulo getComun(Articulo articulo, Sucursal sucursal) {
         Query quBuscar = em.createQuery("SELECT p FROM PrecioArticulo p where p.articulo = :articulo "
-                + "and LOWER(p.listaPrecio.descripcion)='comun' and p.sucursal = :sucursal");
+                + "and LOWER(p.listaPrecio.descripcion)='minorista' and p.sucursal = :sucursal");
         quBuscar.setParameter("articulo", articulo);
         quBuscar.setParameter("sucursal", sucursal);
 
@@ -125,12 +127,26 @@ public class PrecioArticuloFacade {
     }
 
     public List<PrecioArticulo> get(ListaPrecio listaPrecio, Sucursal sucursal) {
-        
+
         EntityManager ema = emf.createEntityManager();
         Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p where p.listaPrecio = :listaPrecio "
                 + "and p.sucursal = :sucursal");
         quBuscar.setParameter("listaPrecio", listaPrecio);
         quBuscar.setParameter("sucursal", sucursal);
+        ema.getEntityManagerFactory().getCache().evictAll();
+
+        try {
+            return (List<PrecioArticulo>) quBuscar.getResultList();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<PrecioArticulo> getTodosActual() {
+
+        EntityManager ema = emf.createEntityManager();
+        Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p");
+
         ema.getEntityManagerFactory().getCache().evictAll();
 
         try {
@@ -245,23 +261,23 @@ public class PrecioArticuloFacade {
             return new ArrayList<>();
         }
     }
-public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
+
+    public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
         EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager ema = emfa.createEntityManager();
         ema.getEntityManagerFactory().getCache().evictAll();
         Query quBuscar = ema.createQuery("SELECT p FROM PrecioArticulo p where p.articulo.id  =:articulo order by p.sucursal.nombre asc");
         quBuscar.setParameter("articulo", articulo);
-        
+
         ema.getEntityManagerFactory().getCache().evictAll();
         try {
-           return (List<PrecioArticulo>) quBuscar.getResultList();
+            return (List<PrecioArticulo>) quBuscar.getResultList();
         } catch (Exception ex) {
             return null;
         }
     }
 
-
- public List<PrecioArticulo> buscarPorDescDescCortayCodigo(String descripcion) {
+    public List<PrecioArticulo> buscarPorDescDescCortayCodigo(String descripcion) {
         EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
         EntityManager em = emfa.createEntityManager();
         Query qu = em.createQuery("SELECT p FROM PrecioArticulo p WHERE "
@@ -272,5 +288,88 @@ public List<PrecioArticulo> buscarPoridArticulo(long articulo) {
         em.getEntityManagerFactory().getCache().evictAll();
         return qu.getResultList();
     }
- 
+
+    public void actualizarPreciosCategoria(BigDecimal porcentaje, Categoria categoria, ListaPrecio listaprecios, Sucursal sucursal, boolean todasListas) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = null;
+        if (!todasListas) {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo.subCategoria.categoria=:categoria and p.sucursal=:sucursal");
+            q.setParameter("listaprecio", listaprecios);
+            
+        } else {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.articulo.subCategoria.categoria=:categoria and p.sucursal=:sucursal");
+           System.out.println("entro por todas las listasssssssssssssssssssssss..........++++++++++++");
+        }
+        q.setParameter("porcentaje", porcentaje);
+        q.setParameter("categoria", categoria);
+
+        q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+
+        em.getTransaction().commit();
+    }
+
+    public void actualizarPreciosSubCategoria(BigDecimal porcentaje, SubCategoria subCategoria, ListaPrecio listaprecios, Sucursal sucursal, boolean todasListas) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = null;
+        if (!todasListas) {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo.subCategoria=:subCategoria  and p.sucursal=:sucursal");
+            q.setParameter("listaprecio", listaprecios);
+           
+        } else {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.articulo.subCategoria=:subCategoria  and p.sucursal=:sucursal");
+ System.out.println("entro por todas las listasssssssssssssssssssssss..........++++++++++++");
+        }
+        q.setParameter("porcentaje", porcentaje);
+        q.setParameter("subCategoria", subCategoria);
+
+        q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+
+        em.getTransaction().commit();
+    }
+
+    public void actualizarPreciosArticuloPorPorcentaje(BigDecimal porcentaje, Articulo articulo, ListaPrecio listaprecios, Sucursal sucursal, boolean todasListas) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = null;
+        if (!todasListas) {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.listaPrecio=:listaprecio and p.articulo=:articulo  and p.sucursal=:sucursal");
+            q.setParameter("listaprecio", listaprecios);
+            
+        } else {
+            q = em.createQuery("UPDATE PrecioArticulo p SET p.precio = p.precio +(p.precio *:porcentaje) WHERE p.articulo=:articulo  and p.sucursal=:sucursal");
+            System.out.println("entro por todas las listasssssssssssssssssssssss..........++++++++++++");
+        }
+        q.setParameter("porcentaje", porcentaje);
+        q.setParameter("articulo", articulo);
+
+        q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+
+        em.getTransaction().commit();
+    }
+
+    public void actualizarPreciosArticuloPorPrecio(BigDecimal precio, Articulo articulo, ListaPrecio listaprecios, Sucursal sucursal) {
+        System.out.println("entro actualizar PrecioArticulos");
+        EntityManagerFactory emfa = Persistence.createEntityManagerFactory("ProyectoCuatroPU", ConexionFacade.PROPIEDADES);
+        EntityManager em = emfa.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery("UPDATE PrecioArticulo p SET p.precio =:precio WHERE p.listaPrecio=:listaprecio and p.articulo=:articulo  and p.sucursal=:sucursal");
+        q.setParameter("precio", precio);
+        q.setParameter("articulo", articulo);
+        q.setParameter("listaprecio", listaprecios);
+        q.setParameter("sucursal", sucursal);
+        q.executeUpdate();
+
+        em.getTransaction().commit();
+    }
 }

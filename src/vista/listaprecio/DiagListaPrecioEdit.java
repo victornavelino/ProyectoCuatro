@@ -8,6 +8,8 @@ import entidades.articulo.ListaPrecio;
 import entidades.articulo.TipoIva;
 import entidades.caja.FormaPago;
 import facade.GenericoFacade;
+import facade.ListaPrecioFacade;
+import includes.Comunes;
 import static includes.Comunes.redondear;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -31,6 +33,7 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private Class<T> entidad;
     private ListaPrecio listaPrecio;
     private List<FormaPago> formasPago;
+    private List<ListaPrecio> lstPrecioDentro = new ArrayList<ListaPrecio>();
 
     /**
      * Creates new form dgAtributoEdit
@@ -39,18 +42,23 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
         super(parent, modal);
         this.setLocationRelativeTo(parent);
         initComponents();
+        this.jlSubTitulo.setText(subTitulo);
         this.initComponentes();
 
         this.setTitle(titulo);
-        this.jlSubTitulo.setText(subTitulo);
+
         this.entidad = entidad;
         this.formasPago = new ArrayList<FormaPago>();
-
+        this.lstPrecioDentro = new ArrayList<>();
     }
 
     private void initComponentes() {
         this.jtfId.setEditable(Boolean.FALSE);
-        
+        System.out.println("el subtitulo es" + "ppp" + jlSubTitulo.getText());
+        if (jlSubTitulo.getText().equals("  Nuevo")) {
+            Comunes.cargarJList(jlListaFuera, ListaPrecioFacade.getInstance().getTodos());
+        }
+
     }//fin initComponentes
 
     public Boolean getRstOperacion() {
@@ -95,13 +103,20 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
         jbSalir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         tmargen = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlListaDentro = new javax.swing.JList();
+        jButton1 = new javax.swing.JButton();
+        quitar = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jlListaFuera = new javax.swing.JList();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,7 +177,7 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Formas de Pago:");
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Formas de Pago"));
 
         jRadioButton1.setText("Efectivo");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -171,24 +186,17 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             }
         });
 
-        jRadioButton2.setText("Tarjeta");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton3.setText("Cuenta Corriente");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-
         jRadioButton4.setText("Cheque");
         jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton4ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton2.setText("Tarjeta");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
             }
         });
 
@@ -206,92 +214,165 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             }
         });
 
+        jRadioButton3.setText("Cuenta Corriente");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton4))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton5))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButton6)
+                    .addComponent(jRadioButton3))
+                .addGap(0, 27, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 17, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton5))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton3))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton6)
+                            .addComponent(jRadioButton4)))))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Permite Cambio de Lista"));
+
+        jScrollPane2.setViewportView(jlListaDentro);
+
+        jButton1.setText("agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        quitar.setText("quitar");
+        quitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarActionPerformed(evt);
+            }
+        });
+
+        jScrollPane3.setViewportView(jlListaFuera);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(quitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(quitar)
+                .addContainerGap(75, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlSubTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(84, 84, 84)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jbAction, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(64, 64, 64)
-                                                .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tmargen, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton4))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton5))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton6)
-                                    .addComponent(jRadioButton3))))
+                            .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tmargen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(210, 210, 210))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlSubTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jbAction, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlSubTitulo)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tmargen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton6)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jRadioButton4)
-                                .addComponent(jRadioButton5)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbAction, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jbSalir, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -333,31 +414,62 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
-        formasPago.add(FormaPago.EFECTIVO);
-        
+
+        if (jRadioButton1.isSelected()) {
+            formasPago.add(FormaPago.EFECTIVO);
+        } else {
+            formasPago.remove(FormaPago.EFECTIVO);
+        }
+
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        formasPago.add(FormaPago.TARJETA);
+        if (jRadioButton2.isSelected()) {
+            formasPago.add(FormaPago.TARJETA);
+        } else {
+            formasPago.remove(FormaPago.TARJETA);
+        }
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        formasPago.add(FormaPago.CUENTA_CORRIENTE);
+        if (jRadioButton3.isSelected()) {
+            formasPago.add(FormaPago.CUENTA_CORRIENTE);
+        } else {
+            formasPago.remove(FormaPago.CUENTA_CORRIENTE);
+        }
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        formasPago.add(FormaPago.CHEQUE);
+        if (jRadioButton4.isSelected()) {
+            formasPago.add(FormaPago.CHEQUE);
+        } else {
+            formasPago.remove(FormaPago.CHEQUE);
+        }
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        // TODO add your handling code here:
-        formasPago.add(FormaPago.DEPOSITO);
+        if (jRadioButton5.isSelected()) {
+            formasPago.add(FormaPago.DEPOSITO);
+        } else {
+            formasPago.remove(FormaPago.DEPOSITO);
+        }
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        // TODO add your handling code here:
-        formasPago.add(FormaPago.RAPIPAGO);
+        if (jRadioButton6.isSelected()) {
+            formasPago.add(FormaPago.RAPIPAGO);
+        } else {
+            formasPago.remove(FormaPago.RAPIPAGO);
+        }
     }//GEN-LAST:event_jRadioButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        agregarListaPrecios();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void quitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarActionPerformed
+        quitarListaPrecios();
+    }//GEN-LAST:event_quitarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -405,11 +517,13 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
@@ -418,12 +532,17 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbAction;
     private javax.swing.JButton jbSalir;
+    private javax.swing.JList jlListaDentro;
+    private javax.swing.JList jlListaFuera;
     private javax.swing.JLabel jlSubTitulo;
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNombre;
+    private javax.swing.JButton quitar;
     private javax.swing.JTextField tmargen;
     // End of variables declaration//GEN-END:variables
 
@@ -441,6 +560,34 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
                 break;
         }//fin switch
     }//fin action
+
+    private void agregarListaPrecios() {
+        if (jlListaFuera.getSelectedIndex() != -1) {
+
+            lstPrecioDentro.add((ListaPrecio) jlListaFuera.getSelectedValue());
+            List<ListaPrecio> listaPrecioFuera = ListaPrecioFacade.getInstance().getTodos();
+            listaPrecioFuera.removeAll(lstPrecioDentro);
+            Comunes.cargarJList(jlListaFuera, listaPrecioFuera);
+
+            Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Debe escoger una Lista", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void quitarListaPrecios() {
+        if (jlListaDentro.getSelectedIndex() != -1) {
+
+            lstPrecioDentro.remove((ListaPrecio) jlListaDentro.getSelectedValue());
+            List<ListaPrecio> lstListasFuera = ListaPrecioFacade.getInstance().getTodos();
+            lstListasFuera.removeAll(lstPrecioDentro);
+            Comunes.cargarJList(jlListaFuera, lstListasFuera);
+
+            Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+
+        }
+    }
 
     private void guardar() {
 
@@ -481,7 +628,11 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
+            cArg[0] = List.class;
+            campo = entidad.getDeclaredMethod("setPermiteCambioAListas", cArg);
+
+            campo.invoke(o, lstPrecioDentro);
+
             System.out.println("paso: " + o.toString());
 
             GenericoFacade.getInstance().alta(o);
@@ -521,19 +672,22 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             campo = entidad.getDeclaredMethod("setDescripcion", cArg);
 
             campo.invoke(o, jtfNombre.getText().toUpperCase().trim());
-            
+
             //Margen
             cArg[0] = BigDecimal.class;
             campo = entidad.getDeclaredMethod("setMargen", cArg);
-             campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
-          //  campo.invoke(o, tmargen.getText().toUpperCase().trim());
+            campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
+            //  campo.invoke(o, tmargen.getText().toUpperCase().trim());
 
-              cArg[0] = List.class;
+            cArg[0] = List.class;
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
-            System.out.println("Antes de modificar");
+            cArg[0] = List.class;
+            campo = entidad.getDeclaredMethod("setPermiteCambioAListas", cArg);
+
+            campo.invoke(o, lstPrecioDentro);
+            System.out.println("Antes de modificar" + formasPago);
             GenericoFacade.getInstance().modificar(o);
 
             sMensaje = "El dato fue modificado";
@@ -569,13 +723,13 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
             //Margen
             cArg[0] = BigDecimal.class;
             campo = entidad.getDeclaredMethod("setMargen", cArg);
-             campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
+            campo.invoke(o, redondear(new BigDecimal(tmargen.getText())));
 
-              cArg[0] = List.class;
+            cArg[0] = List.class;
             campo = entidad.getDeclaredMethod("setFormasDePago", cArg);
 
             campo.invoke(o, formasPago);
-            
+
             GenericoFacade.getInstance().eliminar(o);
 
             sMensaje = "El dato fue eliminado";
@@ -617,38 +771,48 @@ public class DiagListaPrecioEdit<T> extends javax.swing.JDialog {
 
     }//fin 
 
-    public void cargarCampos(String id, String descripcion,String margen, List formaPago) {
+    public void cargarCampos(String id, String descripcion, String margen, List formaPago, List listaPrecio) {
 
         this.jtfId.setText(id);
         this.jtfNombre.setText(descripcion);
         this.tmargen.setText(margen);
-        
-      
-        
-        for(int i=0;i<=formaPago.size()-1;i++){
-           
-            if (formaPago.get(i).equals(FormaPago.EFECTIVO)){
-           
+
+        for (int i = 0; i <= formaPago.size() - 1; i++) {
+
+            if (formaPago.get(i).equals(FormaPago.EFECTIVO)) {
+
                 this.jRadioButton1.setSelected(true);
+                formasPago.add(FormaPago.EFECTIVO);
             }
-            if (formaPago.get(i).equals(FormaPago.TARJETA)){
+            if (formaPago.get(i).equals(FormaPago.TARJETA)) {
                 this.jRadioButton2.setSelected(true);
+                formasPago.add(FormaPago.TARJETA);
             }
-            if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)){
+            if (formaPago.get(i).equals(FormaPago.CUENTA_CORRIENTE)) {
+                System.out.println("---+++++++++++");
                 this.jRadioButton3.setSelected(true);
+                formasPago.add(FormaPago.CUENTA_CORRIENTE);
             }
-            if (formaPago.get(i).equals(FormaPago.CHEQUE)){
+            if (formaPago.get(i).equals(FormaPago.CHEQUE)) {
                 this.jRadioButton4.setSelected(true);
+                formasPago.add(FormaPago.CHEQUE);
             }
-            if (formaPago.get(i).equals(FormaPago.DEPOSITO)){
+            if (formaPago.get(i).equals(FormaPago.DEPOSITO)) {
                 this.jRadioButton5.setSelected(true);
+                formasPago.add(FormaPago.DEPOSITO);
             }
-            if (formaPago.get(i).equals(FormaPago.RAPIPAGO)){
+            if (formaPago.get(i).equals(FormaPago.RAPIPAGO)) {
                 this.jRadioButton6.setSelected(true);
+                formasPago.add(FormaPago.RAPIPAGO);
             }
-        } 
+        }
+        lstPrecioDentro = listaPrecio;
+
+        Comunes.cargarJList(jlListaDentro, lstPrecioDentro);
+        List<ListaPrecio> lstListaPrecioFuera = ListaPrecioFacade.getInstance().getTodos();
+        lstListaPrecioFuera.removeAll(lstPrecioDentro);
+        Comunes.cargarJList(jlListaFuera, lstListaPrecioFuera);
 
     }//fin cargarCampos
 
-    
 }

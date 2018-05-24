@@ -17,6 +17,7 @@ import entidades.Paneles;
 import entidades.Sucursal;
 import entidades.articulo.ListaPrecio;
 import entidades.articulo.costo.ListaCosto;
+import entidades.articulo.stock.Deposito;
 import entidades.caja.Caja;
 import entidades.caja.TarjetaDeCredito;
 import entidades.caja.TipoDeFactura;
@@ -100,6 +101,11 @@ import vista.articulos.DiagAsignarPrecios;
 import vista.articulos.DiagCopiarPrecios;
 import vista.articulos.DiagExportarImportarArticulos;
 import vista.articulos.DiagPrecios;
+import vista.articulos.stock.DiagArticuloDepositoAlta;
+import vista.articulos.stock.DiagArticuloSucursalAlta;
+import vista.articulos.stock.DiagDeposito;
+import vista.articulos.stock.DiagStockGeneral;
+import vista.articulos.stock.infrArticuloDepositoAlta;
 import vista.cliente.DiagCliente;
 import vista.cliente.DiagClienteServer;
 import vista.cliente.DiagImportarExportarClientes;
@@ -468,7 +474,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
             }
 
             public void actionPerformed(ActionEvent e) {
-                DiagPrecios diagprecios = new DiagPrecios(frame, true);
+                DiagPrecios diagprecios = new DiagPrecios(frame, true,sucursal);
                 diagprecios.setLocation(Comunes.centrarDialog(diagprecios));
                 diagprecios.setVisible(true);
             }
@@ -664,7 +670,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
                 if (cajaAbierta != null) {
                     final FrVentas frVentas = new FrVentas(serialPort, usuario, sucursal);
                     frVentas.setVisible(true);
-                    frVentas.setSize(709, 756);
+                    frVentas.setSize(930, 756);
                     Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                     frVentas.setLocation(dim.width / 2 - frVentas.getSize().width / 2, dim.height / 2 - frVentas.getSize().height / 2);
                 } else {
@@ -1176,6 +1182,64 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
 
             }
         });
+        
+        //STOCK
+         jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Alta de Deposito");
+                putValue(Action.SHORT_DESCRIPTION, "Alta de Deposito");
+
+            }
+
+             
+            public void actionPerformed(ActionEvent e) {
+                DiagDeposito depositoAlta = new DiagDeposito(frame, true, "Alta");
+                depositoAlta.setLocation(Comunes.centrarDialog(depositoAlta));
+                depositoAlta.setVisible(true);
+
+            }
+        });
+        jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Mover inventario a sucursal");
+                putValue(Action.SHORT_DESCRIPTION, "Asignación de articulos de depósito a sucursal");
+
+            }
+
+           public void actionPerformed(ActionEvent e) {
+                DiagArticuloSucursalAlta articuloSucursalAlta = new DiagArticuloSucursalAlta();
+                articuloSucursalAlta.setLocation(Comunes.centrarDialog(articuloSucursalAlta));
+                articuloSucursalAlta.setVisible(true);
+            }
+        });
+
+        jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Stock Depósito");
+                putValue(Action.SHORT_DESCRIPTION, "Stock Depósito");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagArticuloDepositoAlta diagArticuloDepositoAlta = new DiagArticuloDepositoAlta(frame, true);
+                diagArticuloDepositoAlta.setLocation(Comunes.centrarDialog(diagArticuloDepositoAlta));
+                diagArticuloDepositoAlta.setVisible(true);
+            }
+        });
+          jXTaskPnStock.add(new AbstractAction() {
+            {
+                putValue(Action.NAME, "Stock General");
+                putValue(Action.SHORT_DESCRIPTION, "Stock General");
+
+            }
+
+            public void actionPerformed(ActionEvent e) {
+                DiagStockGeneral diagStockGeneral = new DiagStockGeneral(frame, true);
+                diagStockGeneral.setLocation(Comunes.centrarDialog(diagStockGeneral));
+                diagStockGeneral.setVisible(true);
+            }
+        });
+
 //        jXTaskPnMovimientos.add(new AbstractAction() {
 //            {
 //                putValue(Action.NAME, "Alta Mov. Internos");
@@ -1278,6 +1342,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jXTaskPnVentas = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPnCaja = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPnMovimientos = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPnStock = new org.jdesktop.swingx.JXTaskPane();
 
         jMenu7.setText("Impresión");
         jMenu7.setActionCommand("jMenu7");
@@ -1463,6 +1528,10 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
         jXTaskPnMovimientos.setName("jXTaskPnMovimientos"); // NOI18N
         jXTaskPaneContainer1.add(jXTaskPnMovimientos);
 
+        jXTaskPnStock.setTitle("Stock");
+        jXTaskPnStock.setName("jXTaskPnStock"); // NOI18N
+        jXTaskPaneContainer1.add(jXTaskPnStock);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1567,6 +1636,7 @@ public class frPrincipal extends javax.swing.JFrame implements SerialPortEventLi
     private org.jdesktop.swingx.JXTaskPane jXTaskPnConfiguracion;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnEmpleados;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnMovimientos;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPnStock;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnSucursal;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnUsuarios;
     private org.jdesktop.swingx.JXTaskPane jXTaskPnVentas;

@@ -88,13 +88,14 @@ public class ArticuloSucursalFacade {
     public ArticuloSucursal buscar(Articulo articulo, Sucursal sucursal) {
         ArticuloSucursal articuloSucursal = new ArticuloSucursal();
         EntityManager em = emf.createEntityManager();
-        quArticuloSucursal = em.createQuery("SELECT "
-                + "ad FROM ArticuloSucursal ad WHERE ad.articulo = :articulo "
-                + "' AND ad.sucursal = :sucursal ");
+        quArticuloSucursal = em.createQuery("SELECT ad FROM ArticuloSucursal ad WHERE ad.articulo = :articulo AND ad.sucursal = :sucursal ");
         quArticuloSucursal.setParameter("articulo", articulo);
         quArticuloSucursal.setParameter("sucursal", sucursal);
-        articuloSucursal = (ArticuloSucursal) quArticuloSucursal.getSingleResult();
-        return articuloSucursal;
+           try {
+            return (ArticuloSucursal) quArticuloSucursal.getResultList().get(0);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     /*public void agregarArticulosAlSucursal(ArticuloSucursal articuloSucursal) {
@@ -126,15 +127,19 @@ public class ArticuloSucursalFacade {
     }
 
     public void transferirArticuloDesdeDepositoASucursal(ArticuloDeposito articuloDepositoParam, Sucursal sucursal, Long cantidad) {
+      
         ArticuloDeposito articuloDeposito = new ArticuloDepositoFacade().buscar(articuloDepositoParam.getArticulo(), articuloDepositoParam.getDeposito());
         if (articuloDeposito.getId() != null) {
             ArticuloSucursal articuloSucursal = buscar(articuloDeposito.getArticulo(), sucursal);
-            if (articuloSucursal.getId() != null) {
+            
+            if (articuloSucursal != null) {
                 if (new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad)) {
                     agregarArticulosAlSucursal(articuloSucursal, cantidad);
-                    new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito);
+                   // new ArticuloDepositoFacade().eliminarArticulosAlDeposito(articuloDeposito, cantidad);
                 }
             } else {
+                articuloSucursal = new ArticuloSucursal();
+                
                 articuloSucursal.setArticulo(articuloDeposito.getArticulo());
                 articuloSucursal.setSucursal(sucursal);
                 articuloSucursal.setCantidad(cantidad);
@@ -184,4 +189,8 @@ public class ArticuloSucursalFacade {
 //            }
 //        }
 //    }
+    
+       public List<ArticuloSucursal> getTodos() {
+        return new ArticuloSucursalJpaController(emf).findArticuloSucursalEntities();
+    }
 }

@@ -515,7 +515,7 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
     }
 
     private void cargarArticulo(Articulo articulo) {
-
+         
         Object[] fila = new Object[10];
         fila[0] = articulo.getId();
         fila[1] = articulo.getCodigoBarra();
@@ -534,7 +534,8 @@ public class DiagAdminArticulos extends javax.swing.JDialog {
     private void modificarArticulo() {
         if (tblArticulos.getSelectedRow() != -1) {
             Articulo articulo = ArticuloFacade.getInstance().buscar((Long) tblArticulos.getValueAt(tblArticulos.getSelectedRow(), 0));
-            DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo);
+            List<PrecioArticulo> lstPrecioArt=PrecioArticuloFacade.getInstance().getPreciosArticulo(articulo);
+            DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo,lstPrecioArt);
             diagArticulo.setLocation(Comunes.centrarDialog(diagArticulo));
             diagArticulo.setVisible(true);
         } else {

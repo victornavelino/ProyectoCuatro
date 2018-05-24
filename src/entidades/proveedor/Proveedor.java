@@ -3,61 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entidades.articulo.stock;
+package entidades.proveedor;
 
-import entidades.articulo.Articulo;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 
 /**
  *
- * @author franco
+ * @author alumno
  */
 @Entity
-@Table(name = "articulo_deposito")
-public class ArticuloDeposito implements Serializable {
+@Table(name = "proveedor")
+public class Proveedor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @ManyToOne
-    private Articulo articulo;
-    @ManyToOne
-    private Deposito deposito;
-    private Long cantidad;
+   private String descripcion;
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public Deposito getDeposito() {
-        return deposito;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
-
-    public void setDeposito(Deposito deposito) {
-        this.deposito = deposito;
-    }
-
-    public Long getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Long cantidad) {
-        this.cantidad = cantidad;
-    }
-
+           
+           
     public Long getId() {
         return id;
     }
@@ -76,10 +53,10 @@ public class ArticuloDeposito implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ArticuloDeposito)) {
+        if (!(object instanceof Proveedor)) {
             return false;
         }
-        ArticuloDeposito other = (ArticuloDeposito) object;
+        Proveedor other = (Proveedor) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -88,7 +65,7 @@ public class ArticuloDeposito implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.articulo.stock.ArticuloDeposito[ id=" + id + " ]";
+        return descripcion;
     }
-
+    
 }

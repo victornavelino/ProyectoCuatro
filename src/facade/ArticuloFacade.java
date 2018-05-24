@@ -112,6 +112,7 @@ public class ArticuloFacade {
                 + "s.descripcionReducida LIKE :descripcion  OR "
                 + "s.codigoBarra LIKE :descripcion OR "
                 + "s.descripcion LIKE :descripcion ORDER BY s.descripcionReducida ASC");
+        
         qu.setParameter("descripcion", "%" + descripcion.toUpperCase() + "%");
         em.getEntityManagerFactory().getCache().evictAll();
         return qu.getResultList();

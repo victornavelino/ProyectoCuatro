@@ -5,9 +5,12 @@
  */
 package vista.articulos;
 
+import entidades.Sucursal;
 import entidades.articulo.Articulo;
 import entidades.articulo.Categoria;
+import entidades.articulo.ListaPrecio;
 import entidades.articulo.PrecioArticulo;
+import entidades.articulo.SubCategoria;
 import facade.ArticuloFacade;
 import facade.CategoriaFacade;
 import facade.ListaPrecioFacade;
@@ -20,6 +23,7 @@ import includes.ModeloTablaNoEditable;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -52,10 +56,15 @@ public class DiagPrecios extends javax.swing.JDialog {
     private Vector headers = new Vector();
     private Vector data = new Vector();
     private Articulo articulo;
+    private Sucursal sucursal;
+    private Articulo articuloselect;
+    private BigDecimal porcentaje = new BigDecimal("0.00");
+    private BigDecimal nuevoPrecio = new BigDecimal("0.00");
 
-    public DiagPrecios(java.awt.Frame parent, boolean modal) {
+    public DiagPrecios(java.awt.Frame parent, boolean modal, Sucursal sucursal) {
         super(parent, modal);
         initComponents();
+        this.sucursal = sucursal;
         inicializarComponentes();
     }
 
@@ -76,6 +85,7 @@ public class DiagPrecios extends javax.swing.JDialog {
     private void initComponents() {
 
         bgCodDesc = new javax.swing.ButtonGroup();
+        bgArticulo = new javax.swing.ButtonGroup();
         btnCerrar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -83,12 +93,9 @@ public class DiagPrecios extends javax.swing.JDialog {
         labelNombreArticulo = new javax.swing.JLabel();
         tfArticulo = new javax.swing.JTextField();
         jbBuscar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         rbRubro = new javax.swing.JRadioButton();
         rbSubRubro = new javax.swing.JRadioButton();
-        rbPrecio = new javax.swing.JRadioButton();
         rbPorcentaje = new javax.swing.JRadioButton();
         cbCategoria = new javax.swing.JComboBox();
         labelCategoria = new javax.swing.JLabel();
@@ -96,7 +103,14 @@ public class DiagPrecios extends javax.swing.JDialog {
         cboSubCategoria = new javax.swing.JComboBox();
         cboListaPrecios = new javax.swing.JComboBox();
         labelListaPrecios = new javax.swing.JLabel();
-        btnGuardarCambios = new javax.swing.JButton();
+        jtporcentaje = new javax.swing.JTextField();
+        labelPorcentaje = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        labelNuevoPrecio = new javax.swing.JLabel();
+        jtNuevoPrecio = new javax.swing.JTextField();
+        rbPorPrecio = new javax.swing.JRadioButton();
+        rbPorPorcentaje = new javax.swing.JRadioButton();
+        jckTodasListas = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,22 +159,6 @@ public class DiagPrecios extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/edit.png"))); // NOI18N
-        jButton2.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagAdminArticulos.jButton2.text")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/delete.png"))); // NOI18N
-        jButton3.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagAdminArticulos.jButton3.text")); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagAdminArticulos.jPanel1.border.title"))); // NOI18N
 
         bgCodDesc.add(rbRubro);
@@ -185,19 +183,6 @@ public class DiagPrecios extends javax.swing.JDialog {
             }
         });
 
-        bgCodDesc.add(rbPrecio);
-        rbPrecio.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.rbPrecio.text")); // NOI18N
-        rbPrecio.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                rbPrecioItemStateChanged(evt);
-            }
-        });
-        rbPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbPrecioActionPerformed(evt);
-            }
-        });
-
         bgCodDesc.add(rbPorcentaje);
         rbPorcentaje.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.rbPorcentaje.text")); // NOI18N
         rbPorcentaje.addItemListener(new java.awt.event.ItemListener() {
@@ -216,15 +201,11 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addComponent(rbSubRubro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbPorcentaje)
-                .addGap(4, 4, 4)
-                .addComponent(rbPrecio)
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(rbPorcentaje)
-                .addComponent(rbPrecio))
+            .addComponent(rbPorcentaje)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(rbRubro)
                 .addComponent(rbSubRubro))
@@ -243,6 +224,45 @@ public class DiagPrecios extends javax.swing.JDialog {
 
         labelListaPrecios.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.labelListaPrecios.text")); // NOI18N
 
+        jtporcentaje.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.jtporcentaje.text")); // NOI18N
+
+        labelPorcentaje.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.labelPorcentaje.text")); // NOI18N
+
+        jButton1.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        labelNuevoPrecio.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.labelNuevoPrecio.text")); // NOI18N
+
+        jtNuevoPrecio.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.jtNuevoPrecio.text")); // NOI18N
+
+        bgArticulo.add(rbPorPrecio);
+        rbPorPrecio.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.rbPorPrecio.text")); // NOI18N
+        rbPorPrecio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbPorPrecioItemStateChanged(evt);
+            }
+        });
+
+        bgArticulo.add(rbPorPorcentaje);
+        rbPorPorcentaje.setSelected(true);
+        rbPorPorcentaje.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.rbPorPorcentaje.text")); // NOI18N
+        rbPorPorcentaje.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbPorPorcentajeItemStateChanged(evt);
+            }
+        });
+
+        jckTodasListas.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagPrecios.jckTodasListas.text")); // NOI18N
+        jckTodasListas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jckTodasListasItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -252,40 +272,58 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
+                        .addGap(113, 113, 113))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 93, Short.MAX_VALUE)
+                        .addGap(0, 248, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(labelListaPrecios)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cboListaPrecios, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(427, 427, 427))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(labelNombreArticulo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                                .addComponent(labelCategoria)
-                                                .addGap(38, 38, 38))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(labelSubcategoria)
-                                                .addGap(26, 26, 26)))
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cboSubCategoria, 0, 212, Short.MAX_VALUE))))
-                                .addGap(203, 203, 203))))))
+                                                .addComponent(labelNuevoPrecio)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jtNuevoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addComponent(labelListaPrecios)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(cboListaPrecios, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addComponent(labelPorcentaje)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(jtporcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jckTodasListas)
+                                        .addGap(83, 83, 83))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(labelCategoria)
+                                        .addGap(38, 38, 38)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(rbPorPorcentaje)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(rbPorPrecio))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(labelSubcategoria)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(cboSubCategoria, 0, 144, Short.MAX_VALUE)
+                                .addGap(109, 109, 109))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(labelNombreArticulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(394, 394, 394)
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,12 +333,14 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCategoria)
-                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboSubCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSubcategoria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbPorPorcentaje)
+                    .addComponent(rbPorPrecio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNombreArticulo)
@@ -308,22 +348,21 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboListaPrecios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelListaPrecios))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelListaPrecios)
+                    .addComponent(jckTodasListas))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtporcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelPorcentaje))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtNuevoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNuevoPrecio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        btnGuardarCambios.setText(org.openide.util.NbBundle.getMessage(DiagPrecios.class, "DiagAdminArticulos.btnGuardarCambios.text")); // NOI18N
-        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarCambiosActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -333,12 +372,10 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(334, Short.MAX_VALUE)
-                .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(397, 397, 397)
                 .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,9 +383,7 @@ public class DiagPrecios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -361,18 +396,6 @@ public class DiagPrecios extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        eliminarArticluo();
-        // cargarTablaArticulos(ArticuloFacade.getInstance().getTodos());
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        modificarArticulo();
-        cargarTablaArticulos(PrecioArticuloFacade.getInstance().getTodos());
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         if (!tfArticulo.getText().isEmpty()) {
             cargarTablaArticulos(PrecioArticuloFacade.getInstance().buscarPorDescDescCortayCodigo(tfArticulo.getText()));
@@ -381,38 +404,51 @@ public class DiagPrecios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
 
-    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-        guardarArticulos();
-    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
-
     private void rbSubRubroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSubRubroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbSubRubroActionPerformed
 
-    private void rbPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbPrecioActionPerformed
-
     private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
-       Comunes.cargarJCombo(cboSubCategoria, SubCategoriaFacade.getInstance().buscarPorid((Categoria)cbCategoria.getSelectedItem())); 
+        Comunes.cargarJCombo(cboSubCategoria, SubCategoriaFacade.getInstance().buscarPorid((Categoria) cbCategoria.getSelectedItem()));
     }//GEN-LAST:event_cbCategoriaActionPerformed
 
     private void rbSubRubroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbSubRubroItemStateChanged
-alternarPorSubrubro();        
-        
+        alternarPorSubrubro();
+
     }//GEN-LAST:event_rbSubRubroItemStateChanged
 
     private void rbRubroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbRubroItemStateChanged
-       alternarPorRubro();
+        alternarPorRubro();
     }//GEN-LAST:event_rbRubroItemStateChanged
 
     private void rbPorcentajeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPorcentajeItemStateChanged
-       alternarPorcentaje();
+        alternarPorcentaje();
     }//GEN-LAST:event_rbPorcentajeItemStateChanged
 
-    private void rbPrecioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPrecioItemStateChanged
-        alternarPrecio();
-    }//GEN-LAST:event_rbPrecioItemStateChanged
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int i = validar();
+        if (i == 0) {
+            confirmarActualizacion();
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rbPorPrecioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPorPrecioItemStateChanged
+        alternarPanelPrecioPorArticulo();
+        jckTodasListas.setVisible(!rbPorPrecio.isSelected());
+    }//GEN-LAST:event_rbPorPrecioItemStateChanged
+
+    private void rbPorPorcentajeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPorPorcentajeItemStateChanged
+        alternarPanelPorcentajePorArticulo();
+    }//GEN-LAST:event_rbPorPorcentajeItemStateChanged
+
+    private void jckTodasListasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jckTodasListasItemStateChanged
+        if (jckTodasListas.isSelected()) {
+            cboListaPrecios.setEnabled(false);
+        } else {
+            cboListaPrecios.setEnabled(true);
+        }
+    }//GEN-LAST:event_jckTodasListasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -457,24 +493,29 @@ alternarPorSubrubro();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgArticulo;
     private javax.swing.ButtonGroup bgCodDesc;
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnGuardarCambios;
     private javax.swing.JComboBox cbCategoria;
     private javax.swing.JComboBox cboListaPrecios;
     private javax.swing.JComboBox cboSubCategoria;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBuscar;
+    private javax.swing.JCheckBox jckTodasListas;
+    private javax.swing.JTextField jtNuevoPrecio;
+    private javax.swing.JTextField jtporcentaje;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelListaPrecios;
     private javax.swing.JLabel labelNombreArticulo;
+    private javax.swing.JLabel labelNuevoPrecio;
+    private javax.swing.JLabel labelPorcentaje;
     private javax.swing.JLabel labelSubcategoria;
+    private javax.swing.JRadioButton rbPorPorcentaje;
+    private javax.swing.JRadioButton rbPorPrecio;
     private javax.swing.JRadioButton rbPorcentaje;
-    private javax.swing.JRadioButton rbPrecio;
     private javax.swing.JRadioButton rbRubro;
     private javax.swing.JRadioButton rbSubRubro;
     private javax.swing.JTable tblArticulos;
@@ -488,12 +529,107 @@ alternarPorSubrubro();
         cboSubCategoria.setVisible(false);
         labelNombreArticulo.setVisible(false);
         tfArticulo.setVisible(false);
-       jbBuscar.setVisible(false);
+        jbBuscar.setVisible(false);
+        labelNuevoPrecio.setVisible(false);
+        jtNuevoPrecio.setVisible(false);
+        rbPorPorcentaje.setVisible(false);
+        rbPorPrecio.setVisible(false);
         Comunes.cargarJCombo(cbCategoria, CategoriaFacade.getInstance().getTodos());
-        
+
         Comunes.cargarJCombo(cboListaPrecios, ListaPrecioFacade.getInstance().getTodos());
         cargarTablaArticulos(PrecioArticuloFacade.getInstance().getTodos());
 
+    }
+
+    private void actualizarPrecios() {
+        System.out.println("la sucursal es" + sucursal.getNombre());
+
+        if (rbRubro.isSelected()) {
+
+            porcentaje = BigDecimal.valueOf((Double.parseDouble(jtporcentaje.getText())) / 100);
+            PrecioArticuloFacade.getInstance().actualizarPreciosCategoria(porcentaje, (Categoria) cbCategoria.getSelectedItem(), (ListaPrecio) cboListaPrecios.getSelectedItem(), sucursal, jckTodasListas.isSelected());
+
+        }
+        if (rbSubRubro.isSelected()) {
+
+            porcentaje = BigDecimal.valueOf((Double.parseDouble(jtporcentaje.getText())) / 100);
+            PrecioArticuloFacade.getInstance().actualizarPreciosSubCategoria(porcentaje, (SubCategoria) cboSubCategoria.getSelectedItem(), (ListaPrecio) cboListaPrecios.getSelectedItem(), sucursal, jckTodasListas.isSelected());
+
+        }
+        if (rbPorcentaje.isSelected()) {
+
+            System.out.println("actualizar por articulo");
+
+            if (rbPorPorcentaje.isSelected()) {
+                porcentaje = BigDecimal.valueOf((Double.parseDouble(jtporcentaje.getText())) / 100);
+                PrecioArticuloFacade.getInstance().actualizarPreciosArticuloPorPorcentaje(porcentaje, articuloselect, (ListaPrecio) cboListaPrecios.getSelectedItem(), sucursal, jckTodasListas.isSelected());
+
+            }
+            if (rbPorPrecio.isSelected()) {
+                nuevoPrecio = BigDecimal.valueOf(Double.parseDouble(jtNuevoPrecio.getText()));
+                PrecioArticuloFacade.getInstance().actualizarPreciosArticuloPorPrecio(nuevoPrecio, articuloselect, (ListaPrecio) cboListaPrecios.getSelectedItem(), sucursal);
+
+            }
+
+        }
+
+    }
+
+    private void confirmarActualizacion() {
+
+        int i = JOptionPane.showConfirmDialog(this, "¿Desea Aplicar la Actualización de Precios?", "Confirmar Actualizacion", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            try {
+                actualizarPrecios();
+                JOptionPane.showMessageDialog(null, "Actualización Realizada");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e + " :Articulo en uso, No se puede Actualizar");
+            }
+
+        }
+        cargarTablaArticulos(PrecioArticuloFacade.getInstance().getTodosActual());
+
+    }
+
+    private int validar() {
+        int p = 0;
+        //Validación para actualizar Precios por articulo
+        if (rbPorcentaje.isSelected()) {
+            if (tblArticulos.getSelectedRow() != -1) {
+                articuloselect = ArticuloFacade.getInstance().buscar((Long) tblArticulos.getValueAt(tblArticulos.getSelectedRow(), 0));
+                System.out.println("el articulo seleccionado es" + articuloselect.getDescripcion());
+            } else {
+                p = 1;
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar un Articulo", "Mensaje", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        // Fin Validación Precios por articulo
+
+        //Validación Actualizar precio por Articulo cuando se seleccione actualizar por precio
+        if (rbPorPrecio.isSelected()) {
+            if (!Comunes.validarBigDecimal(jtNuevoPrecio.getText())) {
+                p = 1;
+                JOptionPane.showMessageDialog(this, "Debe ingresar el Nuevo Precio en formato numerico", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            if (!Comunes.validarBigDecimal(jtporcentaje.getText())) {
+                p = 1;
+                JOptionPane.showMessageDialog(this, "Debe ingresar el porcentaje en formato numerico", "Mensaje", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        //Validación cuando se quiere actualizar por SubRubro
+        if (rbSubRubro.isSelected()) {
+            if ((SubCategoria) cboSubCategoria.getSelectedItem() == null) {
+                p = 1;
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar SubRubro", "Mensaje", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        //fin de validacion actualizar por SubRubro
+
+        return p;
     }
 
     private void cargarTablaArticulos(List<PrecioArticulo> precioArticulo) {
@@ -571,7 +707,7 @@ alternarPorSubrubro();
             }
 
             tblArticulos.setModel(modeloTablaArticulos);
-            Comunes.setOcultarColumnasJTable(tblArticulos, 0);
+            //Comunes.setOcultarColumnasJTable(tblArticulos, 0);
         } catch (Exception ex) {
             Logger.getLogger(DiagAdminArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -580,7 +716,7 @@ alternarPorSubrubro();
     private void cargarArticulo(PrecioArticulo precio_articulo) {
 
         Object[] fila = new Object[10];
-        fila[0] = precio_articulo.getId();
+        fila[0] = precio_articulo.getArticulo().getId();
         fila[1] = precio_articulo.getArticulo().getDescripcion();
         fila[2] = precio_articulo.getArticulo().getMarca().getDescripcion();
         fila[3] = precio_articulo.getArticulo().getSubCategoria().getCategoria().getDescripcion();
@@ -598,9 +734,9 @@ alternarPorSubrubro();
     private void modificarArticulo() {
         if (tblArticulos.getSelectedRow() != -1) {
             Articulo articulo = ArticuloFacade.getInstance().buscar((Long) tblArticulos.getValueAt(tblArticulos.getSelectedRow(), 0));
-            DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo);
-            diagArticulo.setLocation(Comunes.centrarDialog(diagArticulo));
-            diagArticulo.setVisible(true);
+            //DiagArticulo diagArticulo = new DiagArticulo(null, true, "Modificación", articulo);
+            //diagArticulo.setLocation(Comunes.centrarDialog(diagArticulo));
+            //diagArticulo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Articulo");
         }
@@ -744,8 +880,9 @@ alternarPorSubrubro();
         }
 
     }
-    private void alternarPanel() {
-       /* pnArticulos.setVisible(!rbTodosLosArticulos.isSelected());
+
+    private void alternarPanelPrecioPorArticulo() {
+        /* pnArticulos.setVisible(!rbTodosLosArticulos.isSelected());
         tfPorcentajeATodos.setVisible(rbTodosLosArticulos.isSelected());
         lblPorcentajeATodos.setVisible(rbTodosLosArticulos.isSelected());
         if (rbAlgunosArticulos.isSelected()) {
@@ -753,16 +890,44 @@ alternarPorSubrubro();
         } else {
             vaciarArticulos();
         }*/
+        labelPorcentaje.setVisible(!rbPorPrecio.isSelected());
+        jtporcentaje.setVisible(!rbPorPrecio.isSelected());
+
+        labelNuevoPrecio.setVisible(rbPorPrecio.isSelected());
+        jtNuevoPrecio.setVisible(rbPorPrecio.isSelected());
+
+    }
+
+    private void alternarPanelPorcentajePorArticulo() {
+        /* pnArticulos.setVisible(!rbTodosLosArticulos.isSelected());
+        tfPorcentajeATodos.setVisible(rbTodosLosArticulos.isSelected());
+        lblPorcentajeATodos.setVisible(rbTodosLosArticulos.isSelected());
+        if (rbAlgunosArticulos.isSelected()) {
+            tfPorcentajeATodos.setText("0");
+        } else {
+            vaciarArticulos();
+        }*/
+        labelPorcentaje.setVisible(rbPorPorcentaje.isSelected());
+        jtporcentaje.setVisible(rbPorPorcentaje.isSelected());
+        jckTodasListas.setVisible(rbPorPorcentaje.isSelected());
+        labelNuevoPrecio.setVisible(!rbPorPorcentaje.isSelected());
+        jtNuevoPrecio.setVisible(!rbPorPorcentaje.isSelected());
+
     }
 
     private void alternarPorSubrubro() {
         labelNombreArticulo.setVisible(!rbSubRubro.isSelected());
-          tfArticulo.setVisible(!rbSubRubro.isSelected());
-            jbBuscar.setVisible(!rbSubRubro.isSelected());
-            labelCategoria.setVisible(rbSubRubro.isSelected());
-            cbCategoria.setVisible(rbSubRubro.isSelected());
-            labelSubcategoria.setVisible(rbSubRubro.isSelected());
-            cboSubCategoria.setVisible(rbSubRubro.isSelected());
+        tfArticulo.setVisible(!rbSubRubro.isSelected());
+        jbBuscar.setVisible(!rbSubRubro.isSelected());
+        labelCategoria.setVisible(rbSubRubro.isSelected());
+        jckTodasListas.setVisible(rbSubRubro.isSelected());
+        cbCategoria.setVisible(rbSubRubro.isSelected());
+        labelSubcategoria.setVisible(rbSubRubro.isSelected());
+        cboSubCategoria.setVisible(rbSubRubro.isSelected());
+        rbPorPorcentaje.setVisible(!rbSubRubro.isSelected());
+        rbPorPrecio.setVisible(!rbSubRubro.isSelected());
+        labelNuevoPrecio.setVisible(!rbSubRubro.isSelected());
+        jtNuevoPrecio.setVisible(!rbSubRubro.isSelected());
         /*lblArticulosDondeSeAplica.setVisible(!rbPrecio.isSelected());
         rbAlgunosArticulos.setVisible(!rbPrecio.isSelected());
         rbTodosLosArticulos.setVisible(!rbPrecio.isSelected());
@@ -774,14 +939,20 @@ alternarPorSubrubro();
         }
         alternarPanel();*/
     }
-       private void alternarPorRubro() {
-       labelNombreArticulo.setVisible(!rbSubRubro.isSelected());
-          tfArticulo.setVisible(!rbSubRubro.isSelected());
-            jbBuscar.setVisible(!rbSubRubro.isSelected());
-            labelCategoria.setVisible(rbSubRubro.isSelected());
-            cbCategoria.setVisible(rbSubRubro.isSelected());
-            labelSubcategoria.setVisible(!rbSubRubro.isSelected());
-            cbCategoria.setVisible(!rbSubRubro.isSelected());
+
+    private void alternarPorRubro() {
+        labelNombreArticulo.setVisible(!rbRubro.isSelected());
+        tfArticulo.setVisible(!rbRubro.isSelected());
+        jbBuscar.setVisible(!rbRubro.isSelected());
+        labelCategoria.setVisible(rbRubro.isSelected());
+        jckTodasListas.setVisible(rbRubro.isSelected());
+        cbCategoria.setVisible(rbRubro.isSelected());
+        labelSubcategoria.setVisible(!rbRubro.isSelected());
+        cboSubCategoria.setVisible(!rbRubro.isSelected());
+        rbPorPorcentaje.setVisible(!rbRubro.isSelected());
+        rbPorPrecio.setVisible(!rbRubro.isSelected());
+        labelNuevoPrecio.setVisible(!rbRubro.isSelected());
+        jtNuevoPrecio.setVisible(!rbRubro.isSelected());
         /*lblArticulosDondeSeAplica.setVisible(!rbPrecio.isSelected());
         rbAlgunosArticulos.setVisible(!rbPrecio.isSelected());
         rbTodosLosArticulos.setVisible(!rbPrecio.isSelected());
@@ -793,34 +964,20 @@ alternarPorSubrubro();
         }
         alternarPanel();*/
     }
-          private void alternarPrecio() {
-        labelNombreArticulo.setVisible(rbPrecio.isSelected());
-          tfArticulo.setVisible(rbPrecio.isSelected());
-         jbBuscar.setVisible(rbPrecio.isSelected());
-         labelCategoria.setVisible(!rbPrecio.isSelected());
-           cbCategoria.setVisible(!rbPrecio.isSelected());
-           labelSubcategoria.setVisible(!rbPrecio.isSelected());
-           cboSubCategoria.setVisible(!rbPrecio.isSelected());
-           
-        /*lblArticulosDondeSeAplica.setVisible(!rbPrecio.isSelected());
-        rbAlgunosArticulos.setVisible(!rbPrecio.isSelected());
-        rbTodosLosArticulos.setVisible(!rbPrecio.isSelected());
-        lblPorcentajeATodos.setVisible(!rbPrecio.isSelected());
-        tfPorcentajeATodos.setVisible(!rbPrecio.isSelected());
-        if (rbPrecio.isSelected()) {
-            tfPorcentajeATodos.setText("0");
-            rbAlgunosArticulos.setSelected(true);
-        }
-        alternarPanel();*/
-    }
-   private void alternarPorcentaje() {
-       
-     labelNombreArticulo.setVisible(rbPorcentaje.isSelected());
-          tfArticulo.setVisible(rbPorcentaje.isSelected());
-         jbBuscar.setVisible(rbPorcentaje.isSelected());
-         labelCategoria.setVisible(!rbPorcentaje.isSelected());
-           cbCategoria.setVisible(!rbPorcentaje.isSelected());
-           labelSubcategoria.setVisible(!rbPorcentaje.isSelected());
-           cboSubCategoria.setVisible(!rbPorcentaje.isSelected());
+
+    private void alternarPorcentaje() {
+
+        labelNombreArticulo.setVisible(rbPorcentaje.isSelected());
+        tfArticulo.setVisible(rbPorcentaje.isSelected());
+        jbBuscar.setVisible(rbPorcentaje.isSelected());
+        jckTodasListas.setVisible(rbPorcentaje.isSelected());
+        rbPorPorcentaje.setVisible(rbPorcentaje.isSelected());
+        rbPorPrecio.setVisible(rbPorcentaje.isSelected());
+        labelCategoria.setVisible(!rbPorcentaje.isSelected());
+        cbCategoria.setVisible(!rbPorcentaje.isSelected());
+        labelSubcategoria.setVisible(!rbPorcentaje.isSelected());
+        cboSubCategoria.setVisible(!rbPorcentaje.isSelected());
+        labelNuevoPrecio.setVisible(!rbPorcentaje.isSelected());
+        jtNuevoPrecio.setVisible(!rbPorcentaje.isSelected());
     }
 }
