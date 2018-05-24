@@ -9,7 +9,6 @@ import controladores.ValorCostoJpaController;
 import controladores.exceptions.NonexistentEntityException;
 import entidades.articulo.costo.ListaCosto;
 import entidades.articulo.costo.ValorCosto;
-import static entidades.articulo.costo.ValorCosto_.listaCosto;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
